@@ -3,7 +3,7 @@
         <div class="col-sm-12 col-xl-6">
             <div class="bg-secondary text-center rounded p-4">
                 <div class="d-flex align-items-center justify-content-between mb-4">
-                    <h6 class="mb-0">Worldwide Sales</h6>
+                    <h6 class="mb-0">All Documents</h6>
                     <a href="">Show All</a>
                 </div>
                 <canvas id="worldwide-sales"></canvas>
@@ -12,7 +12,7 @@
         <div class="col-sm-12 col-xl-6">
             <div class="bg-secondary text-center rounded p-4">
                 <div class="d-flex align-items-center justify-content-between mb-4">
-                    <h6 class="mb-0">Salse & Revenue</h6>
+                    <h6 class="mb-0">Incoming & Outgoing</h6>
                     <a href="">Show All</a>
                 </div>
                 <canvas id="salse-revenue"></canvas>
