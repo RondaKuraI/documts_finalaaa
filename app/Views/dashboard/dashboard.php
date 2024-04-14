@@ -26,7 +26,7 @@
 
 
         <!-- Recent Sales Start -->
-        <!-- <?= $this->include("partials/recent"); ?> -->
+        <?= $this->include("partials/incoming"); ?>
         <!-- Recent Sales End -->
 
 

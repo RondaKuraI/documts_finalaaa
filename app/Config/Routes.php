@@ -17,7 +17,18 @@ $routes->match(['get', 'post'], 'SigninController/loginAuth', 'SigninController:
 // Dashboard
 $routes->get('/compose', 'Home::compose');
 $routes->get('/incoming', 'Home::incoming');
-$routes->get('/outgoing', 'Home::outgoing');
+$routes->get('/outgoing', 'FileUploadController::index');
+$routes->post('/send', 'FileUploadController::upload');
+$routes->get('/doc_view/(:num)', 'FileUploadController::doc_view/$1');
 $routes->get('/maintenance', 'Home::maintenance');
 $routes->get('/reports', 'Home::reports');
 $routes->get('/user_management', 'Home::user_management');
+
+// User Dashboard
+$routes->get('/user_dashboard', 'UserController::dashboard');
+$routes->get('/user_compose', 'UserController::compose');
+$routes->get('/user_incoming', 'UserController::incoming');
+$routes->get('/user_outgoing', 'UserController::outgoing');
+
+// $routes->post('/send', 'EmailController::sendEmail');
+
