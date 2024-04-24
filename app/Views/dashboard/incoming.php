@@ -20,7 +20,7 @@
                     <div class="col-12 col-sm-12 text-center text-sm-start">
                         <div class="card shadow bg-secondary">
                             <div class="card-header">
-                                <h3 class="text-white">Outgoing Documents
+                                <h3 class="text-white">Incoming Documents
                                     <!-- <a href="<?= base_url(); ?>" class="btn btn-info btn-sm float-end">Add</a> -->
                                 </h3>
                             </div>

@@ -64,7 +64,7 @@
     <!-- <script src="<?= base_url(); ?>lib/chart/chart.min.js"></script> -->
     <!-- ChartJS -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js"></script> -->
-    <script src="<?= base_url(); ?>js/chart.min.js"></script>
+    <!-- <script src="<?= base_url(); ?>js/chart.min.js"></script> -->
 
     <script src="<?= base_url(); ?>lib/easing/easing.min.js"></script>
     <script src="<?= base_url(); ?>lib/waypoints/waypoints.min.js"></script>

@@ -52,8 +52,8 @@
                                                 <td class="px-2 py-1 align-middle"><?= $row['status'] ?></td>
                                                 <!-- <td class="px-2 py-1 align-middle"><p class="m-0 text-truncate" title="<?= $row['fname'] ?>"><?= $row['fname'] ?></p></td> -->
                                                 <td class="px-2 py-1 align-middle text-center">
-                                                    <a href="<?= base_url('doc_view/'.$row['doc_code']); ?>" class="btn btn-warning btn-sm" target="_blank" title="View File"><!--<i class="fa fa-external-link"></i>-->View</a>
-                                                    <!-- <a href="<?= base_url($row['path']) ?>" class="text-primary fw-bolder text-decoration-none mx-2" target="_blank" title="Download File" download="<?= $row['fname'] ?>"><i class="fa fa-download"></i></a> -->
+                                                    <!-- <a href="<?= base_url('doc_view/'.$row['doc_code']); ?>" class="btn btn-warning btn-sm" target="_blank" title="View File"><i class="fa fa-external-link"></i>View</a> -->
+                                                    <a href="<?= base_url($row['path']) ?>" class="text-primary fw-bolder text-decoration-none mx-2" target="_blank" title="Download File" download="<?= $row['fname'] ?>"><i class="fa fa-download"></i></a>
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>

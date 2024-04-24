@@ -32,3 +32,5 @@ $routes->get('/user_outgoing', 'UserController::outgoing');
 
 // $routes->post('/send', 'EmailController::sendEmail');
 
+
+

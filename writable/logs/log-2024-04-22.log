@@ -1,0 +1,16 @@
+CRITICAL - 2024-04-22 13:22:49 --> Undefined variable $outgoingDocsCount
+in APPPATH\Views\partials\cards.php on line 17.
+ 1 APPPATH\Views\partials\cards.php(17): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $outgoingDocsCount', 'C:\\laragon\\www\\documts_finalaaa\\app\\Views\\partials\\cards.php', 17)
+ 2 SYSTEMPATH\View\View.php(226): include('C:\\laragon\\www\\documts_finalaaa\\app\\Views\\partials\\cards.php')
+ 3 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\View\View.php(467): CodeIgniter\View\View->render('partials/cards', null, true)
+ 5 APPPATH\Views\dashboard\dashboard.php(19): CodeIgniter\View\View->include('partials/cards')
+ 6 SYSTEMPATH\View\View.php(226): include('C:\\laragon\\www\\documts_finalaaa\\app\\Views\\dashboard\\dashboard.php')
+ 7 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 8 SYSTEMPATH\Common.php(1188): CodeIgniter\View\View->render('dashboard/dashboard', [], true)
+ 9 APPPATH\Controllers\Home.php(10): view('dashboard/dashboard')
+10 SYSTEMPATH\CodeIgniter.php(919): App\Controllers\Home->index()
+11 SYSTEMPATH\CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+12 SYSTEMPATH\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+13 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+14 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\documts_finalaaa\\public\\index.php')
