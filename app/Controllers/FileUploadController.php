@@ -41,9 +41,12 @@ class FileUploadController extends BaseController
         if (!is_dir('./uploads/'))
             mkdir('./uploads/');
         $doc_code = $this->request->getPost('doc_code');
+        $sender = $this->request->getPost('sender');
         $recipient = $this->request->getPost('recipient');
         $subject = $this->request->getPost('subject');
-        $label = $this->request->getPost('label');
+        $description = $this->request->getPost('description');
+        $date_of_letter = $this->request->getPost('date_of_letter');
+        $deadline = $this->request->getPost('deadline');
         $file = $this->request->getFile('file');
         $fname = $file->getRandomName();
         while (true) {
@@ -57,9 +60,12 @@ class FileUploadController extends BaseController
         if ($file->move("uploads/", $fname)) {
             $this->model->save([
                 "doc_code" => $this->db->escapeString($doc_code),
+                "sender" => $this->db->escapeString($sender),
                 "recipient" => $this->db->escapeString($recipient),
                 "subject" => $this->db->escapeString($subject),
-                "label" => $this->db->escapeString($label),
+                "description" => $this->db->escapeString($description),
+                "date_of_letter" => $this->db->escapeString($date_of_letter),
+                "deadline" => $this->db->escapeString($deadline),
                 "path" => "uploads/" . $fname
             ]);
             $this->session->setFlashdata('main_success', "New File Uploaded successfully.");
@@ -71,9 +77,17 @@ class FileUploadController extends BaseController
         return view('/compose', $this->data);
     }
 
-    public function doc_view($id = null){
-        $model = new FileModel();
-        $data['model'] = $model->find($id);
+    // public function doc_view($id = null){
+    //     $model = new FileModel();
+    //     $data['model'] = $model->find($id);
+    //     return view('dashboard/doc_view', $data);
+    // }
+
+    public function doc_view($id){
+        $file = new FileModel();
+        $data['file'] = $file->find($id);
+        
         return view('dashboard/doc_view', $data);
+
     }
 }

@@ -21,8 +21,8 @@
                     <!-- <div class="col-lg-6 mx-auto"> -->
                     <div class="col-12 col-sm-12 text-center text-sm-start">
                         <div class="card shadow bg-secondary">
-                            <div class="card-header">
-                                <h3 class="text-white">Compose Document</h3>
+                            <div class="card-header d-flex justify-content-center align-items-center bg-primary">
+                                <h3 class="text-white mb-0">Compose Document</h3>
                             </div>
                             <div class="card-body p-5">
 
@@ -38,7 +38,7 @@
                                     </div>
                                 <?php endif; ?>
 
-                                <form action="<?= base_url('send') ?>" method="POST" enctype="multipart/form-data">
+                                <form action="<?= base_url('send') ?>" method="POST" autocomplete="off" enctype="multipart/form-data">
 
                                     <div class="mb-3">
                                         <label for="doc_code">Document Code</label>
@@ -47,15 +47,22 @@
                                             <div class="invalid-feedback"><?= $validation->getError('doc_code') ?></div>
                                         <?php endif; ?>
                                     </div>
+                                    <hr>
+                                    <div class="mb-3">
+                                        <label for="sender">Sender</label>
+                                        <input type="text" name="sender" id="sender" class="form-control <?= ($validation->getError('sender')) ? 'is-invalid' : '' ?>" placeholder="Sender">
+                                        <?php if ($validation->getError('sender')) : ?>
+                                            <div class="invalid-feedback"><?= $validation->getError('sender') ?></div>
+                                        <?php endif; ?>
+                                    </div>
 
                                     <div class="mb-3">
-                                        <label for="recipient">Email</label>
-                                        <input type="email" name="recipient" id="recipient" class="form-control <?= ($validation->getError('recipient')) ? 'is-invalid' : '' ?>" placeholder="Email">
+                                        <label for="recipient">Recipient</label>
+                                        <input type="text" name="recipient" id="recipient" class="form-control <?= ($validation->getError('recipient')) ? 'is-invalid' : '' ?>" placeholder="Recipient">
                                         <?php if ($validation->getError('recipient')) : ?>
                                             <div class="invalid-feedback"><?= $validation->getError('recipient') ?></div>
                                         <?php endif; ?>
                                     </div>
-
 
                                     <div class="mb-3">
                                         <label for="subject">Subject</label>
@@ -65,26 +72,42 @@
                                         <?php endif; ?>
                                     </div>
 
-
-
                                     <div class="mb-3">
-                                        <label for="message">Message</label>
-                                        <textarea name="label" id="label" rows="4" class="form-control <?= ($validation->getError('label')) ? 'is-invalid' : '' ?>" placeholder="Message"></textarea>
-                                        <?php if ($validation->getError('label')) : ?>
-                                            <div class="invalid-feedback"><?= $validation->getError('label') ?></div>
+                                        <label for="description">Description</label>
+                                        <textarea name="description" id="description" rows="4" class="form-control <?= ($validation->getError('description')) ? 'is-invalid' : '' ?>" placeholder="Description"></textarea>
+                                        <?php if ($validation->getError('description')) : ?>
+                                            <div class="invalid-feedback"><?= $validation->getError('description') ?></div>
                                         <?php endif; ?>
                                     </div>
 
-                                    <div class="mb-3">
+                                    <div class="mb-3 row">
+                                        <div class="col-md-6">
+                                            <label for="date_of_letter">Date of Letter</label>
+                                            <input type="date" name="date_of_letter" id="date_of_letter" class="form-control <?= ($validation->getError('date_of_letter')) ? 'is-invalid' : '' ?>" placeholder="date_of_letter">
+                                            <?php if ($validation->getError('date_of_letter')) : ?>
+                                                <div class="invalid-feedback"><?= $validation->getError('date_of_letter') ?></div>
+                                            <?php endif; ?>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label for="deadline">Deadline</label>
+                                            <input type="date" name="deadline" id="deadline" class="form-control <?= ($validation->getError('deadline')) ? 'is-invalid' : '' ?>" placeholder="deadline">
+                                            <?php if ($validation->getError('deadline')) : ?>
+                                                <div class="invalid-feedback"><?= $validation->getError('deadline') ?></div>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3 ">
                                         <label for="file">Select File</label>
-                                        <input type="file" name="file" id="file" class="form-control <?= ($validation->getError('file')) ? 'is-invalid' : '' ?>">
+                                        <input type="file" name="file" id="file" class="form-control bg-dark<?= ($validation->getError('file')) ? 'is-invalid' : '' ?>">
                                         <?php if ($validation->getError('file')) : ?>
                                             <div class="invalid-feedback"><?= $validation->getError('file') ?></div>
                                         <?php endif; ?>
                                     </div>
 
                                     <div class="d-grid">
-                                        <button type="submit" class="btn btn-primary bg-gradient">Send</button>
+                                        <button type="submit" class="btn btn-primary bg-gradient files-save">Send</button>
                                     </div>
                                 </form>
                             </div>
@@ -94,79 +117,4 @@
             </div>
         </div>
 
-        <?= $this->endSection(); ?>
-
-        <!-- <div class="bg-dark">
-            <div class="container-fluid pt-4 px-4">
-                <div class="row">
-                    <div class="col-12 col-sm-12 text-center text-sm-start">
-                        <div class="card shadow bg-secondary">
-                            <div class="card-header">
-                                <h3 class="text-white">Compose</h3>
-                            </div>
-                            <div class="card-body p-5">
-
-                                <?php if (session()->setFlashdata(('success'))) : ?>
-                                    <div class="alert alert-success" role="alert">
-                                        <?= session()->getFlashdata('success'); ?>
-                                    </div>
-                                <?php endif; ?>
-
-                                <?php if (session()->setFlashdata(('error'))) : ?>
-                                    <div class="alert alert-danger" role="alert">
-                                        <?= session()->getFlashdata('error'); ?>
-                                    </div>
-                                <?php endif; ?>
-
-                                <form action="<?= base_url('send') ?>" method="POST" enctype="multipart/form-data">
-                                    <div class="mb-3">
-                                        <label for="email">Email</label>
-                                        <input type="email" name="email" id="email" class="form-control <?= ($validation->getError('email')) ? 'is-invalid' : '' ?>" placeholder="Email">
-                                        <?php if ($validation->getError('email')) : ?>
-                                            <div class="invalid-feedback"><?= $validation->getError('email') ?></div>
-                                        <?php endif; ?>
-                                    </div>
-
-
-                                    <div class="mb-3">
-                                        <label for="subject">Subject</label>
-                                        <input type="text" name="subject" id="subject" class="form-control <?= ($validation->getError('subject')) ? 'is-invalid' : '' ?>" placeholder="Subject">
-                                        <?php if ($validation->getError('subject')) : ?>
-                                            <div class="invalid-feedback"><?= $validation->getError('subject') ?></div>
-                                        <?php endif; ?>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="message">Message</label>
-                                        <textarea name="message" id="message" rows="4" class="form-control <?= ($validation->getError('message')) ? 'is-invalid' : '' ?>" placeholder="Message"></textarea>
-                                        <?php if ($validation->getError('message')) : ?>
-                                            <div class="invalid-feedback"><?= $validation->getError('message') ?></div>
-                                        <?php endif; ?>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="file">Select File</label>
-                                        <input type="file" name="file" id="file" class="form-control <?= ($validation->getError('file')) ? 'is-invalid' : '' ?>">
-                                        <?php if ($validation->getError('file')) : ?>
-                                            <div class="invalid-feedback"><?= $validation->getError('file') ?></div>
-                                        <?php endif; ?>
-                                    </div>
-
-                                    <div class="d-grid">
-                                        <button type="submit" class="btn btn-dark bg-gradient">Send</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-
-
-        <!-- <?php if (session()->getFlashdata(('status'))) : ?>
-                                        <div class="alert alert-success alert-dismissable fade show" role="alert">
-                                        <?= session()->getFlashdata('status'); ?>
-                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                        </div>
-                                    <?php endif; ?> -->
+ <?= $this->endSection(); ?>

@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 class FileModel extends Model
 {
     protected $DBGroup          = 'default';
-    protected $table            = 'files';
+    protected $table            = 'filess';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
@@ -15,12 +15,14 @@ class FileModel extends Model
     protected $protectFields    = true;
     protected $allowedFields    = [
         'doc_code',
+        'sender',
         'recipient',
-        'label',
         'subject',
-        'path',
+        'description',
         'date_of_letter',
-        'status'
+        'deadline',
+        'status',
+        'path'
     ];
 
     // Dates

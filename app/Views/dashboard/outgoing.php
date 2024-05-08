@@ -21,11 +21,11 @@
                         <div class="card shadow bg-secondary">
                             <div class="card-header">
                                 <h3 class="text-white">Outgoing Documents
-                                    <!-- <a href="<?= base_url(); ?>" class="btn btn-info btn-sm float-end">Add</a> -->
+                                    <!-- <a href="#" data-bs-toggle="modal" data-bs-target="#fileModal" class="btn btn-primary float-end">Compose</a> -->
                                 </h3>
                             </div>
                             <div class="card-body p-5">
-                                <table class="table table-bordered" id="mydatatable">
+                                <table class="table table-hover" id="mydatatable">
                                     <thead>
                                         <tr class="text-white">
                                             <th>ID</th>
@@ -37,23 +37,27 @@
                                             <th>Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody class="filedata">
                                         <?php
                                         $i = 1;
                                         foreach ($uploads as $row) :
                                             $row['fname'] = str_replace("uploads/", "", $row['path']);
                                         ?>
                                             <tr>
-                                                <td class="px-2 py-1 align-middle text-center"><?= number_format($i++) ?></td>
+                                                <td class="px-2 py-1 align-middle text-center"><?= $row['id'] ?></td>
                                                 <td class="px-2 py-1 align-middle"><?= $row['doc_code'] ?></td>
                                                 <td class="px-2 py-1 align-middle"><?= $row['recipient'] ?></td>
-                                                <td class="px-2 py-1 align-middle"><?= $row['subject'] ?></td>
+                                                <td class="px-2 py-1 align-middle"><?= $row['description'] ?></td>
                                                 <td class="px-2 py-1 align-middle"><?= $row['date_of_letter'] ?></td>
                                                 <td class="px-2 py-1 align-middle"><?= $row['status'] ?></td>
                                                 <!-- <td class="px-2 py-1 align-middle"><p class="m-0 text-truncate" title="<?= $row['fname'] ?>"><?= $row['fname'] ?></p></td> -->
                                                 <td class="px-2 py-1 align-middle text-center">
-                                                    <!-- <a href="<?= base_url('doc_view/'.$row['doc_code']); ?>" class="btn btn-warning btn-sm" target="_blank" title="View File"><i class="fa fa-external-link"></i>View</a> -->
-                                                    <a href="<?= base_url($row['path']) ?>" class="text-primary fw-bolder text-decoration-none mx-2" target="_blank" title="Download File" download="<?= $row['fname'] ?>"><i class="fa fa-download"></i></a>
+                                                    <!-- <a href="<?= base_url('doc_view/' . $row['doc_code']); ?>" class="btn btn-warning btn-sm" target="_blank" title="View File"><i class="fa fa-external-link"></i>View</a> -->
+                                                    <a href="<?= base_url('doc_view/'.$row['id']); ?>" class="badge btn-success view_btn">View</a>
+                                                    <!-- <a href="#" class="badge btn-primary edit_btn">Edit</a> -->
+                                                    <!-- <a href="<?= base_url($row['path']) ?>" class="text-primary fw-bolder text-decoration-none mx-2" target="_blank" title="Download File" download="<?= $row['fname'] ?>"><i class="fa fa-download"></i></a> -->
+                                                    <a href="<?= base_url($row['path']) ?>" class="badge btn-primary" target="_blank" title="Download File" download="<?= $row['fname'] ?>">Download</a>
+                                                    <!-- <a href="#" class="badge btn-danger delete_btn">Delete</a> -->
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>
@@ -73,4 +77,4 @@
 
 
 
-<?= $this->endSection(); ?>
+        <?= $this->endSection(); ?>

@@ -32,5 +32,16 @@ $routes->get('/user_outgoing', 'UserController::outgoing');
 
 // $routes->post('/send', 'EmailController::sendEmail');
 
+$routes->get('chart', 'ChartController::index');
+$routes->get('chart/data', 'ChartController::getChartData');
 
+
+//jQuery Ajax
+
+$routes->post('ajax-student/store', 'AjaxStudentController::store');
+$routes->get('ajax-students/getdata', 'AjaxStudentController::fetch');
+$routes->post('ajax-student/view_student', 'AjaxStudentController::view');
+$routes->post('ajax-student/edit', 'AjaxStudentController::edit');
+$routes->post('ajax-student/update', 'AjaxStudentController::update');
+$routes->post('ajax-student/delete', 'AjaxStudentController::delete');
 

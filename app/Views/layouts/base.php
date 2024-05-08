@@ -29,7 +29,9 @@
 
     <!-- Template Stylesheet -->
     <link href="<?= base_url(); ?>css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/css/alertify.min.css" />
 </head>
+
 <body>
 
     <?= $this->renderSection("content"); ?>
@@ -59,7 +61,8 @@
     </div>
 
     <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> -->
+    <script src="<?= base_url('js/jquery-3.5.1.min.js'); ?>"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- <script src="<?= base_url(); ?>lib/chart/chart.min.js"></script> -->
     <!-- ChartJS -->
@@ -72,9 +75,19 @@
     <script src="<?= base_url(); ?>lib/tempusdominus/js/moment.min.js"></script>
     <script src="<?= base_url(); ?>lib/tempusdominus/js/moment-timezone.min.js"></script>
     <script src="<?= base_url(); ?>lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
-
     <!-- Template Javascript -->
     <script src="<?= base_url(); ?>js/main.js"></script>
+
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/alertify.min.js"></script>
+    <!-- <script>
+        $(document).ready(function() {
+            alertify.set('notifier', 'position', 'top-right');
+            alertify.success('Current position : ' + alertify.get('notifier', 'position'));
+        });
+    </script> -->
+
+    <?= $this->renderSection("scripts"); ?>
+
 </body>
 
 </html>
