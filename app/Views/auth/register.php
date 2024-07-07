@@ -45,6 +45,37 @@
                         </div>
 
                         <div class="form-floating mb-3">
+                                <select class="form-select" id="floatingSelect" name="role"
+                                    aria-label="Floating label select example">
+                                    <!-- <option selected>Open this select menu</option> -->
+                                    <option value="admin">Admin</option>
+                                    <option value="user">User</option>
+                                </select>
+                                <label for="floatingSelect">Select Role:</label>
+                            </div>
+                        <div class="mb-1">
+                            <span class="text-danger"><?= display_error($validation, 'email'); ?></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                                <select class="form-select" id="floatingSelect" name="brgy"
+                                    aria-label="Floating label select example">
+                                    <option value="Bigaan">Bigaan</option>
+                                    <option value="Calangatan">Calangatan</option>
+                                    <option value="Calsapa">Calsapa</option>
+                                    <option value="Ilag">Ilag</option>
+                                    <option value="Lumangbayan">Lumangbayan</option>
+                                    <option value="Tacligan">Tacligan</option>
+                                    <option value="Poblacion">Poblacion</option>
+                                    <option value="Caagutayan">Caagutayan</option>
+                                </select>
+                                <label for="floatingSelect">Select Barangay:</label>
+                            </div>
+                        <div class="mb-1">
+                            <span class="text-danger"><?= display_error($validation, 'email'); ?></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
                             <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password" value="<?= set_value('password'); ?>">
                             <label for="floatingPassword">Password</label>
                         </div>

@@ -24,6 +24,10 @@
                             <div class="card-header d-flex justify-content-center align-items-center bg-primary">
                                 <h3 class="text-white mb-0">Compose Document</h3>
                             </div>
+                            <br>
+                            <div class="mx-5">
+                                <h4 class="text-white mb-0 d-flex justify-content-center align-items-center bg-primary">Add Details</h4>
+                            </div>
                             <div class="card-body p-5">
 
                                 <?php if (session()->getFlashdata(('main_success'))) : ?>
@@ -42,7 +46,7 @@
 
                                     <div class="mb-3">
                                         <label for="doc_code">Document Code</label>
-                                        <input type="text" name="doc_code" id="doc_code" class="form-control <?= ($validation->getError('doc_code')) ? 'is-invalid' : '' ?>" placeholder="Document Code">
+                                        <input type="text" name="doc_code" id="doc_code" class="form-control <?= ($validation->getError('doc_code')) ? 'is-invalid' : '' ?>" placeholder="Document Code" required>
                                         <?php if ($validation->getError('doc_code')) : ?>
                                             <div class="invalid-feedback"><?= $validation->getError('doc_code') ?></div>
                                         <?php endif; ?>
@@ -97,6 +101,11 @@
                                             <?php endif; ?>
                                         </div>
                                     </div>
+                                    <br>
+                                    <div>
+                                        <h4 class="text-white mb-0 d-flex justify-content-center align-items-center bg-primary">Add Attachment/s</h4>
+                                    </div>
+                                    <br>
 
                                     <div class="mb-3 ">
                                         <label for="file">Select File</label>
@@ -117,4 +126,4 @@
             </div>
         </div>
 
- <?= $this->endSection(); ?>
+        <?= $this->endSection(); ?>

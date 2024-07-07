@@ -1,0 +1,68 @@
+CRITICAL - 2024-05-11 18:10:01 --> Undefined variable $products
+in APPPATH\Views\dashboard\reports.php on line 38.
+ 1 APPPATH\Views\dashboard\reports.php(38): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $products', 'C:\\laragon\\www\\documts_finalaaa\\app\\Views\\dashboard\\reports.php', 38)
+ 2 SYSTEMPATH\View\View.php(226): include('C:\\laragon\\www\\documts_finalaaa\\app\\Views\\dashboard\\reports.php')
+ 3 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1188): CodeIgniter\View\View->render('dashboard/reports', [], true)
+ 5 APPPATH\Controllers\Home.php(30): view('dashboard/reports')
+ 6 SYSTEMPATH\CodeIgniter.php(919): App\Controllers\Home->reports()
+ 7 SYSTEMPATH\CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 8 SYSTEMPATH\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\documts_finalaaa\\public\\index.php')
+CRITICAL - 2024-05-11 18:12:14 --> Undefined variable $filess
+in APPPATH\Views\dashboard\reports.php on line 38.
+ 1 APPPATH\Views\dashboard\reports.php(38): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $filess', 'C:\\laragon\\www\\documts_finalaaa\\app\\Views\\dashboard\\reports.php', 38)
+ 2 SYSTEMPATH\View\View.php(226): include('C:\\laragon\\www\\documts_finalaaa\\app\\Views\\dashboard\\reports.php')
+ 3 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1188): CodeIgniter\View\View->render('dashboard/reports', [], true)
+ 5 APPPATH\Controllers\Home.php(30): view('dashboard/reports')
+ 6 SYSTEMPATH\CodeIgniter.php(919): App\Controllers\Home->reports()
+ 7 SYSTEMPATH\CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 8 SYSTEMPATH\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\documts_finalaaa\\public\\index.php')
+CRITICAL - 2024-05-11 18:28:25 --> Undefined property: stdClass::$day
+in APPPATH\Controllers\GColumnChartController.php on line 24.
+ 1 APPPATH\Controllers\GColumnChartController.php(24): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: stdClass::$day', 'C:\\laragon\\www\\documts_finalaaa\\app\\Controllers\\GColumnChartController.php', 24)
+ 2 SYSTEMPATH\CodeIgniter.php(919): App\Controllers\GColumnChartController->initChart()
+ 3 SYSTEMPATH\CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\GColumnChartController))
+ 4 SYSTEMPATH\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\documts_finalaaa\\public\\index.php')
+CRITICAL - 2024-05-11 18:28:50 --> Undefined array key "day"
+in APPPATH\Views\dashboard\reports.php on line 39.
+ 1 APPPATH\Views\dashboard\reports.php(39): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "day"', 'C:\\laragon\\www\\documts_finalaaa\\app\\Views\\dashboard\\reports.php', 39)
+ 2 SYSTEMPATH\View\View.php(226): include('C:\\laragon\\www\\documts_finalaaa\\app\\Views\\dashboard\\reports.php')
+ 3 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1188): CodeIgniter\View\View->render('dashboard/reports', [], true)
+ 5 APPPATH\Controllers\GColumnChartController.php(30): view('dashboard/reports', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(919): App\Controllers\GColumnChartController->initChart()
+ 7 SYSTEMPATH\CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\GColumnChartController))
+ 8 SYSTEMPATH\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\documts_finalaaa\\public\\index.php')
+ERROR - 2024-05-11 18:32:58 --> mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ', MONTH(date_of_letter), DAY(date_of_letter) GROUP BY YEAR(date_of_letter), MONT' at line 3 in C:\laragon\www\documts_finalaaa\system\Database\MySQLi\Connection.php:306
+Stack trace:
+#0 C:\laragon\www\documts_finalaaa\system\Database\MySQLi\Connection.php(306): mysqli->query('SELECT COUNT(id...', 0)
+#1 C:\laragon\www\documts_finalaaa\system\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(id...')
+#2 C:\laragon\www\documts_finalaaa\system\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(id...')
+#3 C:\laragon\www\documts_finalaaa\system\Database\BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(id...', Array, false)
+#4 C:\laragon\www\documts_finalaaa\app\Controllers\GColumnChartController.php(20): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(919): App\Controllers\GColumnChartController->initChart()
+#6 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\GColumnChartController))
+#7 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\laragon\www\documts_finalaaa\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#9 C:\laragon\www\documts_finalaaa\system\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\...')
+#10 {main}
+CRITICAL - 2024-05-11 18:32:58 --> You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ', MONTH(date_of_letter), DAY(date_of_letter) GROUP BY YEAR(date_of_letter), MONT' at line 3
+in SYSTEMPATH\Database\BaseConnection.php on line 646.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(id) as count, `subject` as `s`, YEAR(date_of_letter) as year, MONTH(date_of_letter) as month, DAY(date_of_letter) as day
+FROM `filess`
+WHERE YEAR(date_of_letter), MONTH(date_of_letter), DAY(date_of_letter) GROUP BY YEAR(date_of_letter), MONTH(date_of_letter), DAY(date_of_letter), s', [], false)
+ 2 APPPATH\Controllers\GColumnChartController.php(20): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\CodeIgniter.php(919): App\Controllers\GColumnChartController->initChart()
+ 4 SYSTEMPATH\CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\GColumnChartController))
+ 5 SYSTEMPATH\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\documts_finalaaa\\public\\index.php')

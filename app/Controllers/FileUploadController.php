@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\FileModel;
+use App\Models\RecipientModel;
 
 class FileUploadController extends BaseController
 {
@@ -11,6 +12,7 @@ class FileUploadController extends BaseController
     // public $session;
     public $db;
     public $model;
+    public $recipientModel;
     public $session;
     public $data;
 
@@ -20,11 +22,13 @@ class FileUploadController extends BaseController
         // $this->session = \Config\Services::session();
         $this->db = db_connect();
         $this->model = new FileModel();
+        $this->recipientModel = new RecipientModel();
         $this->session = session();
         $this->request = \Config\Services::request();
         $this->data['session'] = $this->session;
         $this->data['request'] = $this->request;
         $this->data['uploads'] = $this->model->findAll();
+        $this->data['recipients'] = $this->recipientModel->findAll();
     }
 
     public function index()

@@ -3,26 +3,24 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\UserModel;
 
 class UserController extends BaseController
 {
-    public function dashboard()
+    public function show($id)
     {
-        return view('user_dashboard/dashboard');
-    }
+        $userModel = new UserModel();
+        $user = $userModel->find($id);
 
-    public function compose()
-    {
-        return view('user_dashboard/compose');
-    }
+        // return view('partials/user_sidebar', ['user' => $user]);
 
-    public function incoming()
-    {
-        return view('user_dashboard/incoming');
-    }
-
-    public function outgoing()
-    {
-        return view('user_dashboard/outgoing');
+        // Debugging: check if user data is retrieved
+        if ($user) {
+            echo '<pre>';
+            print_r($user);
+            echo '</pre>';
+        } else {
+            echo 'User not found';
+        }
     }
 }

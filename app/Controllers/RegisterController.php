@@ -25,6 +25,8 @@ class RegisterController extends BaseController
         $rules = [
             'name' => 'required|min_length[4]|max_length[20]',
             'email' => 'required|valid_email|is_unique[users.email]',
+            'role' => 'required',
+            'brgy' => 'required',
             'password' => 'required|min_length[6]|max_length[16]',
             'confirmpassword' => 'required|matches[password]'
         ];
@@ -35,6 +37,8 @@ class RegisterController extends BaseController
                 $userdata = [
                     'name' => $this->request->getVar('name'),
                     'email' => $this->request->getVar('email'),
+                    'role' => $this->request->getVar('role'),
+                    'brgy' => $this->request->getVar('brgy'),
                     'password' => password_hash($this->request->getVar('password'), PASSWORD_DEFAULT),
                     'uniid' => $uniid,
                     'activation_date' => date("Y-m-d h:i:s")

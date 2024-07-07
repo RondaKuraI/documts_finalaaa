@@ -11,7 +11,7 @@
     <!-- Content Start -->
     <div class="content">
         <!-- Navbar Start -->
-        <?= $this->include("partials/navbar"); ?>
+        <?= $this->include("partials/user_navbar"); ?>
         <!-- Navbar End -->
 
 
