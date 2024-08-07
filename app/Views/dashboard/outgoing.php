@@ -20,10 +20,13 @@
                     <div class="col-12 col-sm-12 text-center text-sm-start">
                         <div class="card shadow bg-secondary">
                             <div class="card-header">
-                                <h3 class="text-white">Outgoing Documents
-                                    <!-- <a href="#" data-bs-toggle="modal" data-bs-target="#fileModal" class="btn btn-primary float-end">Compose</a> -->
-                                </h3>
+                            <?php if ($session->get('role') == 'admin'): ?>
+    <h3>All Outgoing Documents</h3>
+<?php else: ?>
+    <h3>Your Outgoing Documents</h3>
+<?php endif; ?>
                             </div>
+                            
                             <div class="card-body p-5">
                                 <table class="table table-hover" id="mydatatable">
                                     <thead>

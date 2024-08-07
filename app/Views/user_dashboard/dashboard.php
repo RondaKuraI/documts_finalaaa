@@ -4,14 +4,14 @@
 <div class="container-fluid position-relative d-flex p-0">
 
     <!-- Sidebar Start -->
-    <?= $this->include("partials/user_sidebar"); ?>
+    <?= $this->include("partials/sidebar"); ?>
     <!-- Sidebar End -->
 
 
     <!-- Content Start -->
     <div class="content">
         <!-- Navbar Start -->
-        <?= $this->include("partials/user_navbar"); ?>
+        <?= $this->include("partials/navbar"); ?>
         <!-- Navbar End -->
 
 

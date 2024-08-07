@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use App\Models\UserModel;
+
 class Home extends BaseController
 {
     public function index()
@@ -11,7 +13,10 @@ class Home extends BaseController
     }
 
     public function compose(){
-        return view('dashboard/compose');
+        $userModel = new UserModel();
+        // Fetch all users to be used as both senders and recipients
+        $users = $userModel->findAll();
+        return view('dashboard/compose', ['users' => $users]);
     }
 
     public function incoming(){

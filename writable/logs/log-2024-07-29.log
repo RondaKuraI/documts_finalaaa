@@ -1,0 +1,24 @@
+CRITICAL - 2024-07-29 14:37:59 --> Undefined variable $senders
+in APPPATH\Views\dashboard\compose.php on line 59.
+ 1 APPPATH\Views\dashboard\compose.php(59): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $senders', 'C:\\laragon\\www\\documts_finalaaa\\app\\Views\\dashboard\\compose.php', 59)
+ 2 SYSTEMPATH\View\View.php(226): include('C:\\laragon\\www\\documts_finalaaa\\app\\Views\\dashboard\\compose.php')
+ 3 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1188): CodeIgniter\View\View->render('dashboard/compose', [], true)
+ 5 APPPATH\Controllers\Home.php(18): view('dashboard/compose', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(919): App\Controllers\Home->compose()
+ 7 SYSTEMPATH\CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 8 SYSTEMPATH\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\documts_finalaaa\\public\\index.php')
+CRITICAL - 2024-07-29 14:40:17 --> Undefined variable $senders
+in APPPATH\Views\dashboard\compose.php on line 59.
+ 1 APPPATH\Views\dashboard\compose.php(59): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $senders', 'C:\\laragon\\www\\documts_finalaaa\\app\\Views\\dashboard\\compose.php', 59)
+ 2 SYSTEMPATH\View\View.php(226): include('C:\\laragon\\www\\documts_finalaaa\\app\\Views\\dashboard\\compose.php')
+ 3 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1188): CodeIgniter\View\View->render('dashboard/compose', [], true)
+ 5 APPPATH\Controllers\Home.php(18): view('dashboard/compose', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(919): App\Controllers\Home->compose()
+ 7 SYSTEMPATH\CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 8 SYSTEMPATH\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\documts_finalaaa\\public\\index.php')

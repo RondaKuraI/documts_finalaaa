@@ -1,0 +1,48 @@
+CRITICAL - 2024-08-06 13:42:38 --> Undefined variable $users
+in APPPATH\Views\user_dashboard\compose.php on line 59.
+ 1 APPPATH\Views\user_dashboard\compose.php(59): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $users', 'C:\\laragon\\www\\documts_finalaaa\\app\\Views\\user_dashboard\\compose.php', 59)
+ 2 SYSTEMPATH\View\View.php(226): include('C:\\laragon\\www\\documts_finalaaa\\app\\Views\\user_dashboard\\compose.php')
+ 3 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1188): CodeIgniter\View\View->render('user_dashboard/compose', [], true)
+ 5 APPPATH\Controllers\UserDBController.php(16): view('user_dashboard/compose')
+ 6 SYSTEMPATH\CodeIgniter.php(919): App\Controllers\UserDBController->compose()
+ 7 SYSTEMPATH\CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\UserDBController))
+ 8 SYSTEMPATH\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\documts_finalaaa\\public\\index.php')
+CRITICAL - 2024-08-06 13:53:03 --> Undefined variable $uploads
+in APPPATH\Views\user_dashboard\outgoing.php on line 43.
+ 1 APPPATH\Views\user_dashboard\outgoing.php(43): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $uploads', 'C:\\laragon\\www\\documts_finalaaa\\app\\Views\\user_dashboard\\outgoing.php', 43)
+ 2 SYSTEMPATH\View\View.php(226): include('C:\\laragon\\www\\documts_finalaaa\\app\\Views\\user_dashboard\\outgoing.php')
+ 3 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1188): CodeIgniter\View\View->render('user_dashboard/outgoing', [], true)
+ 5 APPPATH\Controllers\UserDBController.php(30): view('user_dashboard/outgoing')
+ 6 SYSTEMPATH\CodeIgniter.php(919): App\Controllers\UserDBController->outgoing()
+ 7 SYSTEMPATH\CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\UserDBController))
+ 8 SYSTEMPATH\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\documts_finalaaa\\public\\index.php')
+CRITICAL - 2024-08-06 14:33:40 --> Undefined variable $uploads
+in APPPATH\Views\user_dashboard\outgoing.php on line 43.
+ 1 APPPATH\Views\user_dashboard\outgoing.php(43): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $uploads', 'C:\\laragon\\www\\documts_finalaaa\\app\\Views\\user_dashboard\\outgoing.php', 43)
+ 2 SYSTEMPATH\View\View.php(226): include('C:\\laragon\\www\\documts_finalaaa\\app\\Views\\user_dashboard\\outgoing.php')
+ 3 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1188): CodeIgniter\View\View->render('user_dashboard/outgoing', [], true)
+ 5 APPPATH\Controllers\UserDBController.php(30): view('user_dashboard/outgoing')
+ 6 SYSTEMPATH\CodeIgniter.php(919): App\Controllers\UserDBController->outgoing()
+ 7 SYSTEMPATH\CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\UserDBController))
+ 8 SYSTEMPATH\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\documts_finalaaa\\public\\index.php')
+CRITICAL - 2024-08-06 14:36:36 --> Undefined variable $uploads
+in APPPATH\Views\user_dashboard\outgoing.php on line 43.
+ 1 APPPATH\Views\user_dashboard\outgoing.php(43): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $uploads', 'C:\\laragon\\www\\documts_finalaaa\\app\\Views\\user_dashboard\\outgoing.php', 43)
+ 2 SYSTEMPATH\View\View.php(226): include('C:\\laragon\\www\\documts_finalaaa\\app\\Views\\user_dashboard\\outgoing.php')
+ 3 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1188): CodeIgniter\View\View->render('user_dashboard/outgoing', [], true)
+ 5 APPPATH\Controllers\UserDBController.php(30): view('user_dashboard/outgoing')
+ 6 SYSTEMPATH\CodeIgniter.php(919): App\Controllers\UserDBController->outgoing()
+ 7 SYSTEMPATH\CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\UserDBController))
+ 8 SYSTEMPATH\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\documts_finalaaa\\public\\index.php')

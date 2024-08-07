@@ -3,17 +3,21 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\UserModel;
 
 class UserDBController extends BaseController
 {
     public function dashboard()
     {
-        return view('user_dashboard/dashboard');
+        return view('dashboard/dashboard');
     }
 
     public function compose()
     {
-        return view('user_dashboard/compose');
+        $userModel = new UserModel();
+        // Fetch all users to be used as both senders and recipients
+        $users = $userModel->findAll();
+        return view('user_dashboard/compose', ['users' => $users]);
     }
 
     public function incoming()

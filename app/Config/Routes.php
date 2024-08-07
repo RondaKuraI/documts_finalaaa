@@ -25,10 +25,10 @@ $routes->get('/maintenance', 'Home::maintenance');
 $routes->get('/user_management', 'Home::user_management');
 
 // User Dashboard
-$routes->get('/user_dashboard', 'UserDBController::dashboard');
-$routes->get('/user_compose', 'UserDBController::compose');
-$routes->get('/user_incoming', 'UserDBController::incoming');
-$routes->get('/user_outgoing', 'UserDBController::outgoing');
+$routes->get('/dashboard', 'UserDBController::dashboard');
+// $routes->get('/user_compose', 'UserDBController::compose');
+// $routes->get('/user_incoming', 'UserDBController::incoming');
+// $routes->get('/outgoing', 'FileUploadController::index');
 $routes->get('/user_incoming', 'FetchFileController::index');
 
 $routes->get('user_dashboard/(:num)', 'UserController::show/$1');

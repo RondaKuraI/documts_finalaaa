@@ -67,7 +67,8 @@ class SigninController extends Controller
                 if ($user['role'] == 'admin') {
                     return redirect()->to('/dashboard');
                 } else {
-                    return redirect()->to('/user_dashboard');
+                    // return redirect()->to('/user_dashboard');
+                    return redirect()->to('/dashboard');
                 }
             } else {
                 $session->setFlashdata('msg', 'Password is incorrect.');
