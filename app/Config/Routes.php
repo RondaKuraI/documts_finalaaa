@@ -23,6 +23,7 @@ $routes->get('/doc_view/(:num)', 'FileUploadController::doc_view/$1');
 $routes->get('/maintenance', 'Home::maintenance');
 // $routes->get('/reports', 'Home::reports');
 $routes->get('/user_management', 'Home::user_management');
+$routes->get('search', 'FileUploadController::search');
 
 // User Dashboard
 $routes->get('/dashboard', 'UserDBController::dashboard');

@@ -7,7 +7,6 @@
     <?= $this->include("partials/sidebar"); ?>
     <!-- Sidebar End -->
 
-
     <!-- Content Start -->
     <div class="content">
         <!-- Navbar Start -->
@@ -20,21 +19,38 @@
                     <div class="col-12 col-sm-12 text-center text-sm-start">
                         <div class="card shadow bg-secondary">
                             <div class="card-header">
-                            <?php if ($session->get('role') == 'admin'): ?>
-    <h3>All Outgoing Documents</h3>
-<?php else: ?>
-    <h3>Your Outgoing Documents</h3>
-<?php endif; ?>
+                                <?php if ($session->get('role') == 'admin') : ?>
+                                    <h3>All Outgoing Documents</h3>
+                                <?php else : ?>
+                                    <h3>Your Outgoing Documents</h3>
+                                <?php endif; ?>
                             </div>
-                            
+
                             <div class="card-body p-5">
+                                <!-- Add this search form -->
+                                <form action="<?= site_url('search') ?>" method="get" class="mb-3">
+                                    <div class="input-group">
+                                        <input type="text" name="keyword" class="form-control" placeholder="Search documents..." value="<?= isset($_GET['keyword']) ? esc($_GET['keyword']) : '' ?>" autocomplete="off">
+                                        <button class="btn btn-primary" type="submit">Search</button>
+                                    </div>
+                                </form>
+                                <!-- End of search form -->
+                                <a href="<?= site_url('outgoing') ?>" class="btn btn-warning">Show All</a>
+
+                                <div class="mb-3 mt-4">
+                                    <?php if (isset($_GET['keyword']) && !empty($_GET['keyword'])): ?>
+                                        <p>Search results for: <?= esc($_GET['keyword']) ?></p>
+                                    <?php endif; ?>
+                                </div>
+                                
                                 <table class="table table-hover" id="mydatatable">
                                     <thead>
                                         <tr class="text-white">
                                             <th>ID</th>
                                             <th>Doc. Code</th>
                                             <th>Recipient</th>
-                                            <th>Details</th>
+                                            <th>Subject</th>
+                                            <th>Description</th>
                                             <th>Date of Letter</th>
                                             <th>Status</th>
                                             <th>Action</th>
@@ -50,13 +66,14 @@
                                                 <td class="px-2 py-1 align-middle text-center"><?= $row['id'] ?></td>
                                                 <td class="px-2 py-1 align-middle"><?= $row['doc_code'] ?></td>
                                                 <td class="px-2 py-1 align-middle"><?= $row['recipient'] ?></td>
+                                                <td class="px-2 py-1 align-middle"><?= $row['subject'] ?></td>
                                                 <td class="px-2 py-1 align-middle"><?= $row['description'] ?></td>
                                                 <td class="px-2 py-1 align-middle"><?= $row['date_of_letter'] ?></td>
                                                 <td class="px-2 py-1 align-middle"><?= $row['status'] ?></td>
                                                 <!-- <td class="px-2 py-1 align-middle"><p class="m-0 text-truncate" title="<?= $row['fname'] ?>"><?= $row['fname'] ?></p></td> -->
                                                 <td class="px-2 py-1 align-middle text-center">
                                                     <!-- <a href="<?= base_url('doc_view/' . $row['doc_code']); ?>" class="btn btn-warning btn-sm" target="_blank" title="View File"><i class="fa fa-external-link"></i>View</a> -->
-                                                    <a href="<?= base_url('doc_view/'.$row['id']); ?>" class="badge btn-success view_btn">View</a>
+                                                    <a href="<?= base_url('doc_view/' . $row['id']); ?>" class="badge btn-success view_btn">View</a>
                                                     <!-- <a href="#" class="badge btn-primary edit_btn">Edit</a> -->
                                                     <!-- <a href="<?= base_url($row['path']) ?>" class="text-primary fw-bolder text-decoration-none mx-2" target="_blank" title="Download File" download="<?= $row['fname'] ?>"><i class="fa fa-download"></i></a> -->
                                                     <a href="<?= base_url($row['path']) ?>" class="badge btn-primary" target="_blank" title="Download File" download="<?= $row['fname'] ?>">Download</a>
@@ -77,7 +94,4 @@
                 </div>
             </div>
         </div>
-
-
-
-        <?= $this->endSection(); ?>
+<?= $this->endSection(); ?>

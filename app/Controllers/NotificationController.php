@@ -7,38 +7,36 @@ use App\Models\NotificationModel;
 
 class NotificationController extends BaseController
 {
-    protected $notificationModel;
+    public $notificationModel;
+    public $session;
 
     public function __construct()
     {
         $this->notificationModel = new NotificationModel();
+        $this->session = session();
     }
 
-    public function getPendingNotifications($recipientId)
-    {
-        return $this->notificationModel
-                    ->where('recipient', $recipientId)
-                    ->where('status', 'pending')
-                    ->findAll();
+    public function index(){
+        $userId = $this->session->get('id');
+        $notifications = $this->notificationModel->where('recipient', $userId)
+                                                                                ->orderBy('created_at', 'DESC')
+                                                                                ->findAll();
+        $data = [
+            'notifications' => $notifications
+        ];
+
+        return view('dashboard/notifications', $data);
     }
 
-    public function markAsRead($notificationId)
+    public function markAsRead($id)
     {
-        return $this->notificationModel->update($notificationId, ['status' => 'read']);
-    }
+        $notification = $this->notificationModel->find($id);
 
-    public function viewNotifications($recipientId)
-    {
-        $notifications = $this->getPendingNotifications($recipientId);
-        return view('notifications/view', ['notifications' => $notifications]);
-    }
-
-    public function markNotificationAsRead($notificationId)
-    {
-        if ($this->markAsRead($notificationId)) {
-            return redirect()->back()->with('success', 'Notification marked as read.');
-        } else {
-            return redirect()->back()->with('error', 'Failed to mark notification as read.');
+        if ($notification) {
+            $notification['status'] = 'read';
+            $this->notificationModel->save($notification);
         }
+
+        return redirect()->to('/notifications');
     }
 }
