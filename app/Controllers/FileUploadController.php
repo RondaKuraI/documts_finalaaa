@@ -121,6 +121,21 @@ class FileUploadController extends BaseController
         return view('dashboard/doc_view', $data);
     }
 
+    public function viewMessage($id)
+{
+    $message = $this->model->find($id);
+    if (!$message) {
+        return redirect()->to('/dashboard/incoming')->with('error', 'Message not found');
+    }
+    
+    // Check if the current user is the recipient
+    if ($message['recipient'] != $this->session->get('name') && $this->session->get('role') != 'admin') {
+        return redirect()->to('/dashboard/incoming')->with('error', 'You do not have permission to view this message');
+    }
+
+    return view('dashboard/view_message', ['message' => $message]);
+}
+
     public function search()
     {
         $keyword = $this->request->getGet('keyword');
@@ -154,4 +169,21 @@ class FileUploadController extends BaseController
 
         return view('dashboard/outgoing', $this->data);
     }
+
+    public function incoming()
+{
+    $userName = $this->session->get('name');
+    $userRole = $this->session->get('role');
+
+    if ($userRole == 'admin') {
+        // Admin sees all documents
+        $this->data['incoming'] = $this->model->findAll();
+    } else {
+        // Normal users only see documents where they are the recipient
+        $this->data['incoming'] = $this->model->where('recipient', $userName)->findAll();
+    }
+
+    
+    return view('dashboard/incoming', $this->data);
+}
 }
