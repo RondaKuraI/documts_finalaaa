@@ -68,15 +68,15 @@ class FileUploadController extends BaseController
             'deadline' => 'required|valid_date',
             'file' => 'uploaded[file]|max_size[file,30000]|ext_in[file,pdf,doc,docx]'
         ]);
-    
+
         if (!$validation->withRequest($this->request)->run()) {
             $errors = $validation->getErrors();
             $errorMessages = implode(', ', $errors); // Convert array to string
             return redirect()->back()->withInput()->with('main_error', $errorMessages);
         }
-    
+
         if (!is_dir('./uploads/')) mkdir('./uploads/');
-    
+
         $doc_code = $this->request->getPost('doc_code');
         $sender = $this->request->getPost('sender');
         $recipient = $this->request->getPost('recipient');
@@ -86,14 +86,14 @@ class FileUploadController extends BaseController
         $deadline = $this->request->getPost('deadline');
         $file = $this->request->getFile('file');
         $fname = $file->getRandomName();
-    
+
         while ($this->model->where("path", "uploads/{$fname}")->countAllResults() > 0) {
             $fname = $file->getRandomName();
         }
 
         $userName = $this->session->get('name');
         $sender = $userName; // Use the logged-in user's name as the sender
-    
+
         if ($file->move("uploads/", $fname)) {
             $this->model->save([
                 "doc_code" => $doc_code,
@@ -105,7 +105,7 @@ class FileUploadController extends BaseController
                 "deadline" => $deadline,
                 "path" => "uploads/" . $fname
             ]);
-    
+
             $this->session->setFlashdata('main_success', "New File Uploaded successfully.");
             return redirect()->to('/compose');
         } else {
@@ -114,27 +114,27 @@ class FileUploadController extends BaseController
         }
     }
 
-    
+
     public function doc_view($id)
     {
         $data['file'] = $this->model->find($id);
         return view('dashboard/doc_view', $data);
     }
 
-    public function viewMessage($id)
-{
-    $message = $this->model->find($id);
-    if (!$message) {
-        return redirect()->to('/dashboard/incoming')->with('error', 'Message not found');
-    }
-    
-    // Check if the current user is the recipient
-    if ($message['recipient'] != $this->session->get('name') && $this->session->get('role') != 'admin') {
-        return redirect()->to('/dashboard/incoming')->with('error', 'You do not have permission to view this message');
-    }
+    // public function viewMessage($id)
+    // {
+    //     $message = $this->model->find($id);
+    //     if (!$message) {
+    //         return redirect()->to('/dashboard/incoming')->with('error', 'Message not found');
+    //     }
 
-    return view('dashboard/view_message', ['message' => $message]);
-}
+    //     // Check if the current user is the recipient
+    //     if ($message['recipient'] != $this->session->get('name') && $this->session->get('role') != 'admin') {
+    //         return redirect()->to('/dashboard/incoming')->with('error', 'You do not have permission to view this message');
+    //     }
+
+    //     return view('dashboard/view_message', ['message' => $message]);
+    // }
 
     public function search()
     {
@@ -145,18 +145,18 @@ class FileUploadController extends BaseController
         if ($keyword) {
             if ($userRole == 'admin') {
                 $this->data['uploads'] = $this->model->like('subject', $keyword)
-                                                     ->orLike('description', $keyword)
-                                                     ->orLike('sender', $keyword)
-                                                     ->orLike('recipient', $keyword)
-                                                     ->findAll();
+                    ->orLike('description', $keyword)
+                    ->orLike('sender', $keyword)
+                    ->orLike('recipient', $keyword)
+                    ->findAll();
             } else {
                 $this->data['uploads'] = $this->model->where('sender', $userName)
-                                                     ->groupStart()
-                                                        ->like('subject', $keyword)
-                                                        ->orLike('description', $keyword)
-                                                        ->orLike('recipient', $keyword)
-                                                     ->groupEnd()
-                                                     ->findAll();
+                    ->groupStart()
+                    ->like('subject', $keyword)
+                    ->orLike('description', $keyword)
+                    ->orLike('recipient', $keyword)
+                    ->groupEnd()
+                    ->findAll();
             }
         } else {
             // If no keyword, return all documents (respecting user role)
@@ -171,19 +171,61 @@ class FileUploadController extends BaseController
     }
 
     public function incoming()
-{
-    $userName = $this->session->get('name');
-    $userRole = $this->session->get('role');
+    {
+        $userName = $this->session->get('name');
+        $userRole = $this->session->get('role');
 
-    if ($userRole == 'admin') {
-        // Admin sees all documents
-        $this->data['incoming'] = $this->model->findAll();
-    } else {
-        // Normal users only see documents where they are the recipient
-        $this->data['incoming'] = $this->model->where('recipient', $userName)->findAll();
+        if($userRole == 'admin'){
+            $baseQuery = $this->model;
+        }
+        else{
+            $baseQuery = $this->model->where('recipient', $userName);
+        }
+
+        //Counting bullshit
+        $this->data['all_incoming_count'] = $baseQuery->countAllResults();
+        $baseQuery = $baseQuery->builder();
+        $this->data['pending_count'] = $baseQuery->where('status', 'pending')->countAllResults();
+
+
+        if ($userRole == 'admin') {
+            // Admin sees all documents
+            $this->data['incoming'] = $this->model->findAll();
+        } else {
+            // Normal users only see documents where they are the recipient
+            $this->data['incoming'] = $this->model->where('recipient', $userName)->findAll();
+        }
+
+
+        return view('dashboard/incoming', $this->data);
     }
 
-    
-    return view('dashboard/incoming', $this->data);
-}
+    public function dashboard(){
+        $userName = $this->session->get('name');
+        $userRole = $this->session->get('role');
+
+        if($userRole == 'admin'){
+            $baseQuery = $this->model;
+        }
+        else{
+            $baseQuery = $this->model->where('recipient', $userName);
+        }
+
+        //Counting bullshit
+        $this->data['all_incoming_count'] = $baseQuery->countAllResults();
+        $baseQuery = $baseQuery->builder();
+        $this->data['pending_count'] = $baseQuery->where('status', 'pending')->countAllResults();
+
+
+        if ($userRole == 'admin') {
+            // Admin sees all documents
+            $this->data['incoming'] = $this->model->findAll();
+        } else {
+            // Normal users only see documents where they are the recipient
+            $this->data['incoming'] = $this->model->where('recipient', $userName)->findAll();
+        }
+
+
+        return view('dashboard/dashboard', $this->data);
+    }
 }
