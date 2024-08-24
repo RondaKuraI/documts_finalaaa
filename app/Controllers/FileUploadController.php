@@ -114,11 +114,57 @@ class FileUploadController extends BaseController
         }
     }
 
+    public function compose()
+    {
+        $userModel = new UserModel();
+        // Fetch all users to be used as both senders and recipients
+        $users = $userModel->findAll();
+        // return view('dashboard/compose', ['users' => $users]);
 
+        $isLoggedIn = $this->session->get('isLoggedIn') ?? false;
+
+        // Pass both users and isLoggedIn to the view
+        return view('dashboard/compose', [
+            'users' => $users,
+            'isLoggedIn' => $isLoggedIn
+        ]);
+    }
+
+    // public function doc_view($id)
+    // {
+    //     $data['file'] = $this->model->find($id);
+    //     return view('dashboard/doc_view', $data);
+    // }
     public function doc_view($id)
     {
-        $data['file'] = $this->model->find($id);
-        return view('dashboard/doc_view', $data);
+        $document = $this->model->find($id);
+        $isLoggedIn = $this->session->get('isLoggedIn') ?? false;
+
+        if (!$document) {
+            // If the document is not found, you can either return a 404 error or redirect to a default page
+            return redirect()->to('/dashboard/outgoing')->with('error', 'Document not found');
+        }
+
+        return view('dashboard/doc_view', [
+            'document' => $document,
+            'isLoggedIn' => $isLoggedIn
+        ]);
+    }
+
+    public function incoming_doc_view($id)
+    {
+        $document = $this->model->find($id);
+        $isLoggedIn = $this->session->get('isLoggedIn') ?? false;
+
+        if (!$document) {
+            // If the document is not found, you can either return a 404 error or redirect to a default page
+            return redirect()->to('/dashboard/incoming')->with('error', 'Document not found');
+        }
+
+        return view('dashboard/incoming_doc_view', [
+            'document' => $document,
+            'isLoggedIn' => $isLoggedIn
+        ]);
     }
 
     // public function viewMessage($id)
@@ -175,10 +221,9 @@ class FileUploadController extends BaseController
         $userName = $this->session->get('name');
         $userRole = $this->session->get('role');
 
-        if($userRole == 'admin'){
+        if ($userRole == 'admin') {
             $baseQuery = $this->model;
-        }
-        else{
+        } else {
             $baseQuery = $this->model->where('recipient', $userName);
         }
 
@@ -200,14 +245,14 @@ class FileUploadController extends BaseController
         return view('dashboard/incoming', $this->data);
     }
 
-    public function dashboard(){
+    public function dashboard()
+    {
         $userName = $this->session->get('name');
         $userRole = $this->session->get('role');
 
-        if($userRole == 'admin'){
+        if ($userRole == 'admin') {
             $baseQuery = $this->model;
-        }
-        else{
+        } else {
             $baseQuery = $this->model->where('recipient', $userName);
         }
 

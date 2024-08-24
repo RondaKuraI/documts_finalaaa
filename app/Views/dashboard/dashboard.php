@@ -22,17 +22,17 @@
                     <div class="bg-warning rounded d-flex align-items-center justify-content-between p-4">
                         <i class="fa fa-chart-line fa-3x text-dark"></i>
                         <div class="ms-3">
-                            <p class="mb-2 text-dark">All Incoming Docs</p>
-                            <h4 class="mb-0 text-secondary"><?= $all_incoming_count ?></h4>
+                            <p class="mb-2 text-white">All Incoming Docs</p>
+                            <h4 class="mb-0 text-white"><?= $all_incoming_count ?></h4>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-6 col-xl-3">
-                    <div class="bg-info rounded d-flex align-items-center justify-content-between p-4">
+                    <div class="bg-primary rounded d-flex align-items-center justify-content-between p-4">
                         <i class="fa fa-chart-bar fa-3x text-dark"></i>
                         <div class="ms-3">
-                            <p class="mb-2 text-dark">Pending Docs</p>
-                            <h4 class="mb-0 text-dark"><?= $pending_count ?></h6>
+                            <p class="mb-2 text-white">Pending Docs</p>
+                            <h4 class="mb-0 text-white"><?= $pending_count ?></h6>
                         </div>
                     </div>
                 </div>

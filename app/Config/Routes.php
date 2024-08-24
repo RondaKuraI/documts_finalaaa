@@ -15,19 +15,25 @@ $routes->get('/activate', 'RegisterController::activate');
 $routes->get('/login', 'SigninController::index');
 $routes->match(['get', 'post'], 'SigninController/loginAuth', 'SigninController::loginAuth');
 
+$routes->get('logout', 'SigninController::logout');
+
 // Dashboard
-$routes->get('/dashboard', 'FileUploadController::dashboard');
-$routes->get('/compose', 'Home::compose');
-// $routes->get('/incoming', 'Home::incoming');
-$routes->get('/outgoing', 'FileUploadController::index');
-$routes->post('/send', 'FileUploadController::upload');
-$routes->get('/doc_view/(:num)', 'FileUploadController::doc_view/$1');
-$routes->get('/maintenance', 'ChartController::index');
-// $routes->get('/reports', 'Home::reports');
-// $routes->get('/user_management', 'Home::user_management');
-$routes->get('search', 'FileUploadController::search');
-$routes->get('incoming', 'FileUploadController::incoming');
-$routes->get('document-chart', 'ChartController::index');
+
+$routes->group('', ['filter' => 'auth'], function($routes){
+    $routes->get('/dashboard', 'FileUploadController::dashboard');
+    $routes->get('/compose', 'FileUploadController::compose');
+    // $routes->get('/incoming', 'Home::incoming');
+    $routes->get('/outgoing', 'FileUploadController::index');
+    $routes->post('/send', 'FileUploadController::upload');
+    $routes->get('/doc_view/(:num)', 'FileUploadController::doc_view/$1');
+    $routes->get('/incoming_doc_view/(:num)', 'FileUploadController::incoming_doc_view/$1');
+    $routes->get('/maintenance', 'ChartController::index');
+    // $routes->get('/reports', 'Home::reports');
+    // $routes->get('/user_management', 'Home::user_management');
+    $routes->get('search', 'FileUploadController::search');
+    $routes->get('incoming', 'FileUploadController::incoming');
+    $routes->get('document-chart', 'ChartController::index');
+});
 
 
 // New routes for incoming documents

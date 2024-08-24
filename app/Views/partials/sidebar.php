@@ -4,11 +4,11 @@
             <h3 class="text-primary"><i class="fa fa-user-edit me-2"></i>E-GovDocs</h3>
         </a>
         <div class="d-flex align-items-center ms-4 mb-4">
-            <div class="position-relative">
+            <!-- <div class="position-relative">
                 <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-            </div>
+            </div> -->
             <div class="ms-3">
-                <h6 class="mb-0"><?= session()->get('name') ?? 'Guest' ?></h6>
+                <h4 class="mb-0"><?= session()->get('name') ?? 'Guest' ?></h4>
                 <span><?= ucfirst(session()->get('role') ?? 'Guest') ?></span>
             </div>
         </div>

@@ -12,12 +12,12 @@ class Home extends BaseController
         return view('dashboard/dashboard');
     }
 
-    public function compose(){
-        $userModel = new UserModel();
-        // Fetch all users to be used as both senders and recipients
-        $users = $userModel->findAll();
-        return view('dashboard/compose', ['users' => $users]);
-    }
+    // public function compose(){
+    //     $userModel = new UserModel();
+    //     // Fetch all users to be used as both senders and recipients
+    //     $users = $userModel->findAll();
+    //     return view('dashboard/compose', ['users' => $users]);
+    // }
 
     public function incoming(){
         return view('dashboard/incoming');

@@ -58,12 +58,15 @@ abstract class BaseController extends Controller
         // E.g.: $this->session = \Config\Services::session();
         $this->session = \Config\Services::session();
 
-        if ($this->session->has('isLoggedIn') && $this->session->get('isLoggedIn')) {
+        if ($this->session->get('isLoggedIn')) {
             $this->data['userData'] = [
                 'user_name' => $this->session->get('name'),
                 'user_email' => $this->session->get('email'),
                 'user_role' => $this->session->get('role'),
             ];
+            $this->data['isLoggedIn'] = true;  // Add this line
+        } else {
+            $this->data['isLoggedIn'] = false;  // Add this line
         }
     }
 }
