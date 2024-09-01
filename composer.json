@@ -14,6 +14,7 @@
         "ext-intl": "*",
         "ext-json": "*",
         "ext-mbstring": "*",
+        "endroid/qr-code": "^5.0",
         "laminas/laminas-escaper": "^2.9",
         "psr/log": "^1.1"
     },
@@ -49,7 +50,8 @@
     },
     "autoload": {
         "psr-4": {
-            "CodeIgniter\\": "system/"
+            "CodeIgniter\\": "system/",
+            "App\\": "app/"
         },
         "exclude-from-classmap": [
             "**/Database/Migrations/**"

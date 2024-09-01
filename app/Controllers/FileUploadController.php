@@ -2,11 +2,19 @@
 
 namespace App\Controllers;
 
+defined('FCPATH') || define('FCPATH', ROOTPATH . 'public' . DIRECTORY_SEPARATOR);
+
 use App\Controllers\BaseController;
 use App\Models\FileModel;
 use App\Models\RecipientModel;
 use App\Models\UserModel;
 use App\Models\NotificationModel;
+
+use Endroid\QrCode\Builder\Builder;
+use Endroid\QrCode\Encoding\Encoding;
+use Endroid\QrCode\ErrorCorrectionLevel;
+use Endroid\QrCode\RoundBlockSizeMode;
+use Endroid\QrCode\Writer\PngWriter;
 
 class FileUploadController extends BaseController
 {
@@ -75,9 +83,21 @@ class FileUploadController extends BaseController
             return redirect()->back()->withInput()->with('main_error', $errorMessages);
         }
 
-        if (!is_dir('./uploads/')) mkdir('./uploads/');
+        // if (!is_dir('./uploads/')) mkdir('./uploads/');
+        // Ensure the uploads directory exists and is writable
+        $uploadsDir = FCPATH . 'uploads';
+        if (!is_dir($uploadsDir)) {
+            mkdir($uploadsDir, 0755, true);
+        }
+
+        if (!is_writable($uploadsDir)) {
+            return redirect()->back()->withInput()->with('main_error', 'Uploads directory is not writable');
+        }
 
         $doc_code = $this->request->getPost('doc_code');
+        if (is_array($doc_code)) {
+            $doc_code = implode('', $doc_code);
+        }
         $sender = $this->request->getPost('sender');
         $recipient = $this->request->getPost('recipient');
         $subject = $this->request->getPost('subject');
@@ -86,6 +106,27 @@ class FileUploadController extends BaseController
         $deadline = $this->request->getPost('deadline');
         $file = $this->request->getFile('file');
         $fname = $file->getRandomName();
+
+        /// Generate the QR code image
+        try {
+            $result = Builder::create()
+                ->writer(new PngWriter())
+                ->data($doc_code)
+                ->encoding(new Encoding('UTF-8'))
+                ->errorCorrectionLevel(ErrorCorrectionLevel::Low) // Use correct class
+                ->size(300)
+                ->margin(10)
+                ->roundBlockSizeMode(RoundBlockSizeMode::Margin) // Use correct class
+                ->build();
+
+            $qrCodeFilename = 'qr_code_' . $doc_code . '.png';
+            $qrCodePath = FCPATH . 'uploads' . DIRECTORY_SEPARATOR . $qrCodeFilename;
+            $result->saveToFile($qrCodePath);
+        } catch (\Exception $e) {
+            log_message('error', 'QR Code generation failed: ' . $e->getMessage());
+            return redirect()->back()->withInput()->with('main_error', 'QR Code generation failed: ' . $e->getMessage());
+        }
+
 
         while ($this->model->where("path", "uploads/{$fname}")->countAllResults() > 0) {
             $fname = $file->getRandomName();
@@ -103,7 +144,8 @@ class FileUploadController extends BaseController
                 "description" => $description,
                 "date_of_letter" => $date_of_letter,
                 "deadline" => $deadline,
-                "path" => "uploads/" . $fname
+                "path" => "uploads/" . $fname,
+                "qr_code" => $qrCodeFilename
             ]);
 
             $this->session->setFlashdata('main_success', "New File Uploaded successfully.");
@@ -130,11 +172,6 @@ class FileUploadController extends BaseController
         ]);
     }
 
-    // public function doc_view($id)
-    // {
-    //     $data['file'] = $this->model->find($id);
-    //     return view('dashboard/doc_view', $data);
-    // }
     public function doc_view($id)
     {
         $document = $this->model->find($id);
@@ -166,21 +203,6 @@ class FileUploadController extends BaseController
             'isLoggedIn' => $isLoggedIn
         ]);
     }
-
-    // public function viewMessage($id)
-    // {
-    //     $message = $this->model->find($id);
-    //     if (!$message) {
-    //         return redirect()->to('/dashboard/incoming')->with('error', 'Message not found');
-    //     }
-
-    //     // Check if the current user is the recipient
-    //     if ($message['recipient'] != $this->session->get('name') && $this->session->get('role') != 'admin') {
-    //         return redirect()->to('/dashboard/incoming')->with('error', 'You do not have permission to view this message');
-    //     }
-
-    //     return view('dashboard/view_message', ['message' => $message]);
-    // }
 
     public function search()
     {
@@ -269,8 +291,6 @@ class FileUploadController extends BaseController
             // Normal users only see documents where they are the recipient
             $this->data['incoming'] = $this->model->where('recipient', $userName)->findAll();
         }
-
-
         return view('dashboard/dashboard', $this->data);
     }
 }

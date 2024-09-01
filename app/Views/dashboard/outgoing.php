@@ -13,24 +13,24 @@
         <?= $this->include("partials/navbar"); ?>
         <!-- Navbar End -->
 
-        <div class="bg-dark">
+        <div class="bg-white">
             <div class="container-fluid pt-4 px-4">
                 <div class="row">
                     <div class="col-12 col-sm-12 text-center text-sm-start">
-                        <div class="card shadow bg-secondary">
-                            <div class="card-header">
+                        <div class="card shadow bg-white">
+                            <div class="card-header bg-light">
                                 <?php if ($session->get('role') == 'admin') : ?>
-                                    <h3>All Outgoing Documents</h3>
+                                    <h3 class="text-white mb-0">All Outgoing Documents</h3>
                                 <?php else : ?>
-                                    <h3>Your Outgoing Documents</h3>
+                                    <h3 class="text-white mb-0">Your Outgoing Documents</h3>
                                 <?php endif; ?>
                             </div>
 
-                            <div class="card-body p-5">
+                            <div class="card-body p-6">
                                 <!-- Add this search form -->
                                 <form action="<?= site_url('search') ?>" method="get" class="mb-3">
                                     <div class="input-group">
-                                        <input type="text" name="keyword" class="form-control" placeholder="Search documents..." value="<?= isset($_GET['keyword']) ? esc($_GET['keyword']) : '' ?>" autocomplete="off">
+                                        <input type="text" name="keyword" class="form-control bg-white" placeholder="Search documents..." value="<?= isset($_GET['keyword']) ? esc($_GET['keyword']) : '' ?>" autocomplete="off">
                                         <button class="btn btn-primary" type="submit">Search</button>
                                     </div>
                                 </form>
@@ -43,9 +43,9 @@
                                     <?php endif; ?>
                                 </div>
                                 
-                                <table class="table table-hover" id="mydatatable">
+                                <table class="table table-bordered" id="mydatatable">
                                     <thead>
-                                        <tr class="text-white">
+                                        <tr class="text-white text-center bg-primary">
                                             <th>ID</th>
                                             <th>Doc. Code</th>
                                             <th>Recipient</th>

@@ -9,7 +9,7 @@
 
 
     <!-- Content Start -->
-    <div class="content">
+    <div class="content bg-white">
         <!-- Navbar Start -->
         <?= $this->include("partials/navbar"); ?>
         <!-- Navbar End -->

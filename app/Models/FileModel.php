@@ -22,7 +22,8 @@ class FileModel extends Model
         'date_of_letter',
         'deadline',
         'status',
-        'path'
+        'path',
+        'qr_code'
     ];
 
     // Dates

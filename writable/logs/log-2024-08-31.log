@@ -1,0 +1,36 @@
+CRITICAL - 2024-08-31 15:57:19 --> foreach() argument must be of type array|object, string given
+in APPPATH\Views\dashboard\doc_view.php on line 98.
+ 1 APPPATH\Views\dashboard\doc_view.php(98): CodeIgniter\Debug\Exceptions->errorHandler(2, 'foreach() argument must be of type array|object, string given', 'C:\\laragon\\www\\documts_finalaaa\\app\\Views\\dashboard\\doc_view.php', 98)
+ 2 SYSTEMPATH\View\View.php(226): include('C:\\laragon\\www\\documts_finalaaa\\app\\Views\\dashboard\\doc_view.php')
+ 3 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1188): CodeIgniter\View\View->render('dashboard/doc_view', [], true)
+ 5 APPPATH\Controllers\FileUploadController.php(190): view('dashboard/doc_view', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(919): App\Controllers\FileUploadController->doc_view('38')
+ 7 SYSTEMPATH\CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\FileUploadController))
+ 8 SYSTEMPATH\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\documts_finalaaa\\public\\index.php')
+CRITICAL - 2024-08-31 15:58:57 --> Undefined array key "qr_code_url"
+in APPPATH\Views\dashboard\doc_view.php on line 125.
+ 1 APPPATH\Views\dashboard\doc_view.php(125): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "qr_code_url"', 'C:\\laragon\\www\\documts_finalaaa\\app\\Views\\dashboard\\doc_view.php', 125)
+ 2 SYSTEMPATH\View\View.php(226): include('C:\\laragon\\www\\documts_finalaaa\\app\\Views\\dashboard\\doc_view.php')
+ 3 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1188): CodeIgniter\View\View->render('dashboard/doc_view', [], true)
+ 5 APPPATH\Controllers\FileUploadController.php(190): view('dashboard/doc_view', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(919): App\Controllers\FileUploadController->doc_view('38')
+ 7 SYSTEMPATH\CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\FileUploadController))
+ 8 SYSTEMPATH\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\documts_finalaaa\\public\\index.php')
+CRITICAL - 2024-08-31 16:00:14 --> Undefined array key "qr_code_url"
+in APPPATH\Views\dashboard\doc_view.php on line 77.
+ 1 APPPATH\Views\dashboard\doc_view.php(77): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "qr_code_url"', 'C:\\laragon\\www\\documts_finalaaa\\app\\Views\\dashboard\\doc_view.php', 77)
+ 2 SYSTEMPATH\View\View.php(226): include('C:\\laragon\\www\\documts_finalaaa\\app\\Views\\dashboard\\doc_view.php')
+ 3 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1188): CodeIgniter\View\View->render('dashboard/doc_view', [], true)
+ 5 APPPATH\Controllers\FileUploadController.php(190): view('dashboard/doc_view', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(919): App\Controllers\FileUploadController->doc_view('38')
+ 7 SYSTEMPATH\CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\FileUploadController))
+ 8 SYSTEMPATH\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\documts_finalaaa\\public\\index.php')

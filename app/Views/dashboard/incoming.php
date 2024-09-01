@@ -14,18 +14,18 @@
         <?= $this->include("partials/navbar"); ?>
         <!-- Navbar End -->
 
-        <div class="bg-dark">
+        <div class="bg-white">
             <div class="container-fluid pt-4 px-4">
                 <div class="row">
                     <div class="col-12 col-sm-12 text-center text-sm-start">
-                        <div class="card shadow bg-secondary">
-                            <div class="card-header">
-                                <h3 class="text-white">Incoming Documents</h3>
+                        <div class="card shadow bg-white">
+                            <div class="card-header bg-light">
+                                <h3 class="text-white mb-0">Incoming Documents</h3>
                             </div>
-                            <div class="card-body p-5">
-                                <table class="table table-hover" id="mydatatable">
+                            <div class="card-body p-6">
+                                <table class="table table-bordered" id="mydatatable">
                                     <thead>
-                                        <tr class="text-white">
+                                        <tr class="text-white bg-primary">
                                             <th>Doc. Code</th>
                                             <th>Sender</th>
                                             <th>Subject</th>
@@ -50,7 +50,7 @@
                                                     <td class="px-2 py-1 align-middle"><?= $message['date_of_letter'] ?></td>
                                                     <td class="px-2 py-1 align-middle"><?= $message['deadline'] ?? 'N/A' ?></td>
                                                     <td>
-                                                        <a href="<?= base_url('incoming_doc_view/' . $message['id']) ?>" class="btn btn-info btn-sm">View</a>
+                                                        <a href="<?= base_url('incoming_doc_view/' . $message['id']) ?>" class="btn btn-success btn-sm ">View</a>
                                                     </td>
                                                 </tr>
                                             <?php endforeach; ?>
