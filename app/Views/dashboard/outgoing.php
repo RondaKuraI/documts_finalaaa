@@ -38,11 +38,11 @@
                                 <a href="<?= site_url('outgoing') ?>" class="btn btn-warning">Show All</a>
 
                                 <div class="mb-3 mt-4">
-                                    <?php if (isset($_GET['keyword']) && !empty($_GET['keyword'])): ?>
+                                    <?php if (isset($_GET['keyword']) && !empty($_GET['keyword'])) : ?>
                                         <p>Search results for: <?= esc($_GET['keyword']) ?></p>
                                     <?php endif; ?>
                                 </div>
-                                
+
                                 <table class="table table-bordered" id="mydatatable">
                                     <thead>
                                         <tr class="text-white text-center bg-primary">
@@ -69,14 +69,21 @@
                                                 <td class="px-2 py-1 align-middle"><?= $row['subject'] ?></td>
                                                 <td class="px-2 py-1 align-middle"><?= $row['description'] ?></td>
                                                 <td class="px-2 py-1 align-middle"><?= $row['date_of_letter'] ?></td>
-                                                <td class="px-2 py-1 align-middle"><?= $row['status'] ?></td>
+                                                <td class="px-2 py-1 align-middle text-center">
+                                                    <?php if ($row['status'] == 'pending') : ?>
+                                                        <span class="status-pending d-inline-block">Pending</span>
+                                                    <?php else : ?>
+                                                        <?= $row['status'] ?>
+                                                    <?php endif; ?>
+                                                </td>
+
                                                 <!-- <td class="px-2 py-1 align-middle"><p class="m-0 text-truncate" title="<?= $row['fname'] ?>"><?= $row['fname'] ?></p></td> -->
                                                 <td class="px-2 py-1 align-middle text-center">
                                                     <!-- <a href="<?= base_url('doc_view/' . $row['doc_code']); ?>" class="btn btn-warning btn-sm" target="_blank" title="View File"><i class="fa fa-external-link"></i>View</a> -->
-                                                    <a href="<?= base_url('doc_view/' . $row['id']); ?>" class="badge btn-success view_btn">View</a>
+                                                    <a href="<?= base_url('doc_view/' . $row['id']); ?>" class="btn btn-success btn-sm view_btn">View</a>
                                                     <!-- <a href="#" class="badge btn-primary edit_btn">Edit</a> -->
                                                     <!-- <a href="<?= base_url($row['path']) ?>" class="text-primary fw-bolder text-decoration-none mx-2" target="_blank" title="Download File" download="<?= $row['fname'] ?>"><i class="fa fa-download"></i></a> -->
-                                                    <a href="<?= base_url($row['path']) ?>" class="badge btn-primary" target="_blank" title="Download File" download="<?= $row['fname'] ?>">Download</a>
+                                                    <a href="<?= base_url($row['path']) ?>" class="btn btn-primary btn-sm" target="_blank" title="Download File" download="<?= $row['fname'] ?>">Download</a>
                                                     <!-- <a href="#" class="badge btn-danger delete_btn">Delete</a> -->
                                                 </td>
                                             </tr>
@@ -94,4 +101,4 @@
                 </div>
             </div>
         </div>
-<?= $this->endSection(); ?>
+        <?= $this->endSection(); ?>

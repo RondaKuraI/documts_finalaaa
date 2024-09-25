@@ -65,7 +65,52 @@
 
 
         <!-- Recent Sales Start -->
-        <?= $this->include("partials/incoming"); ?>
+        <div class="container-fluid pt-4 px-4">
+            <div class="card">
+                <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0 text-white">Incoming Documents</h5>
+                    <a href="<?= base_url('incoming') ?>" class="btn btn-primary btn-sm">Show All</a>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover" id="incomingDocumentsTable">
+                            <thead>
+                                <tr class="text-white bg-primary">
+                                    <th>Doc. Code</th>
+                                    <th>Sender</th>
+                                    <th>Subject</th>
+                                    <th>Description</th>
+                                    <th>Date of Letter</th>
+                                    <th>Deadline</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php if (empty($incoming)) : ?>
+                                    <tr>
+                                        <td colspan="7" class="text-center">No records found</td>
+                                    </tr>
+                                <?php else : ?>
+                                    <?php foreach ($incoming as $message) : ?>
+                                        <tr>
+                                            <td><?= esc($message['doc_code']) ?></td>
+                                            <td><?= esc($message['sender']) ?></td>
+                                            <td><?= esc($message['subject']) ?></td>
+                                            <td><?= esc(substr($message['description'], 0, 50) . '...') ?></td>
+                                            <td><?= esc($message['date_of_letter']) ?></td>
+                                            <td><?= esc($message['deadline'] ?? 'N/A') ?></td>
+                                            <td>
+                                                <a href="<?= base_url('incoming_doc_view/' . $message['id']) ?>" class="btn btn-success btn-sm">View</a>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Recent Sales End -->
 
 

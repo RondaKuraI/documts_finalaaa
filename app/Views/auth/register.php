@@ -33,7 +33,8 @@
                             <label for="floatingText">Name</label>
                         </div>
                         <div class="mb-1">
-                            <span class="text-danger"><?= display_error($validation, 'name'); ?></span>
+                            <!-- <span class="text-danger"><?= display_error($validation, 'name'); ?></span> -->
+                            <span class="text-danger"><?= isset($validation) ? $validation->getError('name') : '' ?></span>
                         </div>
 
                         <div class="form-floating mb-3">
@@ -41,7 +42,8 @@
                             <label for="floatingInput">Email address</label>
                         </div>
                         <div class="mb-1">
-                            <span class="text-danger"><?= display_error($validation, 'email'); ?></span>
+                            <!-- <span class="text-danger"><?= display_error($validation, 'email'); ?></span> -->
+                            <span class="text-danger"><?= isset($validation) ? $validation->getError('email') : '' ?></span>
                         </div>
 
                         <div class="form-floating mb-3">
@@ -54,7 +56,8 @@
                                 <label for="floatingSelect">Select Role:</label>
                             </div>
                         <div class="mb-1">
-                            <span class="text-danger"><?= display_error($validation, 'email'); ?></span>
+                            <!-- <span class="text-danger"><?= display_error($validation, 'email'); ?></span> -->
+                            <span class="text-danger"><?= isset($validation) ? $validation->getError('email') : '' ?></span>
                         </div>
 
                         <div class="form-floating mb-3">
@@ -72,7 +75,8 @@
                                 <label for="floatingSelect">Select Barangay:</label>
                             </div>
                         <div class="mb-1">
-                            <span class="text-danger"><?= display_error($validation, 'email'); ?></span>
+                            <!-- <span class="text-danger"><?= display_error($validation, 'email'); ?></span> -->
+                            <span class="text-danger"><?= isset($validation) ? $validation->getError('email') : '' ?></span>
                         </div>
 
                         <div class="form-floating mb-3">
@@ -80,7 +84,8 @@
                             <label for="floatingPassword">Password</label>
                         </div>
                         <div class="mb-1">
-                            <span class="text-danger"><?= display_error($validation, 'password'); ?></span>
+                            <!-- <span class="text-danger"><?= display_error($validation, 'password'); ?></span> -->
+                            <span class="text-danger"><?= isset($validation) ? $validation->getError('password') : '' ?></span>
                         </div>
 
                         <div class="form-floating mb-3">
@@ -88,7 +93,8 @@
                             <label for="floatingPassword">Confirm Password</label>
                         </div>
                         <div class="mb-4">
-                            <span class="text-danger"><?= display_error($validation, 'confirmpassword'); ?></span>
+                            <!-- <span class="text-danger"><?= display_error($validation, 'confirmpassword'); ?></span> -->
+                            <span class="text-danger"><?= isset($validation) ? $validation->getError('confirmpassword') : '' ?></span>
                         </div>
 
                         <!-- <div class="d-flex align-items-center justify-content-between mb-4">

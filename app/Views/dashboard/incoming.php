@@ -19,8 +19,12 @@
                 <div class="row">
                     <div class="col-12 col-sm-12 text-center text-sm-start">
                         <div class="card shadow bg-white">
-                            <div class="card-header bg-light">
-                                <h3 class="text-white mb-0">Incoming Documents</h3>
+                        <div class="card-header bg-light">
+                                <?php if ($session->get('role') == 'admin') : ?>
+                                    <h3 class="text-white mb-0">All Incoming Documents</h3>
+                                <?php else : ?>
+                                    <h3 class="text-white mb-0">Your Incoming Documents</h3>
+                                <?php endif; ?>
                             </div>
                             <div class="card-body p-6">
                                 <table class="table table-bordered" id="mydatatable">

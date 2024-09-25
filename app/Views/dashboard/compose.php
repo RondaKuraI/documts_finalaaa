@@ -29,7 +29,7 @@
                             </div>
                             <div class="card-body p-6">
 
-                                <?php if (session()->getFlashdata(('main_success'))) : ?>
+                                <!-- <?php if (session()->getFlashdata(('main_success'))) : ?>
                                     <div class="alert alert-success" role="alert">
                                         <?= session()->getFlashdata('main_success'); ?>
                                     </div>
@@ -39,7 +39,28 @@
                                     <div class="alert alert-danger" role="alert">
                                         <?= session()->getFlashdata('main_error'); ?>
                                     </div>
+                                <?php endif; ?> -->
+
+                                <?php if (session()->getFlashdata('main_success')) : ?>
+                                    <script>
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: 'Success',
+                                            text: '<?= session()->getFlashdata('main_success'); ?>',
+                                        });
+                                    </script>
                                 <?php endif; ?>
+
+                                <?php if (session()->getFlashdata('main_error')) : ?>
+                                    <script>
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Oops...',
+                                            text: '<?= session()->getFlashdata('main_error'); ?>',
+                                        });
+                                    </script>
+                                <?php endif; ?>
+
 
                                 <form action="<?= base_url('send') ?>" method="POST" autocomplete="off" enctype="multipart/form-data">
                                     <div class="mb-3">
@@ -158,7 +179,11 @@
 
         <?= $this->endSection(); ?>
 
+    
+
         <?= $this->section("scripts"); ?>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
         <script>
             $(document).ready(function() {
                 $('#datepicker').datepicker({
@@ -180,6 +205,45 @@
                     $('#deadline-datepicker input').focus();
                 });
 
+                // Document code uniqueness check
+                $('#doc_code').on('blur', function() {
+                    var docCode = $(this).val();
+                    if (docCode.length > 0) {
+                        $.ajax({
+                            url: '<?= base_url('check-doc-code') ?>',
+                            method: 'POST',
+                            data: {
+                                doc_code: docCode
+                            },
+                            dataType: 'json',
+                            success: function(response) {
+                                if (!response.isUnique) {
+                                    $('#doc_code_error').text(response.message).show();
+                                    $('#doc_code').addClass('is-invalid');
+                                } else {
+                                    $('#doc_code_error').hide();
+                                    $('#doc_code').removeClass('is-invalid');
+                                }
+                            },
+                            error: function() {
+                                $('#doc_code_error').text('Error checking document code').show();
+                            }
+                        });
+                    }
+                });
+
+                // Prevent form submission if document code is not unique
+                $('form').on('submit', function(e) {
+                    if ($('#doc_code').hasClass('is-invalid')) {
+                        e.preventDefault();
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Please choose a unique document code'
+                        });
+                    }
+                });
+
                 // QR Code generation
                 $('#doc_code').on('input', function() {
                     var docCode = $(this).val();
@@ -195,7 +259,7 @@
                                 if (response.success) {
                                     $('#qr_code_container').html('<img src="' + response.qr_code_url + '" alt="QR Code" class="img-fluid" style="max-width: 200px;">');
                                 } else {
-                                    $('#qr_code_container').html('<p>Failed to generate QR code</p>');
+                                    $('#qr_code_container').html('<p>Failed to generate QR code: ' + response.message + '</p>');
                                 }
                             },
                             error: function() {
@@ -207,5 +271,23 @@
                     }
                 });
             });
+
+            // Display SweetAlert for success and error flashdata
+            <?php if (session()->getFlashdata('main_success')) : ?>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: '<?= session()->getFlashdata('main_success'); ?>',
+                });
+            <?php endif; ?>
+
+            <?php if (session()->getFlashdata('main_error')) : ?>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: '<?= session()->getFlashdata('main_error'); ?>',
+                });
+            <?php endif; ?>
         </script>
+
         <?= $this->endSection(); ?>

@@ -33,15 +33,18 @@
                                         <label for="doc_code">Document Code</label>
                                         <input type="text" name="doc_code" id="doc_code" class="form-control bg-outline-dark" value="<?= $document['doc_code'] ?>" disabled>
                                     </div> -->
-                                    <div class="mt-4">
-                                        <div class="bg-primary text-white rounded p-3 mb-2">
-                                            <h6 class="mb-0">Status - <?= $document['recipient'] ?></h6>
-                                            <h6 class="mb-0"><?= $document['status'] ?></h6>
-                                        </div>
-                                        <div class="bg-light text-dark rounded p-2 mb-4">
-                                            <p class="mb-0"><?= $document['status'] ?></p>
-                                        </div>
+                                    <div class="bg-primary text-white rounded p-3 mb-2">
+                                        <h6 class="mb-0">Status - <?= $document['recipient'] ?></h6>
+                                        <h6 class="mb-0">
+                                            <br>
+                                            <?php if ($document['status'] == 'pending') : ?>
+                                                <span class="status-pending">Pending</span>
+                                            <?php else : ?>
+                                                <?= $document['status'] ?>
+                                            <?php endif; ?>
+                                        </h6>
                                     </div>
+
 
                                     <div>
                                         <h4 class="text-white mb-0 d-flex justify-content-center align-items-center bg-primary">Details</h4>

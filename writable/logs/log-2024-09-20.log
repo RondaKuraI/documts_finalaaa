@@ -1,0 +1,64 @@
+CRITICAL - 2024-09-20 04:11:38 --> Undefined variable $isLoggedIn
+in APPPATH\Views\partials\navbar.php on line 43.
+ 1 APPPATH\Views\partials\navbar.php(43): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $isLoggedIn', 'C:\\laragon\\www\\documts_finalaaa\\app\\Views\\partials\\navbar.php', 43)
+ 2 SYSTEMPATH\View\View.php(226): include('C:\\laragon\\www\\documts_finalaaa\\app\\Views\\partials\\navbar.php')
+ 3 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\View\View.php(467): CodeIgniter\View\View->render('partials/navbar', null, true)
+ 5 APPPATH\Views\dashboard\reports.php(14): CodeIgniter\View\View->include('partials/navbar')
+ 6 SYSTEMPATH\View\View.php(226): include('C:\\laragon\\www\\documts_finalaaa\\app\\Views\\dashboard\\reports.php')
+ 7 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 8 SYSTEMPATH\Common.php(1188): CodeIgniter\View\View->render('dashboard/reports', [], true)
+ 9 APPPATH\Controllers\GColumnChartController.php(24): view('dashboard/reports', [...])
+10 SYSTEMPATH\CodeIgniter.php(919): App\Controllers\GColumnChartController->initChart()
+11 SYSTEMPATH\CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\GColumnChartController))
+12 SYSTEMPATH\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+13 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+14 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\documts_finalaaa\\public\\index.php')
+ERROR - 2024-09-20 04:22:53 --> Email: sendWithSmtp throwed ErrorException: fsockopen(): php_network_getaddresses: getaddrinfo for smtp.gmail.com failed: No such host is known.  in C:\laragon\www\documts_finalaaa\system\Email\Email.php:1888
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'fsockopen(): ph...', 'C:\\laragon\\www\\...', 1888)
+#1 C:\laragon\www\documts_finalaaa\system\Email\Email.php(1888): fsockopen('ssl://smtp.gmai...', 465, NULL, NULL, 5)
+#2 C:\laragon\www\documts_finalaaa\system\Email\Email.php(1796): CodeIgniter\Email\Email->SMTPConnect()
+#3 C:\laragon\www\documts_finalaaa\system\Email\Email.php(1681): CodeIgniter\Email\Email->sendWithSmtp()
+#4 C:\laragon\www\documts_finalaaa\system\Email\Email.php(1575): CodeIgniter\Email\Email->spoolEmail()
+#5 C:\laragon\www\documts_finalaaa\app\Controllers\RegisterController.php(58): CodeIgniter\Email\Email->send()
+#6 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(919): App\Controllers\RegisterController->index()
+#7 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\RegisterController))
+#8 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\laragon\www\documts_finalaaa\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#10 C:\laragon\www\documts_finalaaa\system\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\...')
+#11 {main}
+ERROR - 2024-09-20 04:22:53 --> Email: Unable to send email using SMTP. Your server might not be configured to send mail using this method.
+ERROR - 2024-09-20 04:22:53 --> 
+ERROR - 2024-09-20 04:25:27 --> Email: sendWithSmtp throwed ErrorException: fsockopen(): php_network_getaddresses: getaddrinfo for smtp.gmail.com failed: No such host is known.  in C:\laragon\www\documts_finalaaa\system\Email\Email.php:1888
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'fsockopen(): ph...', 'C:\\laragon\\www\\...', 1888)
+#1 C:\laragon\www\documts_finalaaa\system\Email\Email.php(1888): fsockopen('ssl://smtp.gmai...', 465, NULL, NULL, 5)
+#2 C:\laragon\www\documts_finalaaa\system\Email\Email.php(1796): CodeIgniter\Email\Email->SMTPConnect()
+#3 C:\laragon\www\documts_finalaaa\system\Email\Email.php(1681): CodeIgniter\Email\Email->sendWithSmtp()
+#4 C:\laragon\www\documts_finalaaa\system\Email\Email.php(1575): CodeIgniter\Email\Email->spoolEmail()
+#5 C:\laragon\www\documts_finalaaa\app\Controllers\RegisterController.php(58): CodeIgniter\Email\Email->send()
+#6 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(919): App\Controllers\RegisterController->index()
+#7 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\RegisterController))
+#8 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\laragon\www\documts_finalaaa\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#10 C:\laragon\www\documts_finalaaa\system\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\...')
+#11 {main}
+ERROR - 2024-09-20 04:25:27 --> Email: Unable to send email using SMTP. Your server might not be configured to send mail using this method.
+ERROR - 2024-09-20 04:25:27 --> 
+ERROR - 2024-09-20 04:26:45 --> Email: sendWithSmtp throwed ErrorException: fsockopen(): php_network_getaddresses: getaddrinfo for smtp.gmail.com failed: No such host is known.  in C:\laragon\www\documts_finalaaa\system\Email\Email.php:1888
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'fsockopen(): ph...', 'C:\\laragon\\www\\...', 1888)
+#1 C:\laragon\www\documts_finalaaa\system\Email\Email.php(1888): fsockopen('ssl://smtp.gmai...', 465, NULL, NULL, 5)
+#2 C:\laragon\www\documts_finalaaa\system\Email\Email.php(1796): CodeIgniter\Email\Email->SMTPConnect()
+#3 C:\laragon\www\documts_finalaaa\system\Email\Email.php(1681): CodeIgniter\Email\Email->sendWithSmtp()
+#4 C:\laragon\www\documts_finalaaa\system\Email\Email.php(1575): CodeIgniter\Email\Email->spoolEmail()
+#5 C:\laragon\www\documts_finalaaa\app\Controllers\RegisterController.php(58): CodeIgniter\Email\Email->send()
+#6 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(919): App\Controllers\RegisterController->index()
+#7 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\RegisterController))
+#8 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\laragon\www\documts_finalaaa\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#10 C:\laragon\www\documts_finalaaa\system\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\...')
+#11 {main}
+ERROR - 2024-09-20 04:26:45 --> Email: Unable to send email using SMTP. Your server might not be configured to send mail using this method.
+ERROR - 2024-09-20 04:26:45 --> 

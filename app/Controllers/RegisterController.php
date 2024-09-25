@@ -111,16 +111,17 @@ class RegisterController extends BaseController
     }
 
     public function verifyExpiryTime($regTime){
-        $currTime = now();
-        $regTime = strtotime($regTime);
+        $currTime = strtotime(now()); // Current time as Unix timestamp
+        $regTime = strtotime($regTime); // Convert the registration time to Unix timestamp
         $diffTime = $currTime - $regTime;
-        if(3600 > $diffTime){
-            return true;
-        }
-        else
-        {
-            return false;
+        
+        // Set expiration period to 1 hour (3600 seconds)
+        if($diffTime < 3600){
+            return true; // Still valid
+        } else {
+            return false; // Expired
         }
     }
+    
 }
 

@@ -8,6 +8,13 @@
     /* --dark: rgb(24, 23, 23); */
 }
 
+.status-pending {
+    background-color: #ffc107;
+    color: black;
+    padding: 4px;
+    border-radius: 4px;
+}
+
 .back-to-top {
     position: fixed;
     display: none;
@@ -289,3 +296,4 @@
     background: var(--dark);
     border-color: var(--primary);
 }
+

@@ -35,6 +35,8 @@ $routes->group('', ['filter' => 'auth'], function($routes){
     $routes->get('document-chart', 'ChartController::index');
 });
 
+$routes->post('generate-qr', 'FileUploadController::generateQR');
+$routes->post('check-doc-code', 'FileUploadController::checkDocCodeUniqueness');
 
 // New routes for incoming documents
 $routes->get('dashboard/message/view/(:num)', 'FileUploadController::viewMessage/$1');

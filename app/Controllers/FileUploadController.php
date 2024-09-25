@@ -63,11 +63,40 @@ class FileUploadController extends BaseController
         return view('dashboard/outgoing', $this->data);
     }
 
+    public function checkDocCodeUniqueness()
+    {
+        $doc_code = $this->request->getPost('doc_code');
+        
+        if (is_array($doc_code)) {
+            $doc_code = implode('', $doc_code);
+        }
+
+        if (empty($doc_code)) {
+            return $this->response->setJSON(['isUnique' => false, 'message' => 'Document code is required']);
+        }
+
+        // Check if the document code already exists in the database
+        $existingDoc = $this->model->where('doc_code', $doc_code)->first();
+
+        if ($existingDoc) {
+            return $this->response->setJSON(['isUnique' => false, 'message' => 'This document code already exists']);
+        } else {
+            return $this->response->setJSON(['isUnique' => true]);
+        }
+    }
+
     public function upload()
     {
         $validation = \Config\Services::validation();
         $validation->setRules([
-            'doc_code' => 'required|integer',
+            // 'doc_code' => 'required|integer',
+            'doc_code' => [
+                'rules' => 'required|is_unique[filess.doc_code]',
+                'errors' => [
+                    'required' => 'Document code is required',
+                    'is_unique' => 'This document code already exists'
+                ]
+            ],
             'sender' => 'required',
             'recipient' => 'required',
             'subject' => 'required',
@@ -77,11 +106,19 @@ class FileUploadController extends BaseController
             'file' => 'uploaded[file]|max_size[file,30000]|ext_in[file,pdf,doc,docx]'
         ]);
 
+        // if (!$validation->withRequest($this->request)->run()) {
+        //     $errors = $validation->getErrors();
+        //     $errorMessages = implode(', ', $errors); // Convert array to string
+        //     return redirect()->back()->withInput()->with('main_error', $errorMessages);
+        // }
+
         if (!$validation->withRequest($this->request)->run()) {
             $errors = $validation->getErrors();
             $errorMessages = implode(', ', $errors); // Convert array to string
-            return redirect()->back()->withInput()->with('main_error', $errorMessages);
+            $this->session->setFlashdata('main_error', $errorMessages); // Store in session
+            return redirect()->back()->withInput();
         }
+        
 
         // if (!is_dir('./uploads/')) mkdir('./uploads/');
         // Ensure the uploads directory exists and is writable
@@ -286,11 +323,56 @@ class FileUploadController extends BaseController
 
         if ($userRole == 'admin') {
             // Admin sees all documents
-            $this->data['incoming'] = $this->model->findAll();
+            // $this->data['incoming'] = $this->model->findAll();
+            $this->data['incoming'] = $this->model->findAll(5); //most recent
         } else {
             // Normal users only see documents where they are the recipient
-            $this->data['incoming'] = $this->model->where('recipient', $userName)->findAll();
+            // $this->data['incoming'] = $this->model->where('recipient', $userName)->findAll();
+            $this->data['incoming'] = $this->model->where('recipient', $userName)->findAll(5);
         }
         return view('dashboard/dashboard', $this->data);
+    }
+
+    public function generateQR()
+    {
+        $doc_code = $this->request->getPost('doc_code');
+
+        // Handle case where doc_code is an array
+        if (is_array($doc_code)) {
+            $doc_code = implode('', $doc_code);
+        }
+
+        if (empty($doc_code)) {
+            return $this->response->setJSON(['success' => false, 'message' => 'Document code is required']);
+        }
+
+        try {
+            $result = Builder::create()
+                ->writer(new PngWriter())
+                ->data($doc_code)
+                ->encoding(new Encoding('UTF-8'))
+                ->errorCorrectionLevel(ErrorCorrectionLevel::Low)
+                ->size(300)
+                ->margin(10)
+                ->roundBlockSizeMode(RoundBlockSizeMode::Margin)
+                ->build();
+
+            $qrCodeFilename = 'qr_code_' . $doc_code . '.png';
+            $qrCodePath = FCPATH . 'uploads' . DIRECTORY_SEPARATOR . $qrCodeFilename;
+            $result->saveToFile($qrCodePath);
+
+            $qrCodeUrl = base_url('uploads/' . $qrCodeFilename);
+
+            return $this->response->setJSON([
+                'success' => true,
+                'qr_code_url' => $qrCodeUrl
+            ]);
+        } catch (\Exception $e) {
+            log_message('error', 'QR Code generation failed: ' . $e->getMessage());
+            return $this->response->setJSON([
+                'success' => false,
+                'message' => 'QR Code generation failed: ' . $e->getMessage()
+            ]);
+        }
     }
 }
