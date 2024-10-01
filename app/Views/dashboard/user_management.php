@@ -7,365 +7,103 @@
     <?= $this->include("partials/sidebar"); ?>
     <!-- Sidebar End -->
 
-
     <!-- Content Start -->
     <div class="content">
         <!-- Navbar Start -->
         <?= $this->include("partials/navbar"); ?>
         <!-- Navbar End -->
 
-        <!-- Add Student Modal -->
-        <div class="modal fade" id="studentModal" tabindex="-1" aria-labelledby="studentModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content bg-secondary">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="studentModalLabel">Add Student</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label>Full Name</label><span id="error_name" class="text-danger ms-3"></span>
-                            <input type="text" class="form-control name" placeholder="Enter your full name">
+        <div class="bg-white">
+            <div class="container-fluid pt-4 px-4">
+                <div class="row">
+                    <div class="col-12 col-sm-12 text-center text-sm-start">
+                        <div class="card shadow bg-white">
+                            <div class="card-header bg-light">
+                                <h3 class="text-white mb-0">User List</h3>
+                            </div>
+
+                            <div class="card-body p-6">
+                                <!-- Search Form (similar to outgoing view) -->
+                                <form action="<?= site_url('search_users') ?>" method="get" class="mb-3">
+                                    <div class="input-group">
+                                        <input type="text" name="keyword" class="form-control bg-white" placeholder="Search users..." value="<?= isset($_GET['keyword']) ? esc($_GET['keyword']) : '' ?>" autocomplete="off">
+                                        <button class="btn btn-primary" type="submit">Search</button>
+                                    </div>
+                                </form>
+                                <!-- End of search form -->
+
+                                <!-- Show all button, similar to outgoing -->
+                                <a href="<?= site_url('user_management') ?>" class="btn btn-warning">Show All</a>
+
+                                <div class="mb-3 mt-4">
+                                    <?php if (isset($_GET['keyword']) && !empty($_GET['keyword'])) : ?>
+                                        <p>Search results for: <?= esc($_GET['keyword']) ?></p>
+                                    <?php endif; ?>
+                                </div>
+
+                                <table class="table table-bordered" id="userTable">
+                                    <thead>
+                                        <tr class="text-white text-center bg-primary">
+                                            <th>Nos.</th>
+                                            <th>Full Name</th>
+                                            <th>Email</th>
+                                            <th>Barangay</th>
+                                            <th>Role</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php if (empty($users)) : ?>
+                                            <tr>
+                                                <td colspan="7" class="p-1 text-center">No users found</td>
+                                            </tr>
+                                        <?php else : ?>
+                                            <?php foreach ($users as $index => $user) : ?>
+                                                <tr>
+                                                    <td class="px-2 py-1 align-middle text-center"><?= $index + 1 ?></td>
+                                                    <td class="px-2 py-1 align-middle"><?= $user['name'] ?></td>
+                                                    <td class="px-2 py-1 align-middle"><?= $user['email'] ?></td>
+                                                    <td class="px-2 py-1 align-middle"><?= $user['brgy'] ?></td> <!-- Assuming 'brgy' represents the office -->
+                                                    <td class="px-2 py-1 align-middle"><?= $user['role'] ?></td>
+                                                    <td class="px-2 py-1 align-middle text-center">
+                                                        <span class="badge <?= $user['status'] === 'Active' ? 'bg-success' : 'bg-danger' ?>">
+                                                            <?= $user['status'] ?? 'Inactive' ?>
+                                                        </span>
+                                                    </td>
+                                                    <td class="px-2 py-1 align-middle text-center">
+                                                        <a href="<?= base_url('user_view/' . $user['id']); ?>" class="btn btn-success btn-sm">View</a>
+                                                        <a href="#" class="btn btn-primary btn-sm">Edit</a>
+                                                        <a href="#" class="btn btn-danger btn-sm">Delete</a>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        <?php endif; ?>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label>Email</label><span id="error_email" class="text-danger ms-3"></span>
-                            <input type="text" class="form-control email" placeholder="Enter your email">
-                        </div>
-                        <div class="form-group">
-                            <label>Phone</label><span id="error_phone" class="text-danger ms-3"></span>
-                            <input type="text" class="form-control phone" placeholder="Enter your phone number">
-                        </div>
-                        <div class="form-group">
-                            <label>Course</label><span id="error_course" class="text-danger ms-3"></span>
-                            <input type="text" class="form-control course" placeholder="Enter your course">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary ajaxfilename-save">Save</button>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- View Student Modal -->
-        <div class="modal fade" id="studentViewModal" tabindex="-1" aria-labelledby="studentModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content bg-secondary">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="studentModalLabel">Student View</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <h4> ID: <span class="id_view"></span> </h4>
-                        <h4> Name: <span class="name_view"></span> </h4>
-                        <h4> Email: <span class="email_view"></span> </h4>
-                        <h4> Phone: <span class="phone_view"></span> </h4>
-                        <h4> Course: <span class="course_view"></span> </h4>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary ajaxfilename-save">Save</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Edit Student Modal -->
-        <div class="modal fade" id="studentEditModal" tabindex="-1" aria-labelledby="studentModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content bg-secondary">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="studentModalLabel">Edit Student</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                    <input type="hidden" id="stud_id">
-                        <div class="form-group">
-                            <label>Full Name</label>
-                            <input type="text" id="stud_name" class="form-control name" placeholder="Enter your full name">
-                        </div>
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input type="text" id="stud_email" class="form-control email" placeholder="Enter your email">
-                        </div>
-                        <div class="form-group">
-                            <label>Phone</label>
-                            <input type="text" id="stud_phone" class="form-control phone" placeholder="Enter your phone number">
-                        </div>
-                        <div class="form-group">
-                            <label>Course</label>
-                            <input type="text" id="stud_course" class="form-control course" placeholder="Enter your course">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary ajaxstudent-update">Update</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Delete Student Modal -->
-        <div class="modal fade" id="studentDeleteModal" tabindex="-1" aria-labelledby="studentModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content bg-secondary">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="studentModalLabel">Student Delete</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <input type="hidden" id="student_delete_id">
-                        <h4>Are you sure you want to delete this data?</h4>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-danger ajaxstudent-delete">Delete</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="container-fluid pt-4 px-4">
-            <div class="col-12 col-sm-12 text-center text-sm-start">
-                <div class="card bg-secondary">
-                    <div class="card-header">
-                        <h4>jQuery Ajax CRUD
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#studentModal" class="btn btn-primary float-end">Add</a>
-                        </h4>
-                    </div>
-                    <div class="card-body">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Phone</th>
-                                    <th>Course</th>
-                                    <th>Created At</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody class="studentdata">
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
+    </div>
+    <!-- Content End -->
+</div>
 
 <?= $this->endSection(); ?>
 
 <?= $this->section('scripts'); ?>
-
 <script>
-
-    $(document).ready(function () {
-        loadstudent();
-
-        $(document).on('click', '.view_btn', function () {
-            var stud_id = $(this).closest('tr').find('.stud_id').text();
-            // alert(stud_id);
-
-            $.ajax({
-                method: "POST",
-                url: "ajax-student/view_student",
-                data: {
-                    'stud_id' : stud_id,
-                },
-                success: function (response) {
-                    // console.log(response);
-                    $.each(response, function (key, stud_view) { 
-                        //  console.log(stud_view['name']);
-                        $('.id_view').text(stud_view['id']);
-                        $('.name_view').text(stud_view['name']);
-                        $('.email_view').text(stud_view['email']);
-                        $('.phone_view').text(stud_view['phone']);
-                        $('.course_view').text(stud_view['course']);
-                        $('#studentViewModal').modal('show');
-                    });
-                }
-            });
-
+    $(document).ready(function() {
+        $('#userTable').DataTable({
+            "pageLength": 10,
+            "lengthChange": false
         });
 
-        $(document).on('click', '.edit_btn', function () {
-            var stud_id = $(this).closest('tr').find('.stud_id').text();
-
-            $.ajax({
-                method: "POST",
-                url: "ajax-student/edit",
-                data: {
-                    'stud_id' : stud_id
-                },
-                success: function (response) {
-                    // console.log(response);
-                    $.each(response, function (key, stud_value) { 
-                         $('#stud_id').val(stud_value['id']);
-                         $('#stud_name').val(stud_value['name']);
-                         $('#stud_email').val(stud_value['email']);
-                         $('#stud_phone').val(stud_value['phone']);
-                         $('#stud_course').val(stud_value['course']);
-                         $('#studentEditModal').modal('show');
-                    });
-                }
-            });
-        });
-
-        $(document).on('click', '.ajaxstudent-update', function () {
-            var data = {
-                'stud_id' : $('#stud_id').val(),
-                'name' : $('#stud_name').val(),
-                'email' : $('#stud_email').val(),
-                'phone' : $('#stud_phone').val(),
-                'course' : $('#stud_course').val(),
-            };
-
-            $.ajax({
-                method: "POST",
-                url: "ajax-student/update",
-                data: data,
-                success: function (response) {
-                    $('#studentEditModal').modal('hide');
-                    $('.studentdata').html("");
-                    loadstudent();
-                    
-                    alertify.set('notifier', 'position', 'top-right');
-                    alertify.success(response.status);
-                }
-            });
-        });
-
-        $(document).on('click', '.delete_btn', function () {
-            var stud_id = $(this).closest('tr').find('.stud_id').text();
-            // alert(stud_id);
-            $('#student_delete_id').val(stud_id);
-            $('#studentDeleteModal').modal('show');
-        });
-
-        $(document).on('click', '.ajaxstudent-delete', function () {
-            var stud_id = $('#student_delete_id').val();
-
-            $.ajax({
-                method: "POST",
-                url: "ajax-student/delete",
-                data: {
-                    'stud_id' : stud_id
-                },
-                success: function (response) {
-                    $('#studentDeleteModal').modal('hide');
-                    $('.studentdata').html("");
-                    loadstudent();
-                    
-                    alertify.set('notifier', 'position', 'top-right');
-                    alertify.success(response.status);
-                }
-            });
-        });
-
-    });
-
-    function loadstudent(){
-        $.ajax({
-            method: "GET",
-            url: "/ajax-students/getdata",
-            success: function (response) {
-                // console.log(response.students);
-                $.each(response.students, function (key, value) { 
-                    // console.log(value['name']);
-                    $('.studentdata').append('<tr>\
-                        <td class="stud_id">'+value['id']+'</td>\
-                        <td>'+value['name']+'</td>\
-                        <td>'+value['email']+'</td>\
-                        <td>'+value['phone']+'</td>\
-                        <td>'+value['course']+'</td>\
-                        <td>'+value['created_at']+'</td>\
-                        <td>\
-                            <a href="#" class="badge btn-success view_btn">View</a>\
-                            <a href="#" class="badge btn-primary edit_btn">Edit</a>\
-                            <a href="#" class="badge btn-danger delete_btn">Delete</a>\
-                        </td>\
-                    </tr>');
-                });
-            }
-        });
-    }
-
-</script>
-
-<script>
-    $(document).ready(function () {
-        $(document).on('click','.ajaxfilename-save', function () {
-            if($.trim($('.name').val()).length == 0){
-                error_name = 'Please enter full name';
-                $('#error_name').text(error_name);
-            }
-            else{
-                error_name = '';
-                $('#error_name').text(error_name);
-            }
-
-            if($.trim($('.email').val()).length == 0){
-                error_email = 'Please enter email';
-                $('#error_email').text(error_email);
-            }
-            else{
-                error_email = '';
-                $('#error_email').text(error_email);
-            }
-
-            if($.trim($('.phone').val()).length == 0){
-                error_phone = 'Please enter phone';
-                $('#error_phone').text(error_phone);
-            }
-            else{
-                error_phone = '';
-                $('#error_phone').text(error_phone);
-            }
-
-            if($.trim($('.course').val()).length == 0){
-                error_course = 'Please enter course';
-                $('#error_course').text(error_course);
-            }
-            else{
-                error_course = '';
-                $('#error_course').text(error_course);
-            }
-
-            if(error_name != '' || error_email != '' || error_phone != '' || error_course != ''){
-                return false;
-            }
-            else{
-                var data = {
-                    'name' : $('.name').val(),
-                    'email' : $('.email').val(),
-                    'phone' : $('.phone').val(),
-                    'course' : $('.course').val(),
-                }
-
-                $.ajax({
-                    method: "POST",
-                    url: "/ajax-student/store",
-                    data: data,
-                    success: function (response) {
-                        $('#studentModal').modal('hide');
-                        $('#studentModal').find('input').val('');
-
-                        $('.studentdata').html("");
-                        loadstudent();
-
-                        alertify.set('notifier', 'position', 'top-right');
-                        alertify.success(response.status);
-                    }
-                });
-            }
-
+        $('#searchInput').on('keyup', function() {
+            $('#userTable').DataTable().search(this.value).draw();
         });
     });
 </script>
-
 <?= $this->endSection(); ?>

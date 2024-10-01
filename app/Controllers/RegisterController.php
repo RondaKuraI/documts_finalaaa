@@ -56,19 +56,19 @@ class RegisterController extends BaseController
                     $this->email->setMessage($message);
 
                     if($this->email->send()){
-                        $this->session->setTempdata('success', 'Account Created Successfully. Please activate your account.', 3);
+                        $this->session->setTempdata('success', 'Account Created Successfully. Please activate your account.', 10);
                         return redirect()->to(current_url());
                     }
                     else{
-                        $this->session->setTempdata('error', 'Account Created Successfully. Sorry! Unable to send activation link', 3);
-                        return redirect()->to(current_url());
-                        // $data = $this->email->printDebugger(['headers']);
-                        // print_r($data);
+                        $this->session->setTempdata('error', 'Account Created Successfully. Sorry! Unable to send activation link', 10);
+                        // return redirect()->to(current_url());
+                        return redirect()->to('/register');
                     }
                 }
                 else{
                     $this->session->setTempdata('error', 'Sorry! Unable to create an account. Try Again', 3);
-                    return redirect()->to(current_url());
+                    // return redirect()->to(current_url());
+                    return redirect()->to('/register');
                 }
             } else {
                 $data['validation'] = $this->validator;
@@ -116,7 +116,7 @@ class RegisterController extends BaseController
         $diffTime = $currTime - $regTime;
         
         // Set expiration period to 1 hour (3600 seconds)
-        if($diffTime < 3600){
+        if($diffTime < 7200){
             return true; // Still valid
         } else {
             return false; // Expired

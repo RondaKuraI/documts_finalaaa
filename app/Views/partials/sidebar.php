@@ -19,9 +19,10 @@
             <a href="<?= base_url('outgoing'); ?>" class="nav-item nav-link<?= ($_SERVER['REQUEST_URI'] == '/outgoing') ? ' active' : ''; ?>"><i class="fa fa-file-import me-2"></i>Outgoing</a>
             
             <?php if (session()->get('role') === 'admin'): ?>
-                <a href="<?= base_url('maintenance'); ?>" class="nav-item nav-link<?= ($_SERVER['REQUEST_URI'] == '/maintenance') ? ' active' : ''; ?>"><i class="fa fa-wrench me-2"></i>Maintenance</a>
+                <a href="<?= base_url('maintenance'); ?>" class="nav-item nav-link<?= ($_SERVER['REQUEST_URI'] == '/maintenance') ? ' active' : ''; ?>"><i class="fa fa-wrench me-2"></i>Analytics</a>
+                <!-- <a href="<?= base_url('maintenance'); ?>" class="nav-item nav-link<?= ($_SERVER['REQUEST_URI'] == '/maintenance') ? ' active' : ''; ?>"><i class="fa fa-wrench me-2"></i>Analytics</a> -->
                 <a href="<?= base_url('reports'); ?>" class="nav-item nav-link<?= ($_SERVER['REQUEST_URI'] == '/reports') ? ' active' : ''; ?>"><i class="fa fa-chart-bar me-2"></i>Reports</a>
-                <a href="<?= base_url('user_management'); ?>" class="nav-item nav-link<?= ($_SERVER['REQUEST_URI'] == '/user_management') ? ' active' : ''; ?>"><i class="fa fa-user me-2"></i>UserManagement</a>
+                <a href="<?= base_url('user_management'); ?>" class="nav-item nav-link<?= ($_SERVER['REQUEST_URI'] == '/user_management') ? ' active' : ''; ?>"><i class="fa fa-user me-2"></i>User Management</a>
             <?php endif; ?>
         </div>
     </nav>

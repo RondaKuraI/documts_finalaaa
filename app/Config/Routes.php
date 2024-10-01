@@ -41,6 +41,7 @@ $routes->post('check-doc-code', 'FileUploadController::checkDocCodeUniqueness');
 // New routes for incoming documents
 $routes->get('dashboard/message/view/(:num)', 'FileUploadController::viewMessage/$1');
 
+$routes->get('/user_management', 'UserController::user_management');
 
 
 

@@ -7,20 +7,13 @@ use App\Models\UserModel;
 
 class UserController extends BaseController
 {
-    public function show($id)
+    public $userModel;
+
+    public function user_management()
     {
-        $userModel = new UserModel();
-        $user = $userModel->find($id);
-
-        // return view('partials/user_sidebar', ['user' => $user]);
-
-        // Debugging: check if user data is retrieved
-        if ($user) {
-            echo '<pre>';
-            print_r($user);
-            echo '</pre>';
-        } else {
-            echo 'User not found';
-        }
+        $this->userModel = new UserModel();
+        $data['users'] = $this->userModel->findAll();
+        $data['isLoggedIn'] = session()->get('isLoggedIn'); // Get login status from session
+        return view('dashboard/user_management', $data);
     }
 }
