@@ -43,17 +43,17 @@
                                     <?php endif; ?>
                                 </div>
 
-                                <table class="table table-bordered" id="mydatatable">
+                                <table class="table table-hover table-striped align-middle" id="mydatatable">
                                     <thead>
                                         <tr class="text-white text-center bg-primary">
-                                            <th>ID</th>
-                                            <th>Doc. Code</th>
-                                            <th>Recipient</th>
-                                            <th>Subject</th>
-                                            <th>Description</th>
-                                            <th>Date of Letter</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
+                                            <th scope="col">ID</th>
+                                            <th scope="col">Doc. Code</th>
+                                            <th scope="col">Recipient</th>
+                                            <th scope="col">Details</th>
+                                            <!-- <th>Description</th> -->
+                                            <th scope="col">Date of Letter</th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody class="filedata">
@@ -64,27 +64,40 @@
                                         ?>
                                             <tr>
                                                 <td class="px-2 py-1 align-middle text-center"><?= $row['id'] ?></td>
-                                                <td class="px-2 py-1 align-middle"><?= $row['doc_code'] ?></td>
-                                                <td class="px-2 py-1 align-middle"><?= $row['recipient'] ?></td>
-                                                <td class="px-2 py-1 align-middle"><?= $row['subject'] ?></td>
-                                                <td class="px-2 py-1 align-middle"><?= $row['description'] ?></td>
-                                                <td class="px-2 py-1 align-middle"><?= $row['date_of_letter'] ?></td>
-                                                <td class="px-2 py-1 align-middle text-center">
+                                                <td class="text-center"><?= $row['doc_code'] ?></td>
+                                                <td class=""><?= $row['recipient'] ?></td>
+                                                <td>
+                                                    <strong><?= $row['subject'] ?></strong> -
+                                                    <span class="text-muted"><?= $row['description'] ?></span>
+                                                </td>
+                                                <td class=""><?= $row['date_of_letter'] ?></td>
+                                                <!-- <td class="px-2 py-1 align-middle text-center">
                                                     <?php if ($row['status'] == 'pending') : ?>
                                                         <span class="status-pending d-inline-block">Pending</span>
                                                     <?php else : ?>
                                                         <?= $row['status'] ?>
                                                     <?php endif; ?>
+                                                </td> -->
+                                                <td class="text-center">
+                                                    <?php if ($row['status'] == 'pending') : ?>
+                                                        <span class="badge bg-warning text-dark">Pending</span>
+                                                    <?php elseif ($row['status'] == 'received') : ?>
+                                                        <span class="badge bg-danger">Received</span>
+                                                    <?php else : ?>
+                                                        <span class="badge bg-success"><?= ucfirst($row['status']) ?></span>
+                                                    <?php endif; ?>
                                                 </td>
-
-                                                <!-- <td class="px-2 py-1 align-middle"><p class="m-0 text-truncate" title="<?= $row['fname'] ?>"><?= $row['fname'] ?></p></td> -->
-                                                <td class="px-2 py-1 align-middle text-center">
-                                                    <!-- <a href="<?= base_url('doc_view/' . $row['doc_code']); ?>" class="btn btn-warning btn-sm" target="_blank" title="View File"><i class="fa fa-external-link"></i>View</a> -->
+                                                <!-- <td class="px-2 py-1 align-middle text-center">
                                                     <a href="<?= base_url('doc_view/' . $row['id']); ?>" class="btn btn-success btn-sm view_btn">View</a>
-                                                    <!-- <a href="#" class="badge btn-primary edit_btn">Edit</a> -->
-                                                    <!-- <a href="<?= base_url($row['path']) ?>" class="text-primary fw-bolder text-decoration-none mx-2" target="_blank" title="Download File" download="<?= $row['fname'] ?>"><i class="fa fa-download"></i></a> -->
                                                     <a href="<?= base_url($row['path']) ?>" class="btn btn-primary btn-sm" target="_blank" title="Download File" download="<?= $row['fname'] ?>">Download</a>
-                                                    <!-- <a href="#" class="badge btn-danger delete_btn">Delete</a> -->
+                                                </td> -->
+                                                <td class="text-center">
+                                                    <a href="<?= base_url('doc_view/' . $row['id']); ?>" class="btn btn-info btn-sm text-white">
+                                                        <i class="bi bi-search"></i> View
+                                                    </a>
+                                                    <!-- <a href="<?= base_url($row['path']) ?>" class="btn btn-primary btn-sm" target="_blank" download="<?= $row['fname'] ?>">
+                                                        <i class="bi bi-download"></i> Download
+                                                    </a> -->
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>

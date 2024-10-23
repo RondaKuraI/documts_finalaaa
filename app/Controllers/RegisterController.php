@@ -43,11 +43,11 @@ class RegisterController extends BaseController
                     'uniid' => $uniid,
                     'activation_date' => date("Y-m-d h:i:s")
                 ];
-                if($this->registerModel->createUser($userdata)){
+                if ($this->registerModel->createUser($userdata)) {
 
                     $to = $this->request->getVar('email');
                     $subject = 'Account Activation Link - E-Governance Portal';
-                    $message = 'Hi ' .  $this->request->getVar('name') . "<br><br>Thanks. Your account was created successfully. Please click the link below to activate your account<br><br>" . "<a href = '".base_url()."activate/".$uniid."' target = '_blank'>Activate Now</a><br><br>Thanks<br>Team";
+                    $message = 'Hi ' .  $this->request->getVar('name') . "<br><br>Thanks. Your account was created successfully. Please click the link below to activate your account<br><br>" . "<a href = '" . base_url() . "activate/" . $uniid . "' target = '_blank'>Activate Now</a><br><br>Thanks<br>Team";
 
                     $this->email = \Config\Services::email();
                     $this->email->setTo($to);
@@ -55,17 +55,15 @@ class RegisterController extends BaseController
                     $this->email->setSubject($subject);
                     $this->email->setMessage($message);
 
-                    if($this->email->send()){
+                    if ($this->email->send()) {
                         $this->session->setTempdata('success', 'Account Created Successfully. Please activate your account.', 10);
                         return redirect()->to(current_url());
-                    }
-                    else{
+                    } else {
                         $this->session->setTempdata('error', 'Account Created Successfully. Sorry! Unable to send activation link', 10);
                         // return redirect()->to(current_url());
                         return redirect()->to('/register');
                     }
-                }
-                else{
+                } else {
                     $this->session->setTempdata('error', 'Sorry! Unable to create an account. Try Again', 3);
                     // return redirect()->to(current_url());
                     return redirect()->to('/register');
@@ -77,51 +75,45 @@ class RegisterController extends BaseController
         return view('auth/register', $data);
     }
 
-    public function activate($uniid = null){
-        $data = [];
-        if(!empty($uniid)){
-            $userdata = $this->registerModel->verifyUniid($uniid);
-            if($userdata){
-                if($this->verifyExpiryTime($userdata->activation_date)){
-                    if($userdata->status == 'inactive'){
-                        $status = $this->registerModel->updateStatus($uniid);
-                        if($status == true){
-                            $data['success'] = 'Account Activated Successfully';
-                        }
+    public function activate($uniid = null)
+{
+    $data = [];
+    if (!empty($uniid)) {
+        $userdata = $this->registerModel->verifyUniid($uniid);
+        if ($userdata) {
+            // Remove this condition to skip expiry check
+            // if ($this->verifyExpiryTime($userdata->activation_date)) {
+                if ($userdata->status == 'inactive') {
+                    $status = $this->registerModel->updateStatus($uniid);
+                    if ($status == true) {
+                        $data['success'] = 'Account Activated Successfully';
                     }
-                    else
-                    {
-                        $data['success'] = 'Your account is already activated';    
-                    }
+                } else {
+                    $data['success'] = 'Your account is already activated';
                 }
-                else
-                {
-                    $data['error'] = 'Sorry! Activation link was expired';    
-                }
-            }
-            else
-            {
-                $data['error'] = 'Sorry! We are unable to find your account';    
-            }
+            // } else {
+            //     $data['error'] = 'Sorry! Activation link was expired';
+            // }
+        } else {
+            $data['error'] = 'Sorry! We are unable to find your account';
         }
-        else{
-            $data['error'] = 'Sorry! Unable to process your request.';
-        }
-        return view("auth/activate_view", $data);
+    } else {
+        $data['error'] = 'Sorry! Unable to process your request.';
     }
+    return view("auth/activate_view", $data);
+}
 
-    public function verifyExpiryTime($regTime){
+    public function verifyExpiryTime($regTime)
+    {
         $currTime = strtotime(now()); // Current time as Unix timestamp
         $regTime = strtotime($regTime); // Convert the registration time to Unix timestamp
         $diffTime = $currTime - $regTime;
-        
+
         // Set expiration period to 1 hour (3600 seconds)
-        if($diffTime < 7200){
+        if ($diffTime < 7200) {
             return true; // Still valid
         } else {
             return false; // Expired
         }
     }
-    
 }
-

@@ -1,0 +1,24 @@
+ERROR - 2024-10-19 21:41:15 --> mysqli_sql_exception: Unknown column 'role_id' in 'field list' in C:\laragon\www\documts_finalaaa\system\Database\MySQLi\Connection.php:306
+Stack trace:
+#0 C:\laragon\www\documts_finalaaa\system\Database\MySQLi\Connection.php(306): mysqli->query('INSERT INTO `us...', 0)
+#1 C:\laragon\www\documts_finalaaa\system\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `us...')
+#2 C:\laragon\www\documts_finalaaa\system\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `us...')
+#3 C:\laragon\www\documts_finalaaa\system\Database\BaseBuilder.php(2308): CodeIgniter\Database\BaseConnection->query('INSERT INTO `us...', Array, false)
+#4 C:\laragon\www\documts_finalaaa\app\Models\RegisterModel.php(12): CodeIgniter\Database\BaseBuilder->insert(Array)
+#5 C:\laragon\www\documts_finalaaa\app\Controllers\RegisterController.php(61): App\Models\RegisterModel->createUser(Array)
+#6 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(919): App\Controllers\RegisterController->index()
+#7 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\RegisterController))
+#8 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\laragon\www\documts_finalaaa\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#10 C:\laragon\www\documts_finalaaa\system\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\...')
+#11 {main}
+CRITICAL - 2024-10-19 21:41:15 --> Unknown column 'role_id' in 'field list'
+in SYSTEMPATH\Database\BaseConnection.php on line 646.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(2308): CodeIgniter\Database\BaseConnection->query('INSERT INTO `users` (`name`, `email`, `role_id`, `brgy_id`, `password`, `uniid`, `activation_date`) VALUES (:name:, :email:, :role_id:, :brgy_id:, :password:, :uniid:, :activation_date:)', [...], false)
+ 2 APPPATH\Models\RegisterModel.php(12): CodeIgniter\Database\BaseBuilder->insert([...])
+ 3 APPPATH\Controllers\RegisterController.php(61): App\Models\RegisterModel->createUser([...])
+ 4 SYSTEMPATH\CodeIgniter.php(919): App\Controllers\RegisterController->index()
+ 5 SYSTEMPATH\CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\RegisterController))
+ 6 SYSTEMPATH\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\documts_finalaaa\\public\\index.php')

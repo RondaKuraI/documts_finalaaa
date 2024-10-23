@@ -89,7 +89,6 @@ class FileUploadController extends BaseController
     {
         $validation = \Config\Services::validation();
         $validation->setRules([
-            // 'doc_code' => 'required|integer',
             'doc_code' => [
                 'rules' => 'required|is_unique[filess.doc_code]',
                 'errors' => [
@@ -101,6 +100,8 @@ class FileUploadController extends BaseController
             'recipient' => 'required',
             'subject' => 'required',
             'description' => 'required',
+            'prioritization' => 'required|in_list[Usual,Urgent]',
+            'action' => 'required',
             'date_of_letter' => 'required|valid_date',
             'deadline' => 'required|valid_date',
             'file' => 'uploaded[file]|max_size[file,30000]|ext_in[file,pdf,doc,docx]'
@@ -139,6 +140,8 @@ class FileUploadController extends BaseController
         $recipient = $this->request->getPost('recipient');
         $subject = $this->request->getPost('subject');
         $description = $this->request->getPost('description');
+        $prioritization = $this->request->getPost('prioritization');
+        $action = $this->request->getPost('action');
         $date_of_letter = $this->request->getPost('date_of_letter');
         $deadline = $this->request->getPost('deadline');
         $file = $this->request->getFile('file');
@@ -179,6 +182,8 @@ class FileUploadController extends BaseController
                 "recipient" => $recipient,
                 "subject" => $subject,
                 "description" => $description,
+                "prioritization" => $prioritization,
+                "action" => $action,
                 "date_of_letter" => $date_of_letter,
                 "deadline" => $deadline,
                 "path" => "uploads/" . $fname,

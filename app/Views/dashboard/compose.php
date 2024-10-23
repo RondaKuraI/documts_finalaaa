@@ -119,6 +119,39 @@
 
                                     <div class="mb-3 row">
                                         <div class="col-md-6">
+                                            <label for="prioritization">Prioritization</label>
+                                            <select name="prioritization" id="prioritization" class="form-control bg-white <?= ($validation->getError('prioritization')) ? 'is-invalid' : '' ?>" required>
+                                                <option value="">Select Option</option>
+                                                <option value="Usual" <?= old('prioritization') == 'Usual' ? 'selected' : '' ?>>Usual</option>
+                                                <option value="Urgent" <?= old('prioritization') == 'Urgent' ? 'selected' : '' ?>>Urgent</option>
+                                            </select>
+                                            <?php if ($validation->getError('prioritization')) : ?>
+                                                <div class="invalid-feedback"><?= $validation->getError('prioritization') ?></div>
+                                            <?php endif; ?>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label for="action">Action</label>
+                                            <select name="action" id="action" class="form-control bg-white <?= ($validation->getError('action')) ? 'is-invalid' : '' ?>" required>
+                                                <option value="">Select Option</option>
+                                                <option value="For Submission of Documents" <?= old('action') == 'For Submission of Documents' ? 'selected' : '' ?>>For Submission of Documents</option>
+                                                <option value="For approval/signature" <?= old('action') == 'For approval/signature' ? 'selected' : '' ?>>For approval/signature</option>
+                                                <option value="For monitoring" <?= old('action') == 'For monitoring' ? 'selected' : '' ?>>For monitoring</option>
+                                                <option value="For comment/justification" <?= old('action') == 'For comment/justification' ? 'selected' : '' ?>>For comment/justification</option>
+                                                <option value="For consolidation" <?= old('action') == 'For consolidation' ? 'selected' : '' ?>>For consolidation</option>
+                                                <option value="For confirmation" <?= old('action') == 'For confirmation' ? 'selected' : '' ?>>For confirmation</option>
+                                                <option value="For printing" <?= old('action') == 'For printing' ? 'selected' : '' ?>>For printing</option>
+                                                <option value="For dissemination" <?= old('action') == 'For dissemination' ? 'selected' : '' ?>>For dissemination</option>
+                                                <!-- <option value="For other appropriate actions" <?= old('action') == 'For other appropriate actions' ? 'selected' : '' ?>>For other appropriate actions, please specify.</option> -->
+                                            </select>
+                                            <?php if ($validation->getError('action')) : ?>
+                                                <div class="invalid-feedback"><?= $validation->getError('action') ?></div>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3 row">
+                                        <div class="col-md-6">
                                             <label for="date_of_letter">Date of Letter</label>
                                             <div class="input-group date" id="datepicker">
                                                 <input type="text" name="date_of_letter" id="date_of_letter" class="form-control bg-white <?= ($validation->getError('date_of_letter')) ? 'is-invalid' : '' ?>" placeholder="Date of Letter" value="<?= old('date_of_letter') ?>" required>
@@ -179,7 +212,7 @@
 
         <?= $this->endSection(); ?>
 
-    
+
 
         <?= $this->section("scripts"); ?>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

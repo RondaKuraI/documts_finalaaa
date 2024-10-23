@@ -19,6 +19,8 @@ class FileModel extends Model
         'recipient',
         'subject',
         'description',
+        'prioritization',
+        'action',
         'date_of_letter',
         'deadline',
         'status',
