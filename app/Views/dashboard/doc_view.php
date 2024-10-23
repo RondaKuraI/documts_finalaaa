@@ -88,9 +88,8 @@
                                     <br>
 
                                     <div class="shadow d-flex justify-content-between align-items-center bg-white rounded p-2 mb-2">
-                                        <div class="mb-0 ">
-                                            <label for="file">File</label>
-                                            <!-- <a href="<?= base_url($document['path']) ?>" target="_blank" class="btn btn-primary">Download</a> -->
+                                        <div class="mb-0">
+                                            <label for="file"><?= $document['original_name'] ?></label>
                                         </div>
                                         <div>
                                             <a href="<?= base_url('view/' . $document['id']) ?>" class="btn btn-sm btn-primary me-2">View</a>

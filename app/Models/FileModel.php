@@ -25,6 +25,7 @@ class FileModel extends Model
         'deadline',
         'status',
         'path',
+        'original_name',
         'qr_code'
     ];
 

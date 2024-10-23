@@ -107,22 +107,13 @@ class FileUploadController extends BaseController
             'file' => 'uploaded[file]|max_size[file,30000]|ext_in[file,pdf,doc,docx]'
         ]);
 
-        // if (!$validation->withRequest($this->request)->run()) {
-        //     $errors = $validation->getErrors();
-        //     $errorMessages = implode(', ', $errors); // Convert array to string
-        //     return redirect()->back()->withInput()->with('main_error', $errorMessages);
-        // }
-
         if (!$validation->withRequest($this->request)->run()) {
             $errors = $validation->getErrors();
             $errorMessages = implode(', ', $errors); // Convert array to string
             $this->session->setFlashdata('main_error', $errorMessages); // Store in session
             return redirect()->back()->withInput();
         }
-        
 
-        // if (!is_dir('./uploads/')) mkdir('./uploads/');
-        // Ensure the uploads directory exists and is writable
         $uploadsDir = FCPATH . 'uploads';
         if (!is_dir($uploadsDir)) {
             mkdir($uploadsDir, 0755, true);
@@ -145,37 +136,50 @@ class FileUploadController extends BaseController
         $date_of_letter = $this->request->getPost('date_of_letter');
         $deadline = $this->request->getPost('deadline');
         $file = $this->request->getFile('file');
-        $fname = $file->getRandomName();
+        // $fname = $file->getRandomName();
 
-        /// Generate the QR code image
+        // Get original filename and sanitize it
+        $originalName = $file->getClientName();
+        $fileExt = $file->getClientExtension();
+        $baseName = pathinfo($originalName, PATHINFO_FILENAME);
+
+        // Sanitize the filename
+        $safeName = url_title($baseName, '-', true); // Converts spaces to dashes and lowercase
+        
+        // Add timestamp to ensure uniqueness while keeping original name
+        $finalName = $safeName . '_' . time() . '.' . $fileExt;
+
+        // Check if file with this name already exists and append number if needed
+        $counter = 1;
+        while (file_exists($uploadsDir . DIRECTORY_SEPARATOR . $finalName)) {
+            $finalName = $safeName . '_' . time() . '_' . $counter . '.' . $fileExt;
+            $counter++;
+        }
+
+        // Generate QR code
         try {
             $result = Builder::create()
                 ->writer(new PngWriter())
                 ->data($doc_code)
                 ->encoding(new Encoding('UTF-8'))
-                ->errorCorrectionLevel(ErrorCorrectionLevel::Low) // Use correct class
+                ->errorCorrectionLevel(ErrorCorrectionLevel::Low)
                 ->size(300)
                 ->margin(10)
-                ->roundBlockSizeMode(RoundBlockSizeMode::Margin) // Use correct class
+                ->roundBlockSizeMode(RoundBlockSizeMode::Margin)
                 ->build();
 
             $qrCodeFilename = 'qr_code_' . $doc_code . '.png';
-            $qrCodePath = FCPATH . 'uploads' . DIRECTORY_SEPARATOR . $qrCodeFilename;
+            $qrCodePath = $uploadsDir . DIRECTORY_SEPARATOR . $qrCodeFilename;
             $result->saveToFile($qrCodePath);
         } catch (\Exception $e) {
             log_message('error', 'QR Code generation failed: ' . $e->getMessage());
             return redirect()->back()->withInput()->with('main_error', 'QR Code generation failed: ' . $e->getMessage());
         }
 
-
-        while ($this->model->where("path", "uploads/{$fname}")->countAllResults() > 0) {
-            $fname = $file->getRandomName();
-        }
-
         $userName = $this->session->get('name');
         $sender = $userName; // Use the logged-in user's name as the sender
 
-        if ($file->move("uploads/", $fname)) {
+        if ($file->move($uploadsDir, $finalName)) {
             $this->model->save([
                 "doc_code" => $doc_code,
                 "sender" => $sender,
@@ -186,7 +190,8 @@ class FileUploadController extends BaseController
                 "action" => $action,
                 "date_of_letter" => $date_of_letter,
                 "deadline" => $deadline,
-                "path" => "uploads/" . $fname,
+                "path" => "uploads/" . $finalName,
+                "original_name" => $originalName, // Optional: Store original name in database
                 "qr_code" => $qrCodeFilename
             ]);
 
