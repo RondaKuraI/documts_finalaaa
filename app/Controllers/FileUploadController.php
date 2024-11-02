@@ -66,7 +66,7 @@ class FileUploadController extends BaseController
     public function checkDocCodeUniqueness()
     {
         $doc_code = $this->request->getPost('doc_code');
-        
+
         if (is_array($doc_code)) {
             $doc_code = implode('', $doc_code);
         }
@@ -145,7 +145,7 @@ class FileUploadController extends BaseController
 
         // Sanitize the filename
         $safeName = url_title($baseName, '-', true); // Converts spaces to dashes and lowercase
-        
+
         // Add timestamp to ensure uniqueness while keeping original name
         $finalName = $safeName . '_' . time() . '.' . $fileExt;
 
@@ -178,6 +178,19 @@ class FileUploadController extends BaseController
 
         $userName = $this->session->get('name');
         $sender = $userName; // Use the logged-in user's name as the sender
+
+        if (!is_dir($uploadsDir)) {
+            if (!mkdir($uploadsDir, 0755, true)) {
+                log_message('error', 'Failed to create uploads directory: ' . $uploadsDir);
+                return redirect()->back()->with('main_error', 'Failed to create uploads directory');
+            }
+        }
+        
+        if (!is_writable($uploadsDir)) {
+            log_message('error', 'Uploads directory is not writable: ' . $uploadsDir);
+            return redirect()->back()->with('main_error', 'Uploads directory is not writable');
+        }
+        
 
         if ($file->move($uploadsDir, $finalName)) {
             $this->model->save([
@@ -252,38 +265,65 @@ class FileUploadController extends BaseController
     }
 
     public function search()
-    {
-        $keyword = $this->request->getGet('keyword');
-        $userRole = $this->session->get('role');
-        $userName = $this->session->get('name');
+{
+    $keyword = $this->request->getGet('keyword');
+    $type = $this->request->getGet('type') ?? 'outgoing'; // Default to outgoing if not specified
+    $userRole = $this->session->get('role');
+    $userName = $this->session->get('name');
 
-        if ($keyword) {
-            if ($userRole == 'admin') {
-                $this->data['uploads'] = $this->model->like('subject', $keyword)
+    // Set view and data key based on type
+    $viewPath = 'dashboard/' . $type;
+    $dataKey = ($type === 'incoming') ? 'incoming' : 'uploads';
+
+    if ($keyword) {
+        if ($userRole == 'admin') {
+            $this->data[$dataKey] = $this->model
+                ->groupStart()
+                    ->like('subject', $keyword)
                     ->orLike('description', $keyword)
                     ->orLike('sender', $keyword)
                     ->orLike('recipient', $keyword)
-                    ->findAll();
-            } else {
-                $this->data['uploads'] = $this->model->where('sender', $userName)
-                    ->groupStart()
+                    ->orLike('doc_code', $keyword)
+                ->groupEnd()
+                ->findAll();
+        } else {
+            // For non-admin users, filter based on sender/recipient
+            $query = $this->model
+                ->groupStart()
                     ->like('subject', $keyword)
                     ->orLike('description', $keyword)
+                    ->orLike('sender', $keyword)
                     ->orLike('recipient', $keyword)
-                    ->groupEnd()
-                    ->findAll();
-            }
-        } else {
-            // If no keyword, return all documents (respecting user role)
-            if ($userRole == 'admin') {
-                $this->data['uploads'] = $this->model->findAll();
+                    ->orLike('doc_code', $keyword)
+                ->groupEnd();
+
+            // Add user-specific condition based on type
+            if ($type === 'incoming') {
+                $query->where('recipient', $userName);
             } else {
-                $this->data['uploads'] = $this->model->where('sender', $userName)->findAll();
+                $query->where('sender', $userName);
+            }
+
+            $this->data[$dataKey] = $query->findAll();
+        }
+    } else {
+        // If no keyword, return all documents (respecting user role)
+        if ($userRole == 'admin') {
+            $this->data[$dataKey] = $this->model->findAll();
+        } else {
+            if ($type === 'incoming') {
+                $this->data[$dataKey] = $this->model->where('recipient', $userName)->findAll();
+            } else {
+                $this->data[$dataKey] = $this->model->where('sender', $userName)->findAll();
             }
         }
-
-        return view('dashboard/outgoing', $this->data);
     }
+
+    // Pass additional data needed by the views
+    $this->data['session'] = $this->session;
+
+    return view($viewPath, $this->data);
+}
 
     public function incoming()
     {
@@ -384,5 +424,91 @@ class FileUploadController extends BaseController
                 'message' => 'QR Code generation failed: ' . $e->getMessage()
             ]);
         }
+    }
+
+    public function viewFile($id)
+    {
+        $document = $this->model->find($id);
+
+        if (!$document) {
+            return redirect()->back()->with('error', 'Document not found');
+        }
+
+        $filePath = FCPATH . $document['path'];
+        $fileExtension = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
+
+        if (!file_exists($filePath)) {
+            return redirect()->back()->with('error', 'File not found');
+        }
+
+        // Handle DOC and DOCX files
+        if (in_array($fileExtension, ['doc', 'docx'])) {
+            // Instead of using Office Online Viewer directly, use Google Docs Viewer as a fallback
+            $fileUrl = base_url($document['path']);
+            $encodedUrl = urlencode($fileUrl);
+            
+            return view('dashboard/file_viewer', [
+                'document' => $document,
+                'fileUrl' => $fileUrl,
+                'fileName' => $document['original_name'],
+                'fileType' => $fileExtension,
+                'isLoggedIn' => session()->get('isLoggedIn') ?? false
+            ]);
+        }
+
+        // Handle PDF files directly
+        if ($fileExtension === 'pdf') {
+            header('Content-Type: application/pdf');
+            header('Content-Disposition: inline; filename="' . $document['original_name'] . '"');
+            header('Cache-Control: no-cache, must-revalidate');
+            readfile($filePath);
+            exit;
+        }
+
+        // Handle unsupported file types
+        return redirect()->back()->with('error', 'Unsupported file type');
+    }
+
+    // Add a new method to serve the file content
+    public function serveFile($id)
+    {
+        $document = $this->model->find($id);
+        
+        if (!$document) {
+            return $this->response->setStatusCode(404, 'File not found');
+        }
+
+        $filePath = FCPATH . $document['path'];
+        
+        if (!file_exists($filePath)) {
+            return $this->response->setStatusCode(404, 'File not found');
+        }
+
+        $fileExtension = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
+        
+        // Set appropriate content type
+        switch ($fileExtension) {
+            case 'doc':
+                $contentType = 'application/msword';
+                break;
+            case 'docx':
+                $contentType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+                break;
+            case 'pdf':
+                $contentType = 'application/pdf';
+                break;
+            default:
+                $contentType = 'application/octet-stream';
+        }
+
+        // Set headers for file download
+        header('Content-Type: ' . $contentType);
+        header('Content-Disposition: inline; filename="' . $document['original_name'] . '"');
+        header('Cache-Control: public, max-age=3600');
+        header('Content-Length: ' . filesize($filePath));
+        
+        // Output file content
+        readfile($filePath);
+        exit;
     }
 }

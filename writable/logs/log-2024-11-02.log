@@ -1,0 +1,40 @@
+ERROR - 2024-11-02 06:22:24 --> mysqli_sql_exception: Unknown column 'type' in 'where clause' in C:\laragon\www\documts_finalaaa\system\Database\MySQLi\Connection.php:306
+Stack trace:
+#0 C:\laragon\www\documts_finalaaa\system\Database\MySQLi\Connection.php(306): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\laragon\www\documts_finalaaa\system\Database\BaseConnection.php(692): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\laragon\www\documts_finalaaa\system\Database\BaseConnection.php(606): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\laragon\www\documts_finalaaa\system\Database\BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\laragon\www\documts_finalaaa\system\Model.php(237): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\laragon\www\documts_finalaaa\system\BaseModel.php(624): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\laragon\www\documts_finalaaa\app\Controllers\FileUploadController.php(319): CodeIgniter\BaseModel->findAll()
+#7 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(919): App\Controllers\FileUploadController->search()
+#8 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\FileUploadController))
+#9 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\laragon\www\documts_finalaaa\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#11 C:\laragon\www\documts_finalaaa\system\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\...')
+#12 {main}
+CRITICAL - 2024-11-02 06:22:24 --> Unknown column 'type' in 'where clause'
+in SYSTEMPATH\Database\BaseConnection.php on line 646.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `filess`
+WHERE `type` = :type:', [...], false)
+ 2 SYSTEMPATH\Model.php(237): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(624): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Controllers\FileUploadController.php(319): CodeIgniter\BaseModel->findAll()
+ 5 SYSTEMPATH\CodeIgniter.php(919): App\Controllers\FileUploadController->search()
+ 6 SYSTEMPATH\CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\FileUploadController))
+ 7 SYSTEMPATH\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\documts_finalaaa\\public\\index.php')
+CRITICAL - 2024-11-02 07:04:42 --> Undefined variable $row
+in APPPATH\Views\dashboard\incoming.php on line 79.
+ 1 APPPATH\Views\dashboard\incoming.php(79): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $row', 'C:\\laragon\\www\\documts_finalaaa\\app\\Views\\dashboard\\incoming.php', 79)
+ 2 SYSTEMPATH\View\View.php(226): include('C:\\laragon\\www\\documts_finalaaa\\app\\Views\\dashboard\\incoming.php')
+ 3 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1188): CodeIgniter\View\View->render('dashboard/incoming', [], true)
+ 5 APPPATH\Controllers\FileUploadController.php(354): view('dashboard/incoming', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(919): App\Controllers\FileUploadController->incoming()
+ 7 SYSTEMPATH\CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\FileUploadController))
+ 8 SYSTEMPATH\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\documts_finalaaa\\public\\index.php')

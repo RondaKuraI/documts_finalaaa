@@ -1,0 +1,43 @@
+# Allow access to document files
+<IfModule authz_core_module>
+    Require all granted
+</IfModule>
+<IfModule !authz_core_module>
+    Allow from all
+</IfModule>
+
+# Only allow specific file types
+<FilesMatch "^.*\.(pdf|doc|docx)$">
+    Order allow,deny
+    Allow from all
+</FilesMatch>
+
+# Deny access to all other files
+<FilesMatch "^(?!(.*\.(pdf|doc|docx)$))">
+    Order deny,allow
+    Deny from all
+</FilesMatch>
+
+# Prevent script execution
+<IfModule mod_php.c>
+    php_flag engine off
+</IfModule>
+
+# Set proper MIME types
+<IfModule mod_mime.c>
+    AddType application/pdf .pdf
+    AddType application/msword .doc
+    AddType application/vnd.openxmlformats-officedocument.wordprocessingml.document .docx
+</IfModule>
+
+# Security headers
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+    
+    # Cache control for documents
+    <FilesMatch "\.(pdf|doc|docx)$">
+        Header set Cache-Control "public, max-age=3600"
+    </FilesMatch>
+</IfModule>

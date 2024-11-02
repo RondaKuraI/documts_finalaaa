@@ -17,7 +17,19 @@
         <div class="bg-white">
             <div class="container-fluid pt-4 px-4">
                 <div class="row">
-                    <!-- <div class="col-lg-6 mx-auto"> -->
+                    <!-- Simple Breadcrumb -->
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12 px-4 py-2">
+                                <a href="<?= base_url('outgoing') ?>" class="text-decoration-none text-primary">Outgoing Document(s)</a>
+                                <span class="text-secondary mx-2">/</span>
+                                <span class="text-secondary">Document View</span>
+                                <a href="#" onclick="window.print(); return false;" class="float-end text-dark">
+                                    <i class="bi bi-printer"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-12 col-sm-12 text-center text-sm-start">
                         <div class="card shadow bg-white">
                             <div class="card-header d-flex justify-content-center align-items-center bg-light">
@@ -45,60 +57,73 @@
                                         </h6>
                                     </div>
 
+                                    <!-- Details Section -->
+                                    <div class="mb-4">
+                                        <h4 class="text-white mb-3 d-flex justify-content-start align-items-center bg-primary p-1">
+                                            <i class="bi bi-info-circle me-2"></i> Details
+                                        </h4>
 
-                                    <div>
-                                        <h4 class="text-white mb-0 d-flex justify-content-center align-items-center bg-primary">Details</h4>
-                                    </div>
-                                    <br>
-                                    <div class="mb-3">
-                                        <label for="sender" class="text-dark">Sender</label>
-                                        <input type="text" name="sender" id="sender" class="form-control bg-outline-dark" value="<?= $document['sender'] ?>" disabled>
-                                    </div>
+                                        <div class="rounded">
+                                            <div class="row">
+                                                <div class="mb-3">
+                                                    <label for="sender" class="fw-bold text-dark">Sender</label>
+                                                    <input type="text" name="sender" id="sender" class="form-control bg-outline-dark" value="<?= $document['sender'] ?>" disabled>
+                                                </div>
 
-                                    <div class="mb-3">
-                                        <label for="recipient">Recipient</label>
-                                        <input type="text" name="recipient" id="recipient" class="form-control bg-outline-dark" value="<?= $document['recipient'] ?>" disabled>
-                                    </div>
+                                                <div class="mb-3">
+                                                    <label for="recipient" class="fw-bold text-dark">Recipient</label>
+                                                    <input type="text" name="recipient" id="recipient" class="form-control bg-outline-dark" value="<?= $document['recipient'] ?>" disabled>
+                                                </div>
 
-                                    <div class="mb-3">
-                                        <label for="subject">Subject</label>
-                                        <input type="text" name="subject" id="subject" class="form-control bg-outline-dark" value="<?= $document['subject'] ?>" disabled>
-                                    </div>
+                                                <div class="mb-3">
+                                                    <label for="subject" class="fw-bold text-dark">Subject</label>
+                                                    <input type="text" name="subject" id="subject" class="form-control bg-outline-dark" value="<?= $document['subject'] ?>" disabled>
+                                                </div>
 
-                                    <div class="mb-3">
-                                        <label for="description">Description</label>
-                                        <textarea name="description" id="description" rows="4" class="form-control bg-outline-dark" disabled><?= $document['description'] ?></textarea>
-                                    </div>
+                                                <div class="mb-3">
+                                                    <label for="description" class="fw-bold text-dark">Description</label>
+                                                    <textarea name="description" id="description" rows="4" class="form-control bg-outline-dark" disabled><?= $document['description'] ?></textarea>
+                                                </div>
 
-                                    <div class="mb-3 row">
-                                        <div class="col-md-6">
-                                            <label for="date_of_letter">Date of Letter</label>
-                                            <input type="text" name="date_of_letter" id="date_of_letter" class="form-control bg-outline-dark" value="<?= $document['date_of_letter'] ?>" disabled>
-                                        </div>
+                                                <div class="mb-3 row">
+                                                    <div class="col-md-6">
+                                                        <label for="date_of_letter" class="fw-bold text-dark">Date of Letter</label>
+                                                        <input type="text" name="date_of_letter" id="date_of_letter" class="form-control bg-outline-dark" value="<?= $document['date_of_letter'] ?>" disabled>
+                                                    </div>
 
-                                        <div class="col-md-6">
-                                            <label for="deadline">Deadline</label>
-                                            <input type="text" name="deadline" id="deadline" class="form-control bg-outline-dark" value="<?= $document['deadline'] ?>" disabled>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <div>
-                                        <h4 class="text-white mb-0 d-flex justify-content-center align-items-center bg-primary">Attachment</h4>
-                                    </div>
-                                    <br>
-
-                                    <div class="shadow d-flex justify-content-between align-items-center bg-white rounded p-2 mb-2">
-                                        <div class="mb-0">
-                                            <label for="file"><?= $document['original_name'] ?></label>
-                                        </div>
-                                        <div>
-                                            <a href="<?= base_url('view/' . $document['id']) ?>" class="btn btn-sm btn-primary me-2">View</a>
-                                            <a href="<?= base_url($document['path']) ?>" class="btn btn-sm btn-warning">Download</a>
+                                                    <div class="col-md-6">
+                                                        <label for="deadline" class="fw-bold text-dark">Deadline</label>
+                                                        <input type="text" name="deadline" id="deadline" class="form-control bg-outline-dark" value="<?= $document['deadline'] ?>" disabled>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <br>
-                                    <div>
-                                        <h4 class="text-white mb-0 d-flex justify-content-center align-items-center bg-primary">QR Code</h4>
+
+                                    <!-- Attachments Section -->
+                                    <div class="mb-4">
+                                        <h4 class="text-white mb-3 d-flex justify-content-start align-items-center bg-primary p-1">
+                                            <i class="bi bi-paperclip me-2"></i> Attachments
+                                        </h4>
+
+                                        <div class="border rounded p-2">
+                                            <div class="d-flex justify-content-between align-items-center bg-white">
+                                                <div class="d-flex align-items-center">
+                                                    <i class="bi bi-file-earmark-pdf me-2 text-danger"></i>
+                                                    <span><?= !empty($document['original_name']) ? $document['original_name'] : 'File' ?></span>
+                                                </div>
+                                                <div>
+                                                    <a href="<?= base_url('view/file/' . $document['id']) ?>" class="btn btn-sm btn-primary me-2" target="_blank">View</a>
+                                                    <a href="<?= base_url($document['path']) ?>" class="btn btn-sm btn-warning">Download</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <h4 class="text-white mb-3 d-flex justify-content-start align-items-center bg-primary p-1">
+                                            <i class="bi bi-qr me-2"></i> QR Code
+                                        </h4>
                                         <div class="text-center mt-3">
                                             <?php if (!empty($document['qr_code'])) : ?>
                                                 <img src="<?= base_url('uploads/' . $document['qr_code']) ?>" alt="QR Code" class="img-fluid" style="max-width: 200px;">

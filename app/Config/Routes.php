@@ -26,6 +26,8 @@ $routes->group('', ['filter' => 'auth'], function($routes){
     $routes->get('/outgoing', 'FileUploadController::index');
     $routes->post('/send', 'FileUploadController::upload');
     $routes->get('/doc_view/(:num)', 'FileUploadController::doc_view/$1');
+    $routes->get('view/file/(:num)', 'FileUploadController::viewFile/$1');
+    $routes->get('serve/file/(:num)', 'FileUploadController::serveFile/$1');
     $routes->get('/incoming_doc_view/(:num)', 'FileUploadController::incoming_doc_view/$1');
     $routes->get('/maintenance', 'ChartController::index');
     // $routes->get('/reports', 'Home::reports');
