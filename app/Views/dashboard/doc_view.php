@@ -41,20 +41,57 @@
                             </div>
                             <div class="card-body p-6">
                                 <form>
-                                    <!-- <div class="mb-3">
-                                        <label for="doc_code">Document Code</label>
-                                        <input type="text" name="doc_code" id="doc_code" class="form-control bg-outline-dark" value="<?= $document['doc_code'] ?>" disabled>
-                                    </div> -->
-                                    <div class="bg-primary text-white rounded p-3 mb-2">
-                                        <h6 class="mb-0">Status - <?= $document['recipient'] ?></h6>
-                                        <h6 class="mb-0">
-                                            <br>
+                                    <div class="mb-4">
+                                        <!-- Clickable Status Header -->
+                                        <div class="bg-primary text-white rounded p-3 mb-2" role="button" data-bs-toggle="collapse" data-bs-target="#statusTimeline" aria-expanded="false" aria-controls="statusTimeline" style="cursor: pointer;">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <h6 class="mb-0">
+                                                        <i class="bi bi-clipboard-check me-1"></i>
+                                                        Status - <?= $document['recipient'] ?>
+                                                    </h6>
+                                                    <h6 class="mb-0">
+                                                        <?php if ($document['status'] == 'pending') : ?>
+                                                            <span class="badge bg-warning text-dark fs-7 p-1">Pending</span>
+                                                        <?php elseif ($document['status'] == 'received') : ?>
+                                                            <span class="badge bg-success fs-7 p-1">Received</span>
+                                                        <?php elseif ($document['status'] == 'confirmed') : ?>
+                                                            <span class="badge bg-danger fs-7 p-1">Ended</span>
+                                                        <?php else : ?>
+                                                            <span class="badge bg-secondary fs-5 p-2"><?= ucfirst($document['status']) ?></span>
+                                                        <?php endif; ?>
+                                                    </h6>
+                                                </div>
+                                                <i class="bi bi-chevron-down"></i>
+                                            </div>
+                                        </div>
+
+                                        <!-- Collapsible Timeline Content -->
+                                        <div class="collapse" id="statusTimeline">
                                             <?php if ($document['status'] == 'pending') : ?>
-                                                <span class="status-pending">Pending</span>
+                                                <div class="alert alert-warning py-1 px-2 mb-2 text-center">
+                                                    Pending
+                                                </div>
                                             <?php else : ?>
-                                                <?= $document['status'] ?>
+                                                <?php if ($document['updated_at']) : ?>
+                                                    <div class="alert alert-success py-1 px-2 mb-2 text-center">
+                                                        Document Received on <?= date('M d, Y h:i a', strtotime($document['updated_at'])) ?>
+                                                    </div>
+                                                <?php endif; ?>
+
+                                                <?php if ($document['confirmed_at']) : ?>
+                                                    <div class="alert alert-success py-1 px-2 mb-2 text-center">
+                                                        Document confirmed on <?= date('M d, Y h:i a', strtotime($document['confirmed_at'])) ?>
+                                                    </div>
+                                                <?php endif; ?>
+
+                                                <?php if ($document['status'] == 'confirmed') : ?>
+                                                    <div class="alert alert-danger py-1 px-2 mb-2 text-center">
+                                                        Ended
+                                                    </div>
+                                                <?php endif; ?>
                                             <?php endif; ?>
-                                        </h6>
+                                        </div>
                                     </div>
 
                                     <!-- Details Section -->
@@ -88,12 +125,12 @@
                                                 <div class="mb-3 row">
                                                     <div class="col-md-6">
                                                         <label for="date_of_letter" class="fw-bold text-dark">Date of Letter</label>
-                                                        <input type="text" name="date_of_letter" id="date_of_letter" class="form-control bg-outline-dark" value="<?= $document['date_of_letter'] ?>" disabled>
+                                                        <input type="text" name="date_of_letter" id="date_of_letter" class="form-control bg-outline-dark" value="<?= date('M d, Y', strtotime($document['date_of_letter'])) ?>" disabled>
                                                     </div>
 
                                                     <div class="col-md-6">
                                                         <label for="deadline" class="fw-bold text-dark">Deadline</label>
-                                                        <input type="text" name="deadline" id="deadline" class="form-control bg-outline-dark" value="<?= $document['deadline'] ?>" disabled>
+                                                        <input type="text" name="deadline" id="deadline" class="form-control bg-outline-dark" value="<?= date('M d, Y', strtotime($document['deadline'])) ?>" disabled>
                                                     </div>
                                                 </div>
                                             </div>
@@ -140,4 +177,28 @@
             </div>
         </div>
 
+        <?= $this->endSection(); ?>
+
+        <?= $this->section('scripts'); ?>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Add click event to toggle the chevron icon
+                const statusHeader = document.querySelector('[data-bs-toggle="collapse"]');
+                const chevronIcon = statusHeader.querySelector('.bi-chevron-down');
+
+                statusHeader.addEventListener('click', function() {
+                    chevronIcon.style.transform = chevronIcon.style.transform === 'rotate(180deg)' ?
+                        'rotate(0deg)' :
+                        'rotate(180deg)';
+                });
+            });
+        </script>
+        <?= $this->endSection(); ?>
+
+        <?= $this->section('style'); ?>
+        <style>
+            .bi-chevron-down {
+                transition: transform 0.3s ease;
+            }
+        </style>
         <?= $this->endSection(); ?>

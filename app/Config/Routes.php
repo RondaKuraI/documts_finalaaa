@@ -45,6 +45,8 @@ $routes->get('dashboard/message/view/(:num)', 'FileUploadController::viewMessage
 
 $routes->get('/user_management', 'UserController::user_management');
 
+$routes->post('update-status', 'UpdateDocStatusController::updateStatus');
+
 
 
 

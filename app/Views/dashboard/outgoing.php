@@ -72,7 +72,7 @@
                                                     <td colspan="7" class="text-center py-3">No records found</td>
                                                 </tr>
                                             <?php else : ?>
-                                                <?php foreach ($uploads as $row) : 
+                                                <?php foreach ($uploads as $row) :
                                                     $row['fname'] = str_replace("uploads/", "", $row['path']);
                                                 ?>
                                                     <tr>
@@ -87,17 +87,19 @@
                                                                 <?= $row['description'] ?>
                                                             </div>
                                                             <div class="d-md-none mt-1">
-                                                                <small class="text-muted"><?= $row['date_of_letter'] ?></small>
+                                                                <small class="text-muted"><?= date('M d, Y', strtotime($row['date_of_letter'])) ?></small>
                                                             </div>
                                                         </td>
-                                                        <td class="d-none d-lg-table-cell"><?= $row['date_of_letter'] ?></td>
+                                                        <td class="d-none d-lg-table-cell"><?= date('M d, Y', strtotime($row['date_of_letter'])) ?></td>
                                                         <td>
                                                             <?php if ($row['status'] == 'pending') : ?>
                                                                 <span class="badge bg-warning text-dark">Pending</span>
                                                             <?php elseif ($row['status'] == 'received') : ?>
-                                                                <span class="badge bg-danger">Received</span>
+                                                                <span class="badge bg-success">Received</span>
+                                                            <?php elseif ($row['status'] == 'confirmed') : ?>
+                                                                <span class="badge bg-danger">Ended</span>
                                                             <?php else : ?>
-                                                                <span class="badge bg-success"><?= ucfirst($row['status']) ?></span>
+                                                                <span class="badge bg-secondary"><?= ucfirst($row['status']) ?></span>
                                                             <?php endif; ?>
                                                         </td>
                                                         <td>
@@ -118,23 +120,23 @@
                 </div>
             </div>
         </div>
-        
+
         <?= $this->endSection(); ?>
 
-<!-- Add this to your footer or before </body> -->
-<script>
-    $(document).ready(function() {
-        // Initialize DataTable with responsive features
-        $('#mydatatable').DataTable({
-            responsive: true,
-            ordering: true,
-            pageLength: 10,
-            language: {
-                searchPlaceholder: "Search records"
-            },
-            dom: "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
-                "<'row'<'col-sm-12'tr>>" +
-                "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
-        });
-    });
-</script>
+        <!-- Add this to your footer or before </body> -->
+        <script>
+            $(document).ready(function() {
+                // Initialize DataTable with responsive features
+                $('#mydatatable').DataTable({
+                    responsive: true,
+                    ordering: true,
+                    pageLength: 10,
+                    language: {
+                        searchPlaceholder: "Search records"
+                    },
+                    dom: "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
+                        "<'row'<'col-sm-12'tr>>" +
+                        "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+                });
+            });
+        </script>

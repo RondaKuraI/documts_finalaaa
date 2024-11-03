@@ -85,11 +85,12 @@
                                                                 <?= $message['description'] ?>
                                                             </div>
                                                             <div class="d-md-none mt-1">
-                                                                <small class="text-muted"><?= $message['date_of_letter'] ?></small>
+                                                                <small class="text-muted"><?= date('M d, Y', strtotime($message['date_of_letter'])) ?></small>
                                                             </div>
                                                         </td>
-                                                        <td class="d-none d-lg-table-cell"><?= $message['date_of_letter'] ?></td>
-                                                        <td class="d-none d-lg-table-cell"><?= $message['deadline'] ?? 'N/A' ?></td>
+                                                        <td class="d-none d-lg-table-cell"><?= date('M d, Y', strtotime($message['date_of_letter'])) ?></td>
+                                                        <!-- <td class="d-none d-lg-table-cell"><?= $message['deadline'] ?? 'N/A' ?></td> -->
+                                                        <td class="d-none d-lg-table-cell"><?= date('M d, Y', strtotime($message['deadline']) ?? 'N/A') ?></td>
                                                         <td>
                                                             <a href="<?= base_url('incoming_doc_view/' . $message['id']) ?>" class="btn btn-info btn-sm text-white">
                                                                 <i class="bi bi-search"></i>

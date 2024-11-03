@@ -22,6 +22,8 @@ class FileModel extends Model
         'prioritization',
         'action',
         'date_of_letter',
+        'updated_at',
+        'confirmed_at',
         'deadline',
         'status',
         'path',
