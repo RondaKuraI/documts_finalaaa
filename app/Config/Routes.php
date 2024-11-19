@@ -34,7 +34,13 @@ $routes->group('', ['filter' => 'auth'], function($routes){
     // $routes->get('/user_management', 'Home::user_management');
     $routes->get('search', 'FileUploadController::search');
     $routes->get('incoming', 'FileUploadController::incoming');
+    $routes->get('all_documents', 'FileUploadController::allDocuments');
     $routes->get('document-chart', 'ChartController::index');
+    $routes->get('/messages', 'MessageController::messages');
+    
+    $routes->post('reply/(:num)', 'FileUploadController::reply/$1');
+    $routes->get('conversation/(:num)', 'FileUploadController::showConversations/$1');
+
 });
 
 $routes->post('generate-qr', 'FileUploadController::generateQR');
@@ -46,6 +52,8 @@ $routes->get('dashboard/message/view/(:num)', 'FileUploadController::viewMessage
 $routes->get('/user_management', 'UserController::user_management');
 
 $routes->post('update-status', 'UpdateDocStatusController::updateStatus');
+
+
 
 
 

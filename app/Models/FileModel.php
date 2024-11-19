@@ -28,7 +28,7 @@ class FileModel extends Model
         'status',
         'path',
         'original_name',
-        'qr_code'
+        'qr_code',
     ];
 
     // Dates

@@ -121,7 +121,9 @@
                                                 </div>
                                                 <div class="d-flex gap-2 attachment-buttons">
                                                     <a href="<?= base_url('view/file/' . $document['id']) ?>" class="btn btn-sm btn-primary" target="_blank">View</a>
-                                                    <a href="<?= base_url($document['path']) ?>" class="btn btn-sm btn-warning">Download</a>
+                                                    <?php if ($document['status'] !== 'pending') : ?>
+                                                        <a href="<?= base_url($document['path']) ?>" class="btn btn-sm btn-warning download-btn">Download</a>
+                                                    <?php endif; ?>
                                                 </div>
                                             </div>
                                         </div>
@@ -162,6 +164,79 @@
                                         </div>
                                     </div>
                                 </form>
+
+                                <!-- Add this to your incoming_doc_view.php -->
+                                <!-- Reply Modal -->
+                                <!-- <div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="replyModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header bg-primary text-white">
+                                                <h5 class="modal-title" id="replyModalLabel">Reply to Document</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <form action="<?= base_url('reply/' . $document['id']) ?>" method="post" enctype="multipart/form-data">
+                                                <?= csrf_field() ?>
+                                                <div class="modal-body">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Reply To</label>
+                                                        <input type="text" class="form-control" value="<?= $document['sender'] ?>" disabled>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Message</label>
+                                                        <textarea name="message" class="form-control" rows="5" required></textarea>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Attachment (optional)</label>
+                                                        <input type="file" name="attachment" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary">Send Reply</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div> -->
+
+                                <!-- Add this section to show replies -->
+                                <!-- <div class="card mt-4">
+                                    <div class="card-header bg-primary text-white">
+                                        <h5 class="mb-0">Replies</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <?php if (!empty($replies)) : ?>
+                                            <?php foreach ($replies as $reply) : ?>
+                                                <div class="border-bottom mb-3 pb-3">
+                                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                                        <div>
+                                                            <strong><?= esc($reply['sender']) ?></strong>
+                                                            <small class="text-muted ms-2"><?= date('M d, Y h:i a', strtotime($reply['created_at'])) ?></small>
+                                                        </div>
+                                                    </div>
+                                                    <p class="mb-2"><?= nl2br(esc($reply['message'])) ?></p>
+                                                    <?php if ($reply['attachment']) : ?>
+                                                        <div class="attachment">
+                                                            <i class="bi bi-paperclip me-2"></i>
+                                                            <a href="<?= base_url($reply['attachment']) ?>" class="text-decoration-none">
+                                                                <?= esc($reply['original_name']) ?>
+                                                            </a>
+                                                        </div>
+                                                    <?php endif; ?>
+                                                </div>
+                                            <?php endforeach; ?>
+                                        <?php else : ?>
+                                            <p class="text-muted mb-0">No replies yet</p>
+                                        <?php endif; ?>
+                                    </div>
+                                </div> -->
+
+                                <!-- Update your existing reply button to trigger the modal -->
+                                <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#replyModal">
+                                    <i class="fas fa-reply"></i> Reply
+                                </button>
+                                <a href="<?= base_url('conversation/' . $document['id']) ?>" class="btn btn-info">View Full Conversation</a> -->
+
                             </div>
                         </div>
                     </div>
@@ -245,25 +320,31 @@
                         .then(response => response.json())
                         .then(data => {
                             if (data.success) {
-                                // Show the attachment buttons
-                                attachmentButtons.forEach(button => {
-                                    button.style.display = 'flex';
-                                });
-
-                                // Update the UI based on the status
-                                const actionSection = document.querySelector('.d-grid');
+                                // Add download button dynamically after receiving
                                 if (status === 'received') {
+                                    const attachmentButtons = document.querySelector('.attachment-buttons');
+                                    if (!attachmentButtons.querySelector('.download-btn')) {
+                                        const downloadBtn = document.createElement('a');
+                                        downloadBtn.href = '<?= base_url($document['path']) ?>';
+                                        downloadBtn.className = 'btn btn-sm btn-warning download-btn';
+                                        downloadBtn.textContent = 'Download';
+                                        attachmentButtons.appendChild(downloadBtn);
+                                    }
+
+                                    // Update the action section UI
+                                    const actionSection = document.querySelector('.d-grid');
                                     actionSection.innerHTML = `
                         <div class="received-status">
                             <div class="alert alert-success py-1 px-2 mb-2 text-center">
                                 Document Received on ${data.timestamp}
                             </div>
                             <div class="d-flex gap-2">
-                                <button type="button" class="btn btn-outline-primary flex-grow-1" id="confirmBtn" data-document-id="${documentId}">Confirm?</button>
+                                <button type="button" class="btn btn-outline-success flex-grow-1" id="confirmBtn" data-document-id="${documentId}">Confirm?</button>
                             </div>
                         </div>
                     `;
                                 } else if (status === 'confirmed') {
+                                    const actionSection = document.querySelector('.d-grid');
                                     actionSection.innerHTML = `
                         <div>
                             <div class="alert alert-success py-1 px-2 mb-2 text-center">

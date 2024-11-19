@@ -7,7 +7,7 @@
     <!-- Sidebar End -->
 
     <!-- Content Start -->
-    <div class="content">
+    <div class="content bg-white">
         <!-- Navbar Start -->
         <?= $this->include("partials/navbar"); ?>
         <!-- Navbar End -->
@@ -103,10 +103,16 @@
                                                             <?php endif; ?>
                                                         </td>
                                                         <td>
-                                                            <a href="<?= base_url('doc_view/' . $row['id']); ?>" class="btn btn-info btn-sm text-white">
-                                                                <i class="bi bi-search"></i>
-                                                                <span class="d-none d-md-inline ms-1">View</span>
-                                                            </a>
+                                                            <div class="d-flex gap-2">
+                                                                <a href="<?= base_url('doc_view/' . $row['id']); ?>" class="btn btn-info btn-sm text-white">
+                                                                    <i class="bi bi-search"></i>
+                                                                    <span class="d-none d-md-inline ms-1">View</span>
+                                                                </a>
+                                                                <a href="<?= base_url('conversation/' . $row['id']) ?>" class="btn btn-primary btn-sm">
+                                                                    <i class="bi bi-chat-dots"></i>
+                                                                    <span class="d-none d-md-inline ms-1">Chat</span>
+                                                                </a>
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                 <?php endforeach; ?>

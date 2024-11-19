@@ -9,6 +9,7 @@ use App\Models\FileModel;
 use App\Models\RecipientModel;
 use App\Models\UserModel;
 use App\Models\NotificationModel;
+use App\Models\ReplyModel;
 
 use Endroid\QrCode\Builder\Builder;
 use Endroid\QrCode\Encoding\Encoding;
@@ -25,6 +26,7 @@ class FileUploadController extends BaseController
     public $recipientModel;
     public $userModel;
     public $notificationModel;
+    public $replyModel;
     public $session;
     public $data;
 
@@ -37,6 +39,7 @@ class FileUploadController extends BaseController
         $this->recipientModel = new RecipientModel();
         $this->userModel = new UserModel();
         $this->notificationModel = new NotificationModel();
+        $this->replyModel = new ReplyModel();
         $this->session = session();
         $this->request = \Config\Services::request();
         $this->data['session'] = $this->session;
@@ -51,15 +54,9 @@ class FileUploadController extends BaseController
         // return view('dashboard/outgoing', $data);
         // return view('dashboard/outgoing', $this->data);
         $userName = $this->session->get('name');
-        $userRole = $this->session->get('role');
 
-        if ($userRole == 'admin') {
-            // Admin sees all documents
-            $this->data['uploads'] = $this->model->findAll();
-        } else {
-            // Normal users only see their own documents
-            $this->data['uploads'] = $this->model->where('sender', $userName)->findAll();
-        }
+        $this->data['uploads'] = $this->model->where('sender', $userName)->findAll();
+
         return view('dashboard/outgoing', $this->data);
     }
 
@@ -185,12 +182,12 @@ class FileUploadController extends BaseController
                 return redirect()->back()->with('main_error', 'Failed to create uploads directory');
             }
         }
-        
+
         if (!is_writable($uploadsDir)) {
             log_message('error', 'Uploads directory is not writable: ' . $uploadsDir);
             return redirect()->back()->with('main_error', 'Uploads directory is not writable');
         }
-        
+
 
         if ($file->move($uploadsDir, $finalName)) {
             $this->model->save([
@@ -251,6 +248,7 @@ class FileUploadController extends BaseController
     public function incoming_doc_view($id)
     {
         $document = $this->model->find($id);
+        $replies = $this->getReplies($id);
         $isLoggedIn = $this->session->get('isLoggedIn') ?? false;
 
         if (!$document) {
@@ -260,98 +258,133 @@ class FileUploadController extends BaseController
 
         return view('dashboard/incoming_doc_view', [
             'document' => $document,
+            'replies' => $replies,
             'isLoggedIn' => $isLoggedIn
         ]);
     }
 
     public function search()
-{
-    $keyword = $this->request->getGet('keyword');
-    $type = $this->request->getGet('type') ?? 'outgoing'; // Default to outgoing if not specified
-    $userRole = $this->session->get('role');
-    $userName = $this->session->get('name');
+    {
+        $keyword = $this->request->getGet('keyword');
+        $type = $this->request->getGet('type') ?? 'outgoing'; // Default to outgoing if not specified
+        $userRole = $this->session->get('role');
+        $userName = $this->session->get('name');
 
-    // Set view and data key based on type
-    $viewPath = 'dashboard/' . $type;
-    $dataKey = ($type === 'incoming') ? 'incoming' : 'uploads';
+        // Set view and data key based on type
+        $viewPath = 'dashboard/' . $type;
+        $dataKey = ($type === 'incoming') ? 'incoming' : 'uploads';
 
-    if ($keyword) {
-        if ($userRole == 'admin') {
-            $this->data[$dataKey] = $this->model
-                ->groupStart()
+        if ($keyword) {
+            if ($userRole == 'admin') {
+                $this->data[$dataKey] = $this->model
+                    ->groupStart()
                     ->like('subject', $keyword)
                     ->orLike('description', $keyword)
                     ->orLike('sender', $keyword)
                     ->orLike('recipient', $keyword)
                     ->orLike('doc_code', $keyword)
-                ->groupEnd()
-                ->findAll();
-        } else {
-            // For non-admin users, filter based on sender/recipient
-            $query = $this->model
-                ->groupStart()
+                    ->groupEnd()
+                    ->findAll();
+            } else {
+                // For non-admin users, filter based on sender/recipient
+                $query = $this->model
+                    ->groupStart()
                     ->like('subject', $keyword)
                     ->orLike('description', $keyword)
                     ->orLike('sender', $keyword)
                     ->orLike('recipient', $keyword)
                     ->orLike('doc_code', $keyword)
-                ->groupEnd();
+                    ->groupEnd();
 
-            // Add user-specific condition based on type
-            if ($type === 'incoming') {
-                $query->where('recipient', $userName);
-            } else {
-                $query->where('sender', $userName);
+                // Add user-specific condition based on type
+                if ($type === 'incoming') {
+                    $query->where('recipient', $userName);
+                } else {
+                    $query->where('sender', $userName);
+                }
+
+                $this->data[$dataKey] = $query->findAll();
             }
-
-            $this->data[$dataKey] = $query->findAll();
-        }
-    } else {
-        // If no keyword, return all documents (respecting user role)
-        if ($userRole == 'admin') {
-            $this->data[$dataKey] = $this->model->findAll();
         } else {
-            if ($type === 'incoming') {
-                $this->data[$dataKey] = $this->model->where('recipient', $userName)->findAll();
+            // If no keyword, return all documents (respecting user role)
+            if ($userRole == 'admin') {
+                $this->data[$dataKey] = $this->model->findAll();
             } else {
-                $this->data[$dataKey] = $this->model->where('sender', $userName)->findAll();
+                if ($type === 'incoming') {
+                    $this->data[$dataKey] = $this->model->where('recipient', $userName)->findAll();
+                } else {
+                    $this->data[$dataKey] = $this->model->where('sender', $userName)->findAll();
+                }
             }
         }
+
+        // Pass additional data needed by the views
+        $this->data['session'] = $this->session;
+
+        return view($viewPath, $this->data);
     }
-
-    // Pass additional data needed by the views
-    $this->data['session'] = $this->session;
-
-    return view($viewPath, $this->data);
-}
 
     public function incoming()
     {
         $userName = $this->session->get('name');
-        $userRole = $this->session->get('role');
 
-        if ($userRole == 'admin') {
-            $baseQuery = $this->model;
-        } else {
-            $baseQuery = $this->model->where('recipient', $userName);
-        }
+        // Query documents where the recipient is the logged-in user
+        $baseQuery = $this->model->where('recipient', $userName);
 
-        //Counting bullshit
-        $this->data['all_incoming_count'] = $baseQuery->countAllResults();
-        $baseQuery = $baseQuery->builder();
-        $this->data['pending_count'] = $baseQuery->where('status', 'pending')->countAllResults();
-
-
-        if ($userRole == 'admin') {
-            // Admin sees all documents
-            $this->data['incoming'] = $this->model->findAll();
-        } else {
-            // Normal users only see documents where they are the recipient
-            $this->data['incoming'] = $this->model->where('recipient', $userName)->findAll();
-        }
-
+        // Retrieve incoming documents for the logged-in user
+        $this->data['incoming'] = $baseQuery->findAll();
 
         return view('dashboard/incoming', $this->data);
+        // $userName = $this->session->get('name');
+        // $userRole = $this->session->get('role');
+
+        // if ($userRole == 'admin') {
+        //     $baseQuery = $this->model;
+        // } else {
+        //     $baseQuery = $this->model->where('recipient', $userName);
+        // }
+
+        // //Counting bullshit
+        // $this->data['all_incoming_count'] = $baseQuery->countAllResults();
+        // $baseQuery = $baseQuery->builder();
+        // $this->data['pending_count'] = $baseQuery->where('status', 'pending')->countAllResults();
+
+
+        // if ($userRole == 'admin') {
+        //     // Admin sees all documents
+        //     $this->data['incoming'] = $this->model->findAll();
+        // } else {
+        //     // Normal users only see documents where they are the recipient
+        //     $this->data['incoming'] = $this->model->where('recipient', $userName)->findAll();
+        // }
+
+
+        // return view('dashboard/incoming', $this->data);
+    }
+
+    public function ougoing()
+    {
+        $userName = $this->session->get('name');
+
+        // Query documents where the recipient is the logged-in user
+        $baseQuery = $this->model->where('sender', $userName);
+
+        // Retrieve incoming documents for the logged-in user
+        $this->data['outgoing'] = $baseQuery->findAll();
+
+        return view('dashboard/outgoing', $this->data);
+    }
+
+    public function allDocuments()
+    {
+        // Fetch all documents regardless of the sender or recipient
+        $documents = $this->model->findAll();
+        $isLoggedIn = $this->session->get('isLoggedIn') ?? false;
+
+        return view('dashboard/all_documents', [
+            'documents' => $documents,
+            'isLoggedIn' => $isLoggedIn
+        ]);
     }
 
     public function dashboard()
@@ -359,11 +392,11 @@ class FileUploadController extends BaseController
         $userName = $this->session->get('name');
         $userRole = $this->session->get('role');
 
-        if ($userRole == 'admin') {
-            $baseQuery = $this->model;
-        } else {
-            $baseQuery = $this->model->where('recipient', $userName);
-        }
+        // if ($userRole == 'admin') {
+        //     $baseQuery = $this->model;
+        // } else {
+        $baseQuery = $this->model->where('recipient', $userName);
+        // }
 
         //Counting bullshit
         $this->data['all_incoming_count'] = $baseQuery->countAllResults();
@@ -446,7 +479,7 @@ class FileUploadController extends BaseController
             // Instead of using Office Online Viewer directly, use Google Docs Viewer as a fallback
             $fileUrl = base_url($document['path']);
             $encodedUrl = urlencode($fileUrl);
-            
+
             return view('dashboard/file_viewer', [
                 'document' => $document,
                 'fileUrl' => $fileUrl,
@@ -473,19 +506,19 @@ class FileUploadController extends BaseController
     public function serveFile($id)
     {
         $document = $this->model->find($id);
-        
+
         if (!$document) {
             return $this->response->setStatusCode(404, 'File not found');
         }
 
         $filePath = FCPATH . $document['path'];
-        
+
         if (!file_exists($filePath)) {
             return $this->response->setStatusCode(404, 'File not found');
         }
 
         $fileExtension = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
-        
+
         // Set appropriate content type
         switch ($fileExtension) {
             case 'doc':
@@ -506,9 +539,168 @@ class FileUploadController extends BaseController
         header('Content-Disposition: inline; filename="' . $document['original_name'] . '"');
         header('Cache-Control: public, max-age=3600');
         header('Content-Length: ' . filesize($filePath));
-        
+
         // Output file content
         readfile($filePath);
         exit;
+    }
+
+    // public function reply($id = null)
+    // {
+    //     if ($this->request->getMethod() === 'post') {
+    //         // Load the models
+    //         // $replyModel = new \App\Models\ReplyModel();
+
+    //         // Get the original document
+    //         $originalDoc = $this->model->find($id);
+
+    //         if (!$originalDoc) {
+    //             return redirect()->back()->with('error', 'Original document not found');
+    //         }
+
+    //         // Handle file upload
+    //         $file = $this->request->getFile('attachment');
+    //         $attachment = null;
+    //         $originalName = null;
+
+    //         if ($file && $file->isValid() && !$file->hasMoved()) {
+    //             $newName = $file->getRandomName();
+    //             $file->move(FCPATH . 'uploads', $newName);
+    //             $attachment = 'uploads/' . $newName;
+    //             $originalName = $file->getClientName();
+    //         }
+
+    //         // Prepare reply data
+    //         $replyData = [
+    //             'document_id' => $id,
+    //             'sender' => $this->session->get('name'),
+    //             'recipient' => $originalDoc['sender'], // Reply goes to original sender
+    //             'message' => $this->request->getPost('message'),
+    //             'attachment' => $attachment,
+    //             'original_name' => $originalName
+    //         ];
+
+    //         // Save reply
+    //         if ($this->replyModel->insert($replyData)) {
+    //             // // Create notification for the recipient
+    //             // $notificationData = [
+    //             //     'user_id' => $originalDoc['sender_id'],
+    //             //     'title' => 'New Reply Received',
+    //             //     'message' => 'You have received a reply to document ' . $originalDoc['doc_code'],
+    //             //     'is_read' => 0
+    //             // ];
+    //             // $this->notificationModel->insert($notificationData);
+
+    //             return redirect()->back()->with('success', 'Reply sent successfully');
+    //         }
+
+    //         return redirect()->back()->with('error', 'Failed to send reply');
+    //     }
+
+    //     return redirect()->back()->with('error', 'Invalid request method');
+    // }
+
+    // Add a method to get replies for a document
+    public function getReplies($documentId)
+    {
+        $replyModel = new \App\Models\ReplyModel();
+        return $replyModel->where('document_id', $documentId)
+            ->orderBy('created_at', 'DESC')
+            ->findAll();
+    }
+
+    // public function showConversations($documentId)
+    // {
+    //     // Fetch the document details for context (optional, based on your needs)
+    //     $data['document'] = $this->model->find($documentId);
+
+    //     // Fetch all replies associated with the document
+    //     $data['conversations'] = $this->replyModel->getRepliesWithDocuments($documentId);
+
+    //     // Load the conversation view with data
+    //     return view('dashboard/conversation_view', $data);
+    // }
+
+    public function showConversations($id)
+    {
+        // Check if document exists
+        $document = $this->model->find($id);
+        if (!$document) {
+            return redirect()->back()->with('error', 'Document not found');
+        }
+
+        // Check if user has access to this document
+        $currentUser = $this->session->get('name');
+        if ($document['sender'] !== $currentUser && $document['recipient'] !== $currentUser) {
+            return redirect()->back()->with('error', 'Access denied');
+        }
+
+        // Get all replies for this document
+        $conversations = $this->replyModel->where('document_id', $id)
+            ->orderBy('created_at', 'ASC')
+            ->findAll();
+
+        return view('dashboard/conversation_view', [
+            'document' => $document,
+            'conversations' => $conversations,
+            'isLoggedIn' => $this->session->get('isLoggedIn')
+        ]);
+    }
+
+    public function reply($id = null)
+    {
+        if ($this->request->getMethod() !== 'post') {
+            return redirect()->back();
+        }
+
+        // Validate document exists
+        $document = $this->model->find($id);
+        if (!$document) {
+            return redirect()->back()->with('error', 'Document not found');
+        }
+
+        // Validate message
+        $message = $this->request->getPost('message');
+        if (empty($message)) {
+            return redirect()->back()->with('error', 'Message is required');
+        }
+
+        // Handle file upload if exists
+        $file = $this->request->getFile('attachment');
+        $attachment = null;
+        $originalName = null;
+
+        if ($file && $file->isValid() && !$file->hasMoved()) {
+            $newName = $file->getRandomName();
+
+            try {
+                $file->move(FCPATH . 'uploads', $newName);
+                $attachment = 'uploads/' . $newName;
+                $originalName = $file->getClientName();
+            } catch (\Exception $e) {
+                return redirect()->back()->with('error', 'Failed to upload attachment: ' . $e->getMessage());
+            }
+        }
+
+        // Prepare reply data
+        $replyData = [
+            'document_id' => $id,
+            'sender' => $this->session->get('name'),
+            'recipient' => ($document['sender'] === $this->session->get('name')) ? $document['recipient'] : $document['sender'],
+            'message' => $message,
+            'attachment' => $attachment,
+            'original_name' => $originalName
+        ];
+
+        // Save reply
+        try {
+            if ($this->replyModel->insert($replyData)) {
+                return redirect()->back()->with('success', 'Reply sent successfully');
+            } else {
+                return redirect()->back()->with('error', 'Failed to send reply');
+            }
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
+        }
     }
 }

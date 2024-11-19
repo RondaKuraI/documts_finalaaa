@@ -7,7 +7,7 @@
     <!-- Sidebar End -->
 
     <!-- Content Start -->
-    <div class="content">
+    <div class="content bg-white">
         <!-- Navbar Start -->
         <?= $this->include("partials/navbar"); ?>
         <!-- Navbar End -->
@@ -62,7 +62,7 @@
                                                 <th class="d-none d-md-table-cell">Subject</th>
                                                 <th>Description</th>
                                                 <th class="d-none d-lg-table-cell">Date</th>
-                                                <th class="d-none d-lg-table-cell">Deadline</th>
+                                                <th class="d-none d-lg-table-cell">Status</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -89,13 +89,28 @@
                                                             </div>
                                                         </td>
                                                         <td class="d-none d-lg-table-cell"><?= date('M d, Y', strtotime($message['date_of_letter'])) ?></td>
-                                                        <!-- <td class="d-none d-lg-table-cell"><?= $message['deadline'] ?? 'N/A' ?></td> -->
-                                                        <td class="d-none d-lg-table-cell"><?= date('M d, Y', strtotime($message['deadline']) ?? 'N/A') ?></td>
                                                         <td>
-                                                            <a href="<?= base_url('incoming_doc_view/' . $message['id']) ?>" class="btn btn-info btn-sm text-white">
-                                                                <i class="bi bi-search"></i>
-                                                                <span class="d-none d-md-inline ms-1">View</span>
-                                                            </a>
+                                                            <?php if ($message['status'] == 'pending') : ?>
+                                                                <span class="badge bg-warning text-dark">Pending</span>
+                                                            <?php elseif ($message['status'] == 'received') : ?>
+                                                                <span class="badge bg-success">Received</span>
+                                                            <?php elseif ($message['status'] == 'confirmed') : ?>
+                                                                <span class="badge bg-danger">Ended</span>
+                                                            <?php else : ?>
+                                                                <span class="badge bg-secondary"><?= ucfirst($message['status']) ?></span>
+                                                            <?php endif; ?>
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex gap-2">
+                                                                <a href="<?= base_url('incoming_doc_view/' . $message['id']) ?>" class="btn btn-info btn-sm text-white">
+                                                                    <i class="bi bi-search"></i>
+                                                                    <span class="d-none d-md-inline ms-1">View</span>
+                                                                </a>
+                                                                <a href="<?= base_url('conversation/' . $message['id']) ?>" class="btn btn-primary btn-sm">
+                                                                    <i class="bi bi-chat-dots"></i>
+                                                                    <span class="d-none d-md-inline ms-1">Chat</span>
+                                                                </a>
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                 <?php endforeach; ?>
