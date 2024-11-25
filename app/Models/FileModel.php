@@ -29,7 +29,76 @@ class FileModel extends Model
         'path',
         'original_name',
         'qr_code',
+        'archived'
     ];
+
+    public function getAllDocuments($status = null, $start_date = null, $end_date = null, $keyword = null)
+    {
+        $builder = $this->where('archived', 0);
+
+        // Status filter
+        if ($status) {
+            $builder->where('status', $status);
+        }
+
+        // Date range filter
+        if ($start_date && $end_date) {
+            $builder->where('date_of_letter >=', $start_date)
+                ->where('date_of_letter <=', $end_date);
+        }
+
+        // Keyword search
+        if ($keyword) {
+            $builder->groupStart()
+                ->like('doc_code', $keyword)
+                ->orLike('sender', $keyword)
+                ->orLike('subject', $keyword)
+                ->orLike('description', $keyword)
+                ->groupEnd();
+        }
+
+        // Order by most recent first
+        $builder->orderBy('date_of_letter', 'DESC');
+
+        return $builder->findAll();
+    }
+
+    public function getDocumentsByBarangay($brgy, $status = null, $keyword = null)
+    {
+        $builder = $this->select('filess.*, users.name as name, users.brgy')
+            ->join('users', 'users.name = filess.sender', 'left')
+            ->where('users.brgy', $brgy)
+            ->where('filess.archived', 0);
+
+        // Status filter
+        if ($status) {
+            $builder->where('filess.status', $status);
+        }
+
+        // Keyword search
+        if ($keyword) {
+            $builder->groupStart()
+                ->like('filess.doc_code', $keyword)
+                ->orLike('filess.subject', $keyword)
+                ->orLike('filess.description', $keyword)
+                ->groupEnd();
+        }
+
+        return $builder->orderBy('filess.date_of_letter', 'DESC')->findAll();
+    }
+
+    public function getAllBarangays()
+    {
+        $db = \Config\Database::connect();
+        return $db->table('users')
+            ->select('brgy')
+            ->where('brgy IS NOT NULL')
+            ->distinct()
+            ->orderBy('brgy', 'ASC')
+            ->get()
+            ->getResultArray();
+    }
+
 
     // Dates
     protected $useTimestamps = false;

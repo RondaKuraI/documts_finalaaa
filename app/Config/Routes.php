@@ -19,7 +19,7 @@ $routes->get('logout', 'SigninController::logout');
 
 // Dashboard
 
-$routes->group('', ['filter' => 'auth'], function($routes){
+$routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->get('/dashboard', 'FileUploadController::dashboard');
     $routes->get('/compose', 'FileUploadController::compose');
     // $routes->get('/incoming', 'Home::incoming');
@@ -34,13 +34,21 @@ $routes->group('', ['filter' => 'auth'], function($routes){
     // $routes->get('/user_management', 'Home::user_management');
     $routes->get('search', 'FileUploadController::search');
     $routes->get('incoming', 'FileUploadController::incoming');
-    $routes->get('all_documents', 'FileUploadController::allDocuments');
+    $routes->get('all_documents', 'AllDocumentsController::allDocuments');
     $routes->get('document-chart', 'ChartController::index');
     $routes->get('/messages', 'MessageController::messages');
-    
+
     $routes->post('reply/(:num)', 'FileUploadController::reply/$1');
     $routes->get('conversation/(:num)', 'FileUploadController::showConversations/$1');
+    //Archiving
+    $routes->get('/documents/archived', 'FileUploadController::archived');
+    $routes->get('/fileupload/archive/(:num)', 'FileUploadController::archive/$1');
+    $routes->get('/fileupload/unarchive/(:num)', 'FileUploadController::unarchive/$1');
+    $routes->get('export', 'AllDocumentsController::export');
+    $routes->get('export/(:any)', 'AllDocumentsController::exportDocuments');
 
+    $routes->get('barangay_list', 'AllDocumentsController::barangayList');
+    $routes->get('barangay_documents/(:segment)', 'AllDocumentsController::barangayDocuments/$1');
 });
 
 $routes->post('generate-qr', 'FileUploadController::generateQR');
@@ -90,4 +98,3 @@ $routes->get('user_dashboard/(:num)', 'UserController::show/$1');
 
 
 $routes->match(['get', 'post'], '/reports', 'GColumnChartController::initChart');
-

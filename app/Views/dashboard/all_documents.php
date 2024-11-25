@@ -7,7 +7,7 @@
     <!-- Sidebar End -->
 
     <!-- Content Start -->
-    <div class="content">
+    <div class="content bg-white">
         <!-- Navbar Start -->
         <?= $this->include("partials/navbar"); ?>
         <!-- Navbar End -->
@@ -18,13 +18,13 @@
                     <div class="col-12">
                         <div class="card shadow bg-white">
                             <div class="card-header bg-light">
-                                    <h3 class="text-white mb-0 fs-4">All Documents</h3>
+                                <h3 class="text-white mb-0 fs-4">All Documents</h3>
                             </div>
                             <div class="card-body p-3 p-md-4">
                                 <!-- Search and Filter Section -->
                                 <div class="row g-3 mb-4">
                                     <div class="col-12 col-md-8">
-                                        <form action="<?= site_url('search') ?>" method="get">
+                                        <form action="<?= site_url('all_documents') ?>" method="get">
                                             <div class="input-group">
                                                 <input type="hidden" name="type" value="documents">
                                                 <input type="text" name="keyword" class="form-control bg-white" placeholder="Search documents..." value="<?= isset($_GET['keyword']) ? esc($_GET['keyword']) : '' ?>" autocomplete="off">
@@ -36,7 +36,7 @@
                                         </form>
                                     </div>
                                     <div class="col-12 col-md-4 text-md-end">
-                                        <a href="<?= site_url('documents') ?>" class="btn btn-warning w-100 w-md-auto">
+                                        <a href="<?= site_url('all_documents') ?>" class="btn btn-warning w-100 w-md-auto">
                                             <i class="bi bi-list-ul me-1"></i> Show All
                                         </a>
                                     </div>
@@ -47,6 +47,24 @@
                                         Search results for: <?= esc($_GET['keyword']) ?>
                                     </div>
                                 <?php endif; ?>
+
+                                <div class="row g-3 mb-3">
+                                    <div class="col-md-3">
+                                        <form action="<?= site_url('all_documents') ?>" method="get">
+                                            <select class="form-select" name="status" onchange="this.form.submit()">
+                                                <option value="">Filter by Status</option>
+                                                <option value="pending" <?= isset($_GET['status']) && $_GET['status'] == 'pending' ? 'selected' : '' ?>>Pending</option>
+                                                <option value="received" <?= isset($_GET['status']) && $_GET['status'] == 'received' ? 'selected' : '' ?>>Received</option>
+                                                <option value="confirmed" <?= isset($_GET['status']) && $_GET['status'] == 'confirmed' ? 'selected' : '' ?>>Ended</option>
+                                            </select>
+                                        </form>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <a href="<?= site_url('export') ?>" class="btn btn-success mb-3">
+                                            <i class="bi bi-file-earmark-spreadsheet"></i> Export to CSV
+                                        </a>
+                                    </div>
+                                </div>
 
                                 <!-- Responsive Table -->
                                 <div class="table-responsive">
@@ -97,11 +115,25 @@
                                                             <?php endif; ?>
                                                         </td>
                                                         <td>
-                                                            <a href="<?= base_url('incoming_doc_view/' . $message['id']) ?>" class="btn btn-info btn-sm text-white">
-                                                                <i class="bi bi-search"></i>
-                                                                <span class="d-none d-md-inline ms-1">View</span>
-                                                            </a>
+                                                            <div class="btn-group">
+                                                                <button class="btn btn-sm btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                    Actions
+                                                                </button>
+                                                                <ul class="dropdown-menu">
+                                                                    <li>
+                                                                        <a class="dropdown-item" href="<?= base_url('incoming_doc_view/' . $message['id']) ?>">
+                                                                            <i class="bi bi-search me-2"></i> View
+                                                                        </a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a class="dropdown-item" href="<?= base_url('fileupload/archive/' . $message['id']) ?>">
+                                                                            <i class="bi bi-archive me-2"></i> Archive
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
                                                         </td>
+
                                                     </tr>
                                                 <?php endforeach; ?>
                                             <?php endif; ?>
@@ -114,10 +146,9 @@
                 </div>
             </div>
         </div>
-
         <?= $this->endSection(); ?>
 
-        <!-- Add this to your footer or before </body> -->
+        <!-- Add DataTable Initialization -->
         <script>
             $(document).ready(function() {
                 // Initialize DataTable with responsive features
@@ -126,7 +157,7 @@
                     ordering: true,
                     pageLength: 10,
                     language: {
-                        searchPlaceholder: "Search records"
+                        searchPlaceholder: "Search documents"
                     },
                     dom: "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
                         "<'row'<'col-sm-12'tr>>" +

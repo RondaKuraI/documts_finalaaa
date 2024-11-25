@@ -50,12 +50,14 @@ class FileUploadController extends BaseController
 
     public function index()
     {
-        // $data['uploads'] = $this->fileModel->findAll();
-        // return view('dashboard/outgoing', $data);
-        // return view('dashboard/outgoing', $this->data);
         $userName = $this->session->get('name');
 
-        $this->data['uploads'] = $this->model->where('sender', $userName)->findAll();
+        // $this->data['uploads'] = $this->model->where('sender', $userName)->findAll();
+        $builder = $this->db->table('filess');
+        $builder->select('filess.*, users.brgy');
+        $builder->join('users', 'filess.recipient = users.name', 'left');
+        $builder->where('filess.sender', $userName);
+        $this->data['uploads'] = $builder->get()->getResult('array');
 
         return view('dashboard/outgoing', $this->data);
     }
@@ -325,42 +327,23 @@ class FileUploadController extends BaseController
     }
 
     public function incoming()
-    {
-        $userName = $this->session->get('name');
+{
+    $userName = $this->session->get('name');
 
-        // Query documents where the recipient is the logged-in user
-        $baseQuery = $this->model->where('recipient', $userName);
+    // Start with a builder instance
+    $builder = $this->model->builder();
+    
+    // Select needed fields and join with users table
+    $builder->select('filess.*, users.name as sender, users.brgy as brgy')
+            ->join('users', 'users.name = filess.sender', 'left')
+            ->where('filess.recipient', $userName)
+            ->orderBy('filess.date_of_letter', 'DESC');
 
-        // Retrieve incoming documents for the logged-in user
-        $this->data['incoming'] = $baseQuery->findAll();
+    // Get the results
+    $this->data['incoming'] = $builder->get()->getResultArray();
 
-        return view('dashboard/incoming', $this->data);
-        // $userName = $this->session->get('name');
-        // $userRole = $this->session->get('role');
-
-        // if ($userRole == 'admin') {
-        //     $baseQuery = $this->model;
-        // } else {
-        //     $baseQuery = $this->model->where('recipient', $userName);
-        // }
-
-        // //Counting bullshit
-        // $this->data['all_incoming_count'] = $baseQuery->countAllResults();
-        // $baseQuery = $baseQuery->builder();
-        // $this->data['pending_count'] = $baseQuery->where('status', 'pending')->countAllResults();
-
-
-        // if ($userRole == 'admin') {
-        //     // Admin sees all documents
-        //     $this->data['incoming'] = $this->model->findAll();
-        // } else {
-        //     // Normal users only see documents where they are the recipient
-        //     $this->data['incoming'] = $this->model->where('recipient', $userName)->findAll();
-        // }
-
-
-        // return view('dashboard/incoming', $this->data);
-    }
+    return view('dashboard/incoming', $this->data);
+}
 
     public function ougoing()
     {
@@ -373,18 +356,6 @@ class FileUploadController extends BaseController
         $this->data['outgoing'] = $baseQuery->findAll();
 
         return view('dashboard/outgoing', $this->data);
-    }
-
-    public function allDocuments()
-    {
-        // Fetch all documents regardless of the sender or recipient
-        $documents = $this->model->findAll();
-        $isLoggedIn = $this->session->get('isLoggedIn') ?? false;
-
-        return view('dashboard/all_documents', [
-            'documents' => $documents,
-            'isLoggedIn' => $isLoggedIn
-        ]);
     }
 
     public function dashboard()
@@ -545,61 +516,6 @@ class FileUploadController extends BaseController
         exit;
     }
 
-    // public function reply($id = null)
-    // {
-    //     if ($this->request->getMethod() === 'post') {
-    //         // Load the models
-    //         // $replyModel = new \App\Models\ReplyModel();
-
-    //         // Get the original document
-    //         $originalDoc = $this->model->find($id);
-
-    //         if (!$originalDoc) {
-    //             return redirect()->back()->with('error', 'Original document not found');
-    //         }
-
-    //         // Handle file upload
-    //         $file = $this->request->getFile('attachment');
-    //         $attachment = null;
-    //         $originalName = null;
-
-    //         if ($file && $file->isValid() && !$file->hasMoved()) {
-    //             $newName = $file->getRandomName();
-    //             $file->move(FCPATH . 'uploads', $newName);
-    //             $attachment = 'uploads/' . $newName;
-    //             $originalName = $file->getClientName();
-    //         }
-
-    //         // Prepare reply data
-    //         $replyData = [
-    //             'document_id' => $id,
-    //             'sender' => $this->session->get('name'),
-    //             'recipient' => $originalDoc['sender'], // Reply goes to original sender
-    //             'message' => $this->request->getPost('message'),
-    //             'attachment' => $attachment,
-    //             'original_name' => $originalName
-    //         ];
-
-    //         // Save reply
-    //         if ($this->replyModel->insert($replyData)) {
-    //             // // Create notification for the recipient
-    //             // $notificationData = [
-    //             //     'user_id' => $originalDoc['sender_id'],
-    //             //     'title' => 'New Reply Received',
-    //             //     'message' => 'You have received a reply to document ' . $originalDoc['doc_code'],
-    //             //     'is_read' => 0
-    //             // ];
-    //             // $this->notificationModel->insert($notificationData);
-
-    //             return redirect()->back()->with('success', 'Reply sent successfully');
-    //         }
-
-    //         return redirect()->back()->with('error', 'Failed to send reply');
-    //     }
-
-    //     return redirect()->back()->with('error', 'Invalid request method');
-    // }
-
     // Add a method to get replies for a document
     public function getReplies($documentId)
     {
@@ -608,18 +524,6 @@ class FileUploadController extends BaseController
             ->orderBy('created_at', 'DESC')
             ->findAll();
     }
-
-    // public function showConversations($documentId)
-    // {
-    //     // Fetch the document details for context (optional, based on your needs)
-    //     $data['document'] = $this->model->find($documentId);
-
-    //     // Fetch all replies associated with the document
-    //     $data['conversations'] = $this->replyModel->getRepliesWithDocuments($documentId);
-
-    //     // Load the conversation view with data
-    //     return view('dashboard/conversation_view', $data);
-    // }
 
     public function showConversations($id)
     {
@@ -702,5 +606,42 @@ class FileUploadController extends BaseController
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
         }
+    }
+
+    // Method to list archived documents
+    public function archived()
+    {
+        $this->data['archived'] = $this->model->where('archived', 1)->findAll();
+        return view('dashboard/archived', $this->data);
+    }
+
+    // Archive a document
+    public function archive($id)
+    {
+        $document = $this->model->find($id);
+
+        if ($document) {
+            $this->model->update($id, ['archived' => 1]);
+            $this->session->setFlashdata('main_success', 'Document archived successfully.');
+        } else {
+            $this->session->setFlashdata('main_error', 'Document not found.');
+        }
+
+        return redirect()->to('/barangay_documents/(:segment)');
+    }
+
+    // Unarchive a document
+    public function unarchive($id)
+    {
+        $document = $this->model->find($id);
+
+        if ($document) {
+            $this->model->update($id, ['archived' => 0]);
+            $this->session->setFlashdata('main_success', 'Document unarchived successfully.');
+        } else {
+            $this->session->setFlashdata('main_error', 'Document not found.');
+        }
+
+        return redirect()->to('/documents/archived');
     }
 }

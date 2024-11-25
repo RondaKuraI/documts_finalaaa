@@ -57,12 +57,12 @@
                                     <table class="table table-hover table-striped align-middle" id="mydatatable">
                                         <thead>
                                             <tr class="text-white bg-primary">
-                                                <th class="d-none d-md-table-cell">Doc. Code</th>
+                                                <th>Doc. Code</th>
                                                 <th>Sender</th>
-                                                <th class="d-none d-md-table-cell">Subject</th>
-                                                <th>Description</th>
-                                                <th class="d-none d-lg-table-cell">Date</th>
-                                                <th class="d-none d-lg-table-cell">Status</th>
+                                                <th>Details</th>
+                                                <th>Required Action</th>
+                                                <th>Date</th>
+                                                <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -74,21 +74,16 @@
                                             <?php else : ?>
                                                 <?php foreach ($incoming as $message) : ?>
                                                     <tr>
-                                                        <td class="d-none d-md-table-cell"><?= $message['doc_code'] ?></td>
-                                                        <td><?= $message['sender'] ?></td>
-                                                        <td class="d-none d-md-table-cell"><strong><?= $message['subject'] ?></strong></td>
+                                                        <td class="text-dark"><?= $message['doc_code'] ?></td>
                                                         <td>
-                                                            <div class="d-md-none mb-1">
-                                                                <small class="text-muted"><?= $message['doc_code'] ?></small>
-                                                            </div>
-                                                            <div class="text-truncate" style="max-width: 150px;">
-                                                                <?= $message['description'] ?>
-                                                            </div>
-                                                            <div class="d-md-none mt-1">
-                                                                <small class="text-muted"><?= date('M d, Y', strtotime($message['date_of_letter'])) ?></small>
-                                                            </div>
+                                                            <strong class="text-dark"><?= $message['sender'] ?></strong> - <small class="text-primary"><?= $message['brgy'] ?></small>
                                                         </td>
-                                                        <td class="d-none d-lg-table-cell"><?= date('M d, Y', strtotime($message['date_of_letter'])) ?></td>
+                                                        <td>
+                                                            <strong class="text-dark"><?= $message['subject'] ?></strong><br>
+                                                            <span class="text-dark"><?= $message['description'] ?></span>
+                                                        </td>
+                                                        <td class="text-dark"><?= $message['action'] ?? 'For Information' ?></td>
+                                                        <td class="text-dark"><?= date('M d, Y', strtotime($message['date_of_letter'])) ?></td>
                                                         <td>
                                                             <?php if ($message['status'] == 'pending') : ?>
                                                                 <span class="badge bg-warning text-dark">Pending</span>
@@ -126,21 +121,3 @@
         </div>
 
         <?= $this->endSection(); ?>
-
-        <!-- Add this to your footer or before </body> -->
-        <script>
-            $(document).ready(function() {
-                // Initialize DataTable with responsive features
-                $('#mydatatable').DataTable({
-                    responsive: true,
-                    ordering: true,
-                    pageLength: 10,
-                    language: {
-                        searchPlaceholder: "Search records"
-                    },
-                    dom: "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
-                        "<'row'<'col-sm-12'tr>>" +
-                        "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
-                });
-            });
-        </script>
