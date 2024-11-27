@@ -169,12 +169,36 @@ class AllDocumentsController extends BaseController
         }
 
         $data = [
-            'documents' => $this->model->getDocumentsByBarangay($brgy, $status, $keyword),
+            'documents' => $this->model->getDocumentsByBarangay($brgy, $status, $keyword, ['archived' => 0]),
             'barangay' => $brgy,
             'isLoggedIn' => $this->session->get('isLoggedIn') ?? false,
             'showAll' => $this->request->getGet('show_all'), // Pass a flag to indicate if "Show All" was clicked
         ];
 
         return view('dashboard/barangay_documents', $data);
+    }
+
+    public function archive($id)
+    {
+        $document = $this->model->find($id);
+
+        if ($document) {
+            $this->model->update($id, ['archived' => 1]);
+            $this->session->setFlashdata('main_success', 'Document archived successfully.');
+
+            // Get the current barangay
+            $brgy = $document['brgy'] ?? null;
+
+            if ($brgy) {
+                // Redirect back to the barangay documents page
+                return redirect()->to('/barangay_documents/' . $brgy);
+            } else {
+                // Redirect to the default documents page
+                return redirect()->to('/barangay_list');
+            }
+        } else {
+            $this->session->setFlashdata('main_error', 'Document not found.');
+            return redirect()->to('/barangay_documents/(:segment)');
+        }
     }
 }

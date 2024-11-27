@@ -42,7 +42,7 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->get('conversation/(:num)', 'FileUploadController::showConversations/$1');
     //Archiving
     $routes->get('/documents/archived', 'FileUploadController::archived');
-    $routes->get('/fileupload/archive/(:num)', 'FileUploadController::archive/$1');
+    $routes->get('/fileupload/archive/(:num)', 'AllDocumentsController::archive/$1');
     $routes->get('/fileupload/unarchive/(:num)', 'FileUploadController::unarchive/$1');
     $routes->get('export', 'AllDocumentsController::export');
     $routes->get('export/(:any)', 'AllDocumentsController::exportDocuments');

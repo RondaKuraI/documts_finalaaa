@@ -615,20 +615,20 @@ class FileUploadController extends BaseController
         return view('dashboard/archived', $this->data);
     }
 
-    // Archive a document
-    public function archive($id)
-    {
-        $document = $this->model->find($id);
+    // // Archive a document
+    // public function archive($id)
+    // {
+    //     $document = $this->model->find($id);
 
-        if ($document) {
-            $this->model->update($id, ['archived' => 1]);
-            $this->session->setFlashdata('main_success', 'Document archived successfully.');
-        } else {
-            $this->session->setFlashdata('main_error', 'Document not found.');
-        }
+    //     if ($document) {
+    //         $this->model->update($id, ['archived' => 1]);
+    //         $this->session->setFlashdata('main_success', 'Document archived successfully.');
+    //     } else {
+    //         $this->session->setFlashdata('main_error', 'Document not found.');
+    //     }
 
-        return redirect()->to('/barangay_documents/(:segment)');
-    }
+    //     return redirect()->to('/barangay_documents/(:segment)');
+    // }
 
     // Unarchive a document
     public function unarchive($id)
