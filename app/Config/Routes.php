@@ -30,7 +30,7 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->get('serve/file/(:num)', 'FileUploadController::serveFile/$1');
     $routes->get('/incoming_doc_view/(:num)', 'FileUploadController::incoming_doc_view/$1');
     $routes->get('/maintenance', 'ChartController::index');
-    // $routes->get('/reports', 'Home::reports');
+    $routes->get('/reports', 'ReportsController::dashboard');
     // $routes->get('/user_management', 'Home::user_management');
     $routes->get('search', 'FileUploadController::search');
     $routes->get('incoming', 'FileUploadController::incoming');
@@ -46,9 +46,12 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->get('/fileupload/unarchive/(:num)', 'FileUploadController::unarchive/$1');
     $routes->get('export', 'AllDocumentsController::export');
     $routes->get('export/(:any)', 'AllDocumentsController::exportDocuments');
+    $routes->get('/export-csv', 'ReportsController::exportToCSV');
+
 
     $routes->get('barangay_list', 'AllDocumentsController::barangayList');
     $routes->get('barangay_documents/(:segment)', 'AllDocumentsController::barangayDocuments/$1');
+    
 });
 
 $routes->post('generate-qr', 'FileUploadController::generateQR');

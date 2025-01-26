@@ -39,8 +39,8 @@
                     </div>
                     <div class="col-sm-12 col-xl-6">
                         <div class="bg-secondary rounded h-100 p-4">
-                            <h6 class="mb-4">Ended Documents</h6>
-                            <canvas id="salse-revenue"></canvas>
+                            <h6 class="mb-4">Submissions Per Barangay</h6>
+                            <canvas id="submissionsPerBarangayChart"></canvas>
                         </div>
                     </div>
                 </div>
@@ -133,53 +133,30 @@
                     responsive: true
                 }
             });
+
+           // Submissions Per Barangay Chart
+           var ctx4 = document.getElementById('submissionsPerBarangayChart').getContext('2d');
+            var submissionsPerBarangayData = <?= $submissionsPerBarangayData ?>;
+            var myChart4 = new Chart(ctx4, {
+                type: 'bar',
+                data: {
+                    labels: submissionsPerBarangayData.labels,
+                    datasets: [{
+                        label: 'Submissions',
+                        data: submissionsPerBarangayData.data,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    responsive: true
+                }
+            });
         </script>
         <?= $this->endSection(); ?>
-
-
-
-
-
-
-
-
-
-
-
-        <!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document Chart</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body>
-    <canvas id="documentChart" width="400" height="200"></canvas>
-
-    <script>
-    var ctx = document.getElementById('documentChart').getContext('2d');
-    var chartData = <?= $chartData ?>;
-    var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: chartData.labels,
-            datasets: [{
-                label: '# of Documents',
-                data: chartData.data,
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-    </script>
-</body>
-</html> -->

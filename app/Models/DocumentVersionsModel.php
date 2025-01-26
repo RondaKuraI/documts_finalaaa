@@ -4,35 +4,16 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class UserModel extends Model
+class DocumentVersionsModel extends Model
 {
     protected $DBGroup          = 'default';
-    protected $table            = 'users';
+    protected $table            = 'documentversions';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = [
-        'id',
-        'name',
-        'email',
-        'role',
-        'brgy',
-        'password',
-        'created_at'
-    ];
-
-    public function getTopUsers()
-{
-    $builder = $this->db->table('filess');
-    $builder->select('sender AS name, COUNT(*) AS documents_created');
-    $builder->groupBy('sender');
-    $builder->orderBy('documents_created', 'DESC');
-    $query = $builder->get();
-    return $query->getResultArray();
-}
-
+    protected $allowedFields    = [];
 
     // Dates
     protected $useTimestamps = false;

@@ -22,10 +22,12 @@ class ChartController extends BaseController
         $chartData = $this->getChartData();
         $incomingChartData = $this->getIncomingChartData();
         $usersByBarangayData = $this->getUsersByBarangayChartData();
+        $submissionsPerBarangayData = $this->getSubmissionsPerBarangayChartData();
 
         $this->data['chartData'] = json_encode($chartData);
         $this->data['incomingChartData'] = json_encode($incomingChartData);
         $this->data['usersByBarangayData'] = json_encode($usersByBarangayData);
+        $this->data['submissionsPerBarangayData'] = json_encode($submissionsPerBarangayData);
 
         return view('dashboard/maintenance', $this->data);
     }
@@ -119,6 +121,41 @@ class ChartController extends BaseController
         // Prepare data for chart.js
         foreach ($barangays as $barangay => $count) {
             $barangayData['labels'][] = $barangay;
+            $barangayData['data'][] = $count;
+        }
+
+        return $barangayData;
+    }
+
+    private function getSubmissionsPerBarangayChartData()
+    {
+        $files = $this->fileModel->findAll();
+        $users = $this->userModel->findAll();
+
+        $barangayData = [
+            'labels' => [],
+            'data' => []
+        ];
+
+        $barangays = [];
+
+        foreach ($files as $file) {
+            $user = array_filter($users, function ($u) use ($file) {
+                return $u['name'] == $file['sender'];
+            });
+
+            if (!empty($user)) {
+                $barangay = reset($user)['brgy'];
+                if (isset($barangays[$barangay])) {
+                    $barangays[$barangay]++;
+                } else {
+                    $barangays[$barangay] = 1;
+                    $barangayData['labels'][] = $barangay;
+                }
+            }
+        }
+
+        foreach ($barangays as $count) {
             $barangayData['data'][] = $count;
         }
 
