@@ -1,0 +1,308 @@
+ERROR - 2025-02-18 12:10:27 --> Error connecting to the database: mysqli_sql_exception: Unknown database 'documts_final' in C:\laragon\www\documts_finalaaa\system\Database\MySQLi\Connection.php:185
+Stack trace:
+#0 C:\laragon\www\documts_finalaaa\system\Database\MySQLi\Connection.php(185): mysqli->real_connect('localhost', 'root', '', 'documts_final', 3306, '', 0)
+#1 C:\laragon\www\documts_finalaaa\system\Database\BaseConnection.php(391): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\laragon\www\documts_finalaaa\system\Database\BaseConnection.php(574): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\laragon\www\documts_finalaaa\system\Database\BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\laragon\www\documts_finalaaa\system\Model.php(237): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\laragon\www\documts_finalaaa\system\BaseModel.php(624): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\laragon\www\documts_finalaaa\app\Controllers\FileUploadController.php(47): CodeIgniter\BaseModel->findAll()
+#7 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(891): App\Controllers\FileUploadController->__construct()
+#8 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(485): CodeIgniter\CodeIgniter->createController()
+#9 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\laragon\www\documts_finalaaa\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#11 C:\laragon\www\documts_finalaaa\system\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\...')
+#12 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Unknown database 'documts_final' in C:\laragon\www\documts_finalaaa\system\Database\MySQLi\Connection.php:229
+Stack trace:
+#0 C:\laragon\www\documts_finalaaa\system\Database\BaseConnection.php(391): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\laragon\www\documts_finalaaa\system\Database\BaseConnection.php(574): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\laragon\www\documts_finalaaa\system\Database\BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#3 C:\laragon\www\documts_finalaaa\system\Model.php(237): CodeIgniter\Database\BaseBuilder->get()
+#4 C:\laragon\www\documts_finalaaa\system\BaseModel.php(624): CodeIgniter\Model->doFindAll(0, 0)
+#5 C:\laragon\www\documts_finalaaa\app\Controllers\FileUploadController.php(47): CodeIgniter\BaseModel->findAll()
+#6 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(891): App\Controllers\FileUploadController->__construct()
+#7 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(485): CodeIgniter\CodeIgniter->createController()
+#8 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\laragon\www\documts_finalaaa\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#10 C:\laragon\www\documts_finalaaa\system\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\...')
+#11 {main}
+CRITICAL - 2025-02-18 12:10:27 --> Unable to connect to the database.
+Main connection [MySQLi]: Unknown database 'documts_final'
+in SYSTEMPATH\Database\BaseConnection.php on line 427.
+ 1 SYSTEMPATH\Database\BaseConnection.php(574): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `filess`', [], false)
+ 3 SYSTEMPATH\Model.php(237): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH\BaseModel.php(624): CodeIgniter\Model->doFindAll(0, 0)
+ 5 APPPATH\Controllers\FileUploadController.php(47): CodeIgniter\BaseModel->findAll()
+ 6 SYSTEMPATH\CodeIgniter.php(891): App\Controllers\FileUploadController->__construct()
+ 7 SYSTEMPATH\CodeIgniter.php(485): CodeIgniter\CodeIgniter->createController()
+ 8 SYSTEMPATH\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\documts_finalaaa\\public\\index.php')
+ERROR - 2025-02-18 12:11:23 --> Error connecting to the database: mysqli_sql_exception: Unknown database 'documts_final' in C:\laragon\www\documts_finalaaa\system\Database\MySQLi\Connection.php:185
+Stack trace:
+#0 C:\laragon\www\documts_finalaaa\system\Database\MySQLi\Connection.php(185): mysqli->real_connect('localhost', 'root', '', 'documts_final', 3306, '', 0)
+#1 C:\laragon\www\documts_finalaaa\system\Database\BaseConnection.php(391): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\laragon\www\documts_finalaaa\system\Database\BaseConnection.php(574): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\laragon\www\documts_finalaaa\system\Database\BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\laragon\www\documts_finalaaa\system\Model.php(237): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\laragon\www\documts_finalaaa\system\BaseModel.php(624): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\laragon\www\documts_finalaaa\app\Controllers\FileUploadController.php(47): CodeIgniter\BaseModel->findAll()
+#7 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(891): App\Controllers\FileUploadController->__construct()
+#8 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(485): CodeIgniter\CodeIgniter->createController()
+#9 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\laragon\www\documts_finalaaa\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#11 C:\laragon\www\documts_finalaaa\system\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\...')
+#12 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Unknown database 'documts_final' in C:\laragon\www\documts_finalaaa\system\Database\MySQLi\Connection.php:229
+Stack trace:
+#0 C:\laragon\www\documts_finalaaa\system\Database\BaseConnection.php(391): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\laragon\www\documts_finalaaa\system\Database\BaseConnection.php(574): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\laragon\www\documts_finalaaa\system\Database\BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#3 C:\laragon\www\documts_finalaaa\system\Model.php(237): CodeIgniter\Database\BaseBuilder->get()
+#4 C:\laragon\www\documts_finalaaa\system\BaseModel.php(624): CodeIgniter\Model->doFindAll(0, 0)
+#5 C:\laragon\www\documts_finalaaa\app\Controllers\FileUploadController.php(47): CodeIgniter\BaseModel->findAll()
+#6 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(891): App\Controllers\FileUploadController->__construct()
+#7 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(485): CodeIgniter\CodeIgniter->createController()
+#8 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\laragon\www\documts_finalaaa\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#10 C:\laragon\www\documts_finalaaa\system\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\...')
+#11 {main}
+CRITICAL - 2025-02-18 12:11:23 --> Unable to connect to the database.
+Main connection [MySQLi]: Unknown database 'documts_final'
+in SYSTEMPATH\Database\BaseConnection.php on line 427.
+ 1 SYSTEMPATH\Database\BaseConnection.php(574): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `filess`', [], false)
+ 3 SYSTEMPATH\Model.php(237): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH\BaseModel.php(624): CodeIgniter\Model->doFindAll(0, 0)
+ 5 APPPATH\Controllers\FileUploadController.php(47): CodeIgniter\BaseModel->findAll()
+ 6 SYSTEMPATH\CodeIgniter.php(891): App\Controllers\FileUploadController->__construct()
+ 7 SYSTEMPATH\CodeIgniter.php(485): CodeIgniter\CodeIgniter->createController()
+ 8 SYSTEMPATH\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\documts_finalaaa\\public\\index.php')
+ERROR - 2025-02-18 12:11:27 --> Error connecting to the database: mysqli_sql_exception: Unknown database 'documts_final' in C:\laragon\www\documts_finalaaa\system\Database\MySQLi\Connection.php:185
+Stack trace:
+#0 C:\laragon\www\documts_finalaaa\system\Database\MySQLi\Connection.php(185): mysqli->real_connect('localhost', 'root', '', 'documts_final', 3306, '', 0)
+#1 C:\laragon\www\documts_finalaaa\system\Database\BaseConnection.php(391): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\laragon\www\documts_finalaaa\system\Database\BaseConnection.php(574): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\laragon\www\documts_finalaaa\system\Database\BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\laragon\www\documts_finalaaa\system\Model.php(237): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\laragon\www\documts_finalaaa\system\BaseModel.php(624): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\laragon\www\documts_finalaaa\app\Controllers\FileUploadController.php(47): CodeIgniter\BaseModel->findAll()
+#7 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(891): App\Controllers\FileUploadController->__construct()
+#8 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(485): CodeIgniter\CodeIgniter->createController()
+#9 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\laragon\www\documts_finalaaa\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#11 C:\laragon\www\documts_finalaaa\system\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\...')
+#12 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Unknown database 'documts_final' in C:\laragon\www\documts_finalaaa\system\Database\MySQLi\Connection.php:229
+Stack trace:
+#0 C:\laragon\www\documts_finalaaa\system\Database\BaseConnection.php(391): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\laragon\www\documts_finalaaa\system\Database\BaseConnection.php(574): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\laragon\www\documts_finalaaa\system\Database\BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#3 C:\laragon\www\documts_finalaaa\system\Model.php(237): CodeIgniter\Database\BaseBuilder->get()
+#4 C:\laragon\www\documts_finalaaa\system\BaseModel.php(624): CodeIgniter\Model->doFindAll(0, 0)
+#5 C:\laragon\www\documts_finalaaa\app\Controllers\FileUploadController.php(47): CodeIgniter\BaseModel->findAll()
+#6 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(891): App\Controllers\FileUploadController->__construct()
+#7 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(485): CodeIgniter\CodeIgniter->createController()
+#8 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\laragon\www\documts_finalaaa\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#10 C:\laragon\www\documts_finalaaa\system\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\...')
+#11 {main}
+CRITICAL - 2025-02-18 12:11:27 --> Unable to connect to the database.
+Main connection [MySQLi]: Unknown database 'documts_final'
+in SYSTEMPATH\Database\BaseConnection.php on line 427.
+ 1 SYSTEMPATH\Database\BaseConnection.php(574): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `filess`', [], false)
+ 3 SYSTEMPATH\Model.php(237): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH\BaseModel.php(624): CodeIgniter\Model->doFindAll(0, 0)
+ 5 APPPATH\Controllers\FileUploadController.php(47): CodeIgniter\BaseModel->findAll()
+ 6 SYSTEMPATH\CodeIgniter.php(891): App\Controllers\FileUploadController->__construct()
+ 7 SYSTEMPATH\CodeIgniter.php(485): CodeIgniter\CodeIgniter->createController()
+ 8 SYSTEMPATH\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\documts_finalaaa\\public\\index.php')
+ERROR - 2025-02-18 12:12:11 --> Error connecting to the database: mysqli_sql_exception: No connection could be made because the target machine actively refused it in C:\laragon\www\documts_finalaaa\system\Database\MySQLi\Connection.php:185
+Stack trace:
+#0 C:\laragon\www\documts_finalaaa\system\Database\MySQLi\Connection.php(185): mysqli->real_connect('localhost', 'root', '', 'documts_final', 3306, '', 0)
+#1 C:\laragon\www\documts_finalaaa\system\Database\BaseConnection.php(391): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\laragon\www\documts_finalaaa\system\Database\BaseConnection.php(574): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\laragon\www\documts_finalaaa\system\Database\BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\laragon\www\documts_finalaaa\system\Model.php(237): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\laragon\www\documts_finalaaa\system\BaseModel.php(624): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\laragon\www\documts_finalaaa\app\Controllers\FileUploadController.php(47): CodeIgniter\BaseModel->findAll()
+#7 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(891): App\Controllers\FileUploadController->__construct()
+#8 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(485): CodeIgniter\CodeIgniter->createController()
+#9 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\laragon\www\documts_finalaaa\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#11 C:\laragon\www\documts_finalaaa\system\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\...')
+#12 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: No connection could be made because the target machine actively refused it in C:\laragon\www\documts_finalaaa\system\Database\MySQLi\Connection.php:229
+Stack trace:
+#0 C:\laragon\www\documts_finalaaa\system\Database\BaseConnection.php(391): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\laragon\www\documts_finalaaa\system\Database\BaseConnection.php(574): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\laragon\www\documts_finalaaa\system\Database\BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#3 C:\laragon\www\documts_finalaaa\system\Model.php(237): CodeIgniter\Database\BaseBuilder->get()
+#4 C:\laragon\www\documts_finalaaa\system\BaseModel.php(624): CodeIgniter\Model->doFindAll(0, 0)
+#5 C:\laragon\www\documts_finalaaa\app\Controllers\FileUploadController.php(47): CodeIgniter\BaseModel->findAll()
+#6 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(891): App\Controllers\FileUploadController->__construct()
+#7 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(485): CodeIgniter\CodeIgniter->createController()
+#8 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\laragon\www\documts_finalaaa\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#10 C:\laragon\www\documts_finalaaa\system\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\...')
+#11 {main}
+CRITICAL - 2025-02-18 12:12:11 --> Unable to connect to the database.
+Main connection [MySQLi]: No connection could be made because the target machine actively refused it
+in SYSTEMPATH\Database\BaseConnection.php on line 427.
+ 1 SYSTEMPATH\Database\BaseConnection.php(574): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `filess`', [], false)
+ 3 SYSTEMPATH\Model.php(237): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH\BaseModel.php(624): CodeIgniter\Model->doFindAll(0, 0)
+ 5 APPPATH\Controllers\FileUploadController.php(47): CodeIgniter\BaseModel->findAll()
+ 6 SYSTEMPATH\CodeIgniter.php(891): App\Controllers\FileUploadController->__construct()
+ 7 SYSTEMPATH\CodeIgniter.php(485): CodeIgniter\CodeIgniter->createController()
+ 8 SYSTEMPATH\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\documts_finalaaa\\public\\index.php')
+ERROR - 2025-02-18 12:12:47 --> Error connecting to the database: mysqli_sql_exception: No connection could be made because the target machine actively refused it in C:\laragon\www\documts_finalaaa\system\Database\MySQLi\Connection.php:185
+Stack trace:
+#0 C:\laragon\www\documts_finalaaa\system\Database\MySQLi\Connection.php(185): mysqli->real_connect('localhost', 'root', '', 'documts_final', 3306, '', 0)
+#1 C:\laragon\www\documts_finalaaa\system\Database\BaseConnection.php(391): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\laragon\www\documts_finalaaa\system\Database\BaseConnection.php(574): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\laragon\www\documts_finalaaa\system\Database\BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\laragon\www\documts_finalaaa\system\Model.php(237): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\laragon\www\documts_finalaaa\system\BaseModel.php(624): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\laragon\www\documts_finalaaa\app\Controllers\FileUploadController.php(47): CodeIgniter\BaseModel->findAll()
+#7 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(891): App\Controllers\FileUploadController->__construct()
+#8 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(485): CodeIgniter\CodeIgniter->createController()
+#9 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\laragon\www\documts_finalaaa\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#11 C:\laragon\www\documts_finalaaa\system\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\...')
+#12 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: No connection could be made because the target machine actively refused it in C:\laragon\www\documts_finalaaa\system\Database\MySQLi\Connection.php:229
+Stack trace:
+#0 C:\laragon\www\documts_finalaaa\system\Database\BaseConnection.php(391): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\laragon\www\documts_finalaaa\system\Database\BaseConnection.php(574): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\laragon\www\documts_finalaaa\system\Database\BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#3 C:\laragon\www\documts_finalaaa\system\Model.php(237): CodeIgniter\Database\BaseBuilder->get()
+#4 C:\laragon\www\documts_finalaaa\system\BaseModel.php(624): CodeIgniter\Model->doFindAll(0, 0)
+#5 C:\laragon\www\documts_finalaaa\app\Controllers\FileUploadController.php(47): CodeIgniter\BaseModel->findAll()
+#6 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(891): App\Controllers\FileUploadController->__construct()
+#7 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(485): CodeIgniter\CodeIgniter->createController()
+#8 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\laragon\www\documts_finalaaa\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#10 C:\laragon\www\documts_finalaaa\system\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\...')
+#11 {main}
+CRITICAL - 2025-02-18 12:12:47 --> Unable to connect to the database.
+Main connection [MySQLi]: No connection could be made because the target machine actively refused it
+in SYSTEMPATH\Database\BaseConnection.php on line 427.
+ 1 SYSTEMPATH\Database\BaseConnection.php(574): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `filess`', [], false)
+ 3 SYSTEMPATH\Model.php(237): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH\BaseModel.php(624): CodeIgniter\Model->doFindAll(0, 0)
+ 5 APPPATH\Controllers\FileUploadController.php(47): CodeIgniter\BaseModel->findAll()
+ 6 SYSTEMPATH\CodeIgniter.php(891): App\Controllers\FileUploadController->__construct()
+ 7 SYSTEMPATH\CodeIgniter.php(485): CodeIgniter\CodeIgniter->createController()
+ 8 SYSTEMPATH\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\documts_finalaaa\\public\\index.php')
+ERROR - 2025-02-18 12:13:18 --> Error connecting to the database: mysqli_sql_exception: No connection could be made because the target machine actively refused it in C:\laragon\www\documts_finalaaa\system\Database\MySQLi\Connection.php:185
+Stack trace:
+#0 C:\laragon\www\documts_finalaaa\system\Database\MySQLi\Connection.php(185): mysqli->real_connect('localhost', 'root', '', 'documts_final', 3306, '', 0)
+#1 C:\laragon\www\documts_finalaaa\system\Database\BaseConnection.php(391): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\laragon\www\documts_finalaaa\system\Database\BaseConnection.php(574): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\laragon\www\documts_finalaaa\system\Database\BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\laragon\www\documts_finalaaa\system\Model.php(237): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\laragon\www\documts_finalaaa\system\BaseModel.php(624): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\laragon\www\documts_finalaaa\app\Controllers\FileUploadController.php(47): CodeIgniter\BaseModel->findAll()
+#7 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(891): App\Controllers\FileUploadController->__construct()
+#8 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(485): CodeIgniter\CodeIgniter->createController()
+#9 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\laragon\www\documts_finalaaa\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#11 C:\laragon\www\documts_finalaaa\system\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\...')
+#12 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: No connection could be made because the target machine actively refused it in C:\laragon\www\documts_finalaaa\system\Database\MySQLi\Connection.php:229
+Stack trace:
+#0 C:\laragon\www\documts_finalaaa\system\Database\BaseConnection.php(391): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\laragon\www\documts_finalaaa\system\Database\BaseConnection.php(574): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\laragon\www\documts_finalaaa\system\Database\BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#3 C:\laragon\www\documts_finalaaa\system\Model.php(237): CodeIgniter\Database\BaseBuilder->get()
+#4 C:\laragon\www\documts_finalaaa\system\BaseModel.php(624): CodeIgniter\Model->doFindAll(0, 0)
+#5 C:\laragon\www\documts_finalaaa\app\Controllers\FileUploadController.php(47): CodeIgniter\BaseModel->findAll()
+#6 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(891): App\Controllers\FileUploadController->__construct()
+#7 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(485): CodeIgniter\CodeIgniter->createController()
+#8 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\laragon\www\documts_finalaaa\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#10 C:\laragon\www\documts_finalaaa\system\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\...')
+#11 {main}
+CRITICAL - 2025-02-18 12:13:18 --> Unable to connect to the database.
+Main connection [MySQLi]: No connection could be made because the target machine actively refused it
+in SYSTEMPATH\Database\BaseConnection.php on line 427.
+ 1 SYSTEMPATH\Database\BaseConnection.php(574): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `filess`', [], false)
+ 3 SYSTEMPATH\Model.php(237): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH\BaseModel.php(624): CodeIgniter\Model->doFindAll(0, 0)
+ 5 APPPATH\Controllers\FileUploadController.php(47): CodeIgniter\BaseModel->findAll()
+ 6 SYSTEMPATH\CodeIgniter.php(891): App\Controllers\FileUploadController->__construct()
+ 7 SYSTEMPATH\CodeIgniter.php(485): CodeIgniter\CodeIgniter->createController()
+ 8 SYSTEMPATH\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\documts_finalaaa\\public\\index.php')
+ERROR - 2025-02-18 12:17:19 --> Error connecting to the database: mysqli_sql_exception: No connection could be made because the target machine actively refused it in C:\laragon\www\documts_finalaaa\system\Database\MySQLi\Connection.php:185
+Stack trace:
+#0 C:\laragon\www\documts_finalaaa\system\Database\MySQLi\Connection.php(185): mysqli->real_connect('localhost', 'root', '', 'documts_final', 3306, '', 0)
+#1 C:\laragon\www\documts_finalaaa\system\Database\BaseConnection.php(391): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\laragon\www\documts_finalaaa\system\Database\BaseConnection.php(574): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\laragon\www\documts_finalaaa\system\Database\BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\laragon\www\documts_finalaaa\system\Model.php(237): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\laragon\www\documts_finalaaa\system\BaseModel.php(624): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\laragon\www\documts_finalaaa\app\Controllers\FileUploadController.php(47): CodeIgniter\BaseModel->findAll()
+#7 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(891): App\Controllers\FileUploadController->__construct()
+#8 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(485): CodeIgniter\CodeIgniter->createController()
+#9 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\laragon\www\documts_finalaaa\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#11 C:\laragon\www\documts_finalaaa\system\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\...')
+#12 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: No connection could be made because the target machine actively refused it in C:\laragon\www\documts_finalaaa\system\Database\MySQLi\Connection.php:229
+Stack trace:
+#0 C:\laragon\www\documts_finalaaa\system\Database\BaseConnection.php(391): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\laragon\www\documts_finalaaa\system\Database\BaseConnection.php(574): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\laragon\www\documts_finalaaa\system\Database\BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#3 C:\laragon\www\documts_finalaaa\system\Model.php(237): CodeIgniter\Database\BaseBuilder->get()
+#4 C:\laragon\www\documts_finalaaa\system\BaseModel.php(624): CodeIgniter\Model->doFindAll(0, 0)
+#5 C:\laragon\www\documts_finalaaa\app\Controllers\FileUploadController.php(47): CodeIgniter\BaseModel->findAll()
+#6 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(891): App\Controllers\FileUploadController->__construct()
+#7 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(485): CodeIgniter\CodeIgniter->createController()
+#8 C:\laragon\www\documts_finalaaa\system\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\laragon\www\documts_finalaaa\public\index.php(79): CodeIgniter\CodeIgniter->run()
+#10 C:\laragon\www\documts_finalaaa\system\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\...')
+#11 {main}
+CRITICAL - 2025-02-18 12:17:19 --> Unable to connect to the database.
+Main connection [MySQLi]: No connection could be made because the target machine actively refused it
+in SYSTEMPATH\Database\BaseConnection.php on line 427.
+ 1 SYSTEMPATH\Database\BaseConnection.php(574): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1615): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `filess`', [], false)
+ 3 SYSTEMPATH\Model.php(237): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH\BaseModel.php(624): CodeIgniter\Model->doFindAll(0, 0)
+ 5 APPPATH\Controllers\FileUploadController.php(47): CodeIgniter\BaseModel->findAll()
+ 6 SYSTEMPATH\CodeIgniter.php(891): App\Controllers\FileUploadController->__construct()
+ 7 SYSTEMPATH\CodeIgniter.php(485): CodeIgniter\CodeIgniter->createController()
+ 8 SYSTEMPATH\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\laragon\\www\\documts_finalaaa\\public\\index.php')
