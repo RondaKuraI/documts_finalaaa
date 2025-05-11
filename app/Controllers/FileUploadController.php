@@ -10,7 +10,7 @@ use App\Models\RecipientModel;
 use App\Models\UserModel;
 use App\Models\NotificationModel;
 use App\Models\ReplyModel;
-
+use App\Models\DocumentVersionModel;
 use Endroid\QrCode\Builder\Builder;
 use Endroid\QrCode\Encoding\Encoding;
 use Endroid\QrCode\ErrorCorrectionLevel;
@@ -27,6 +27,7 @@ class FileUploadController extends BaseController
     public $userModel;
     public $notificationModel;
     public $replyModel;
+    public $versionModel;
     public $session;
     public $data;
 
@@ -40,6 +41,7 @@ class FileUploadController extends BaseController
         $this->userModel = new UserModel();
         $this->notificationModel = new NotificationModel();
         $this->replyModel = new ReplyModel();
+        $this->versionModel = new DocumentVersionModel;
         $this->session = session();
         $this->request = \Config\Services::request();
         $this->data['session'] = $this->session;
@@ -192,7 +194,7 @@ class FileUploadController extends BaseController
 
 
         if ($file->move($uploadsDir, $finalName)) {
-            $this->model->save([
+            $this->model->insert([
                 "doc_code" => $doc_code,
                 "sender" => $sender,
                 "recipient" => $recipient,
@@ -643,5 +645,238 @@ class FileUploadController extends BaseController
         }
 
         return redirect()->to('/documents/archived');
+    }
+
+    // Add a new method for updating documents with versioning
+    public function updateDocument($id)
+    {
+        // Check if document exists
+        $document = $this->model->find($id);
+        if (!$document) {
+            $this->session->setFlashdata('main_error', 'Document not found.');
+            return redirect()->back();
+        }
+
+        // Validate user has permission to update this document
+        $userName = $this->session->get('name');
+        if ($document['sender'] !== $userName && $this->session->get('role') !== 'admin') {
+            $this->session->setFlashdata('main_error', 'You do not have permission to update this document.');
+            return redirect()->back();
+        }
+
+        // Validate form data
+        $validation = \Config\Services::validation();
+        $validation->setRules([
+            'subject' => 'required',
+            'description' => 'required',
+            'prioritization' => 'required|in_list[Usual,Urgent]',
+            'action' => 'required',
+            'deadline' => 'required|valid_date',
+            'version_notes' => 'required|min_length[5]', // New field for version notes
+            'file' => 'uploaded[file]|max_size[file,30000]|ext_in[file,pdf,doc,docx]'
+        ]);
+
+        if (!$validation->withRequest($this->request)->run()) {
+            $errors = $validation->getErrors();
+            $errorMessages = implode(', ', $errors);
+            $this->session->setFlashdata('main_error', $errorMessages);
+            return redirect()->back()->withInput();
+        }
+
+        // Handle file upload
+        $file = $this->request->getFile('file');
+        $uploadsDir = FCPATH . 'uploads';
+
+        // Original filename and sanitization (similar to upload method)
+        $originalName = $file->getClientName();
+        $fileExt = $file->getClientExtension();
+        $baseName = pathinfo($originalName, PATHINFO_FILENAME);
+        $safeName = url_title($baseName, '-', true);
+        $finalName = $safeName . '_v' . time() . '.' . $fileExt;
+
+        // Ensure directory exists and is writable
+        if (!is_dir($uploadsDir) || !is_writable($uploadsDir)) {
+            if (!mkdir($uploadsDir, 0755, true)) {
+                return redirect()->back()->with('main_error', 'Uploads directory issue');
+            }
+        }
+
+        // Move the uploaded file
+        if (!$file->move($uploadsDir, $finalName)) {
+            $this->session->setFlashdata('main_error', "File Upload failed.");
+            return redirect()->back()->withInput();
+        }
+
+        // Get current version number and increment
+        $currentVersion = $this->versionModel->getLatestVersionNumber($id);
+        $newVersionNumber = $currentVersion + 1;
+
+        // Save the current document as a version record
+        $versionData = [
+            'original_document_id' => $id,
+            'version_number' => $newVersionNumber,
+            'path' => "uploads/" . $finalName,
+            'original_name' => $originalName,
+            'created_by' => $userName,
+            'notes' => $this->request->getPost('version_notes')
+        ];
+
+        $this->versionModel->insert($versionData);
+
+        // Update the main document record
+        $updateData = [
+            'subject' => $this->request->getPost('subject'),
+            'description' => $this->request->getPost('description'),
+            'prioritization' => $this->request->getPost('prioritization'),
+            'action' => $this->request->getPost('action'),
+            'deadline' => $this->request->getPost('deadline'),
+            'path' => "uploads/" . $finalName,
+            'original_name' => $originalName,
+            'updated_at' => date('Y-m-d H:i:s')
+        ];
+
+        $this->model->update($id, $updateData);
+
+        // Add notification for the recipient about the update
+        $notificationData = [
+            'user_id' => $this->userModel->where('name', $document['recipient'])->first()['id'] ?? null,
+            'message' => "Document {$document['doc_code']} has been updated with a new version.",
+            'link' => "/document/view/{$id}",
+            'is_read' => 0
+        ];
+
+        if ($notificationData['user_id']) {
+            $this->notificationModel->insert($notificationData);
+        }
+
+        $this->session->setFlashdata('main_success', "Document updated successfully with new version {$newVersionNumber}.");
+        return redirect()->to('/outgoing'); // Adjust redirect as needed
+    }
+
+    public function showUpdateForm($id)
+{
+    // Check if document exists
+    $document = $this->model->find($id);
+    if (!$document) {
+        $this->session->setFlashdata('main_error', 'Document not found.');
+        return redirect()->back();
+    }
+
+    // Validate user has permission to update this document
+    $userName = $this->session->get('name');
+    if ($document['sender'] !== $userName && $this->session->get('role') !== 'admin') {
+        $this->session->setFlashdata('main_error', 'You do not have permission to update this document.');
+        return redirect()->back();
+    }
+
+    // Get version history info
+    $versionCount = $this->versionModel->where('original_document_id', $id)->countAllResults();
+    $latestVersion = $this->versionModel->getLatestVersionNumber($id);
+
+    // Prepare data for the view
+    $this->data['document'] = $document;
+    $this->data['versionCount'] = $versionCount;
+    $this->data['latestVersion'] = $latestVersion;
+
+    return view('dashboard/update_document_form', $this->data);
+}
+
+    // Method to view document versions
+    public function viewVersions($id)
+    {
+        // Check if document exists
+        $document = $this->model->find($id);
+        if (!$document) {
+            $this->session->setFlashdata('main_error', 'Document not found.');
+            return redirect()->back();
+        }
+
+        // Get all versions for this document
+        $versions = $this->versionModel->getDocumentVersions($id);
+
+        // Prepare data for view
+        $this->data['document'] = $document;
+        $this->data['versions'] = $versions;
+
+        return view('dashboard/document_versions', $this->data);
+    }
+
+    // Method to view a specific version
+    public function viewVersion($versionId)
+    {
+        // Get version details
+        $version = $this->versionModel->find($versionId);
+        
+        if (!$version) {
+            $this->session->setFlashdata('main_error', 'Version not found.');
+            return redirect()->back();
+        }
+
+        // Get original document
+        $document = $this->model->find($version['original_document_id']);
+        
+        // Prepare data for view
+        $this->data['document'] = $document;
+        $this->data['version'] = $version;
+        
+        return view('dashboard/view_version', $this->data);
+    }
+
+    // Method to restore to a previous version
+    public function restoreVersion($versionId)
+    {
+        // Get version details
+        $version = $this->versionModel->find($versionId);
+        
+        if (!$version) {
+            $this->session->setFlashdata('main_error', 'Version not found.');
+            return redirect()->back();
+        }
+
+        $documentId = $version['original_document_id'];
+        $document = $this->model->find($documentId);
+
+        // Validate user has permission
+        $userName = $this->session->get('name');
+        if ($document['sender'] !== $userName && $this->session->get('role') !== 'admin') {
+            $this->session->setFlashdata('main_error', 'You do not have permission to restore this version.');
+            return redirect()->back();
+        }
+
+        // First create a new version with the current document state
+        $currentVersion = $this->versionModel->getLatestVersionNumber($documentId);
+        $newVersionNumber = $currentVersion + 1;
+
+        // Save current state as a version
+        $this->versionModel->insert([
+            'original_document_id' => $documentId,
+            'version_number' => $newVersionNumber,
+            'path' => $document['path'],
+            'original_name' => $document['original_name'],
+            'created_by' => $userName,
+            'notes' => "Auto-saved before restoring to version " . $version['version_number']
+        ]);
+
+        // Then update the main document with the data from the version being restored
+        $this->model->update($documentId, [
+            'path' => $version['path'],
+            'original_name' => $version['original_name'],
+            'updated_at' => date('Y-m-d H:i:s')
+        ]);
+
+        // Add notification
+        $notificationData = [
+            'user_id' => $this->userModel->where('name', $document['recipient'])->first()['id'] ?? null,
+            'message' => "Document {$document['doc_code']} has been restored to version {$version['version_number']}.",
+            'link' => "/document/view/{$documentId}",
+            'is_read' => 0
+        ];
+
+        if ($notificationData['user_id']) {
+            $this->notificationModel->insert($notificationData);
+        }
+
+        $this->session->setFlashdata('main_success', "Document restored to version {$version['version_number']} successfully.");
+        return redirect()->to("/document/versions/{$documentId}");
     }
 }

@@ -51,7 +51,19 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
 
     $routes->get('barangay_list', 'AllDocumentsController::barangayList');
     $routes->get('barangay_documents/(:segment)', 'AllDocumentsController::barangayDocuments/$1');
-    
+
+    $routes->get('document/versions/(:num)', 'FileUploadController::viewVersions/$1');
+    // View specific version
+    $routes->get('document/view-version/(:num)', 'FileUploadController::viewVersion/$1');
+
+    // Restore version
+    $routes->get('document/restore-version/(:num)', 'FileUploadController::restoreVersion/$1');
+
+    // Display update form
+    $routes->get('document/update-form/(:num)', 'FileUploadController::showUpdateForm/$1');
+
+    // Process update with version tracking
+    $routes->post('document/update/(:num)', 'FileUploadController::updateDocument/$1');
 });
 
 $routes->post('generate-qr', 'FileUploadController::generateQR');

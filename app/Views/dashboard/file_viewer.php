@@ -23,20 +23,20 @@
                                 <!-- <a href="<?= base_url($document['path']) ?>" class="btn btn-warning btn-sm">
                                     <i class="fa fa-download"></i> Download
                                 </a> -->
-                                <a href="<?= base_url('doc_view/' . $document['id']) ?>" class="btn btn-secondary btn-sm">
-            <i class="fa fa-arrow-left"></i> Back
-        </a>
+                                <a href="<?= base_url('incoming_doc_view/' . $document['id']) ?>" class="btn btn-secondary btn-sm">
+                                    <i class="fa fa-arrow-left"></i> Back
+                                </a>
                             </div>
                         </div>
                         <div class="card-body p-0" style="height: 80vh;">
                             <?php if (in_array($fileType, ['doc', 'docx'])): ?>
                                 <!-- Use Google Docs Viewer -->
-                                <iframe 
-                                    src="https://docs.google.com/gview?url=<?= urlencode($fileUrl) ?>&embedded=true" 
-                                    style="width: 100%; height: 100%;" 
+                                <iframe
+                                    src="https://docs.google.com/gview?url=<?= urlencode($fileUrl) ?>&embedded=true"
+                                    style="width: 100%; height: 100%;"
                                     frameborder="0">
                                 </iframe>
-                                
+
                                 <!-- Fallback message if viewer fails -->
                                 <div id="viewerFallback" class="p-4 text-center" style="display: none;">
                                     <p>Unable to load document viewer. Please try the following options:</p>
@@ -58,27 +58,40 @@
                     </div>
                 </div>
             </div>
+
+            <div>
+                <h1>
+                    <a href="<?= base_url('document/versions/' . $document['id']) ?>" class="btn btn-primary btn-sm">
+                        <i class="fa fa-document"></i> View Versions
+                    </a>
+                </h1>
+                <h1>
+                    <a href="<?= base_url('document/update-form/' . $document['id']) ?>" class="btn btn-success btn-sm">
+                        <i class="fa fa-document"></i> Update Document
+                    </a>
+                </h1>
+            </div>
         </div>
     </div>
 </div>
 
 <script>
-// Add error handling for the iframe
-document.querySelector('iframe').onload = function() {
-    // Check if the iframe loaded successfully
-    try {
-        setTimeout(function() {
-            if (document.querySelector('iframe').contentDocument.body.innerHTML === '') {
-                document.querySelector('#viewerFallback').style.display = 'block';
-                document.querySelector('iframe').style.display = 'none';
-            }
-        }, 2000);
-    } catch(e) {
-        // If there's an error accessing the iframe content, show fallback
-        document.querySelector('#viewerFallback').style.display = 'block';
-        document.querySelector('iframe').style.display = 'none';
-    }
-};
+    // Add error handling for the iframe
+    document.querySelector('iframe').onload = function() {
+        // Check if the iframe loaded successfully
+        try {
+            setTimeout(function() {
+                if (document.querySelector('iframe').contentDocument.body.innerHTML === '') {
+                    document.querySelector('#viewerFallback').style.display = 'block';
+                    document.querySelector('iframe').style.display = 'none';
+                }
+            }, 2000);
+        } catch (e) {
+            // If there's an error accessing the iframe content, show fallback
+            document.querySelector('#viewerFallback').style.display = 'block';
+            document.querySelector('iframe').style.display = 'none';
+        }
+    };
 </script>
 
 <?= $this->endSection(); ?>

@@ -120,7 +120,7 @@
                                                     <span class="text-break"><?= !empty($document['original_name']) ? $document['original_name'] : 'File' ?></span>
                                                 </div>
                                                 <div class="d-flex gap-2 attachment-buttons">
-                                                    <a href="<?= base_url('view/file/' . $document['id']) ?>" class="btn btn-sm btn-primary" target="_blank">View</a>
+                                                    <a href="<?= base_url('view/file/' . $document['id']) ?>" class="btn btn-sm btn-primary">View</a>
                                                     <?php if ($document['status'] !== 'pending') : ?>
                                                         <a href="<?= base_url($document['path']) ?>" class="btn btn-sm btn-warning download-btn">Download</a>
                                                     <?php endif; ?>
