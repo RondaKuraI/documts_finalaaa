@@ -4,16 +4,16 @@
 <div class="container-fluid position-relative d-flex p-0">
     <?= $this->include("partials/sidebar"); ?>
 
-    <div class="content bg-white">
+    <div class="content bg-gradient-light">
         <?= $this->include("partials/navbar"); ?>
 
-        <div class="container-fluid pt-4 px-4">
+        <div class="container-fluid pt-4 px-4 bg-gradient-light">
             <div class="row">
                 <div class="col-12">
-                    <div class="card shadow bg-white">
-                        <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                    <div class="card shadow bg-gradient-light">
+                        <div class="card-header bg-gradient-dark d-flex justify-content-between align-items-center">
                             <h3 class="text-white mb-0 fs-4">Documents - Barangay <?= esc($barangay) ?></h3>
-                            <a href="<?= base_url('barangay_list') ?>" class="btn btn-secondary">
+                            <a href="<?= base_url('barangay_list') ?>" class="btn btn-light">
                                 <i class="bi bi-arrow-left me-2"></i>Back to List
                             </a>
                         </div>
@@ -23,8 +23,8 @@
                                 <div class="col-12 col-md-8">
                                     <form action="<?= current_url() ?>" method="get">
                                         <div class="input-group">
-                                            <input type="text" name="keyword" class="form-control bg-white" placeholder="Search documents..." value="<?= isset($_GET['keyword']) ? esc($_GET['keyword']) : '' ?>" autocomplete="off">
-                                            <button class="btn btn-primary" type="submit">
+                                            <input type="text" name="keyword" class="form-control bg-gradient-light" placeholder="Search documents..." value="<?= isset($_GET['keyword']) ? esc($_GET['keyword']) : '' ?>" autocomplete="off">
+                                            <button class="btn btn-light" type="submit">
                                                 <i class="bi bi-search d-md-none"></i>
                                                 <span class="d-none d-md-inline">Search</span>
                                             </button>
@@ -32,12 +32,12 @@
                                     </form>
                                 </div>
                                 <div class="col-12 col-md-4">
-                                    <a href="<?= current_url() . '?show_all=1' ?>" class="btn btn-warning w-100">
+                                    <a href="<?= current_url() . '?show_all=1' ?>" class="btn btn-danger w-100">
                                         <i class="bi bi-arrow-repeat me-2"></i> Show All
                                     </a>
                                 </div>
                                 <div class="col-12 col-md-4">
-                                    <select class="form-select" name="status" onchange="window.location.href=this.value">
+                                    <select class="form-select bg-primary text-white" name="status" onchange="window.location.href=this.value">
                                         <option value="<?= current_url() ?>">All Status</option>
                                         <option value="<?= current_url() ?>?status=pending" <?= isset($_GET['status']) && $_GET['status'] == 'pending' ? 'selected' : '' ?>>
                                             Pending
@@ -56,7 +56,7 @@
                             <div class="table-responsive">
                                 <table class="table table-hover table-striped align-middle" id="mydatatable">
                                     <thead>
-                                        <tr class="text-white bg-primary">
+                                        <tr class="text-white bg-gradient-primary">
                                             <th class="d-none d-md-table-cell">Doc. Code</th>
                                             <th>Sender</th>
                                             <th>Details</th>

@@ -7,17 +7,17 @@
     <!-- Sidebar End -->
 
     <!-- Content Start -->
-    <div class="content bg-white">
+    <div class="content bg-gradient-light">
         <!-- Navbar Start -->
         <?= $this->include("partials/navbar"); ?>
         <!-- Navbar End -->
 
-        <div class="bg-white">
+        <div class="bg-gradient-light">
             <div class="container-fluid pt-4 px-4">
                 <div class="row">
                     <div class="col-12">
-                        <div class="card shadow bg-white">
-                            <div class="card-header bg-light">
+                        <div class="card shadow bg-gradient-light">
+                            <div class="card-header bg-gradient-dark">
                                 <?php if ($session->get('role') == 'admin') : ?>
                                     <h3 class="text-white mb-0 fs-4">All Incoming Documents</h3>
                                 <?php else : ?>
@@ -32,7 +32,7 @@
                                             <div class="input-group">
                                                 <input type="hidden" name="type" value="incoming">
                                                 <input type="text" name="keyword" class="form-control bg-white" placeholder="Search documents..." value="<?= isset($_GET['keyword']) ? esc($_GET['keyword']) : '' ?>" autocomplete="off">
-                                                <button class="btn btn-primary" type="submit">
+                                                <button class="btn btn-light" type="submit">
                                                     <i class="bi bi-search d-md-none"></i>
                                                     <span class="d-none d-md-inline">Search</span>
                                                 </button>
@@ -40,7 +40,7 @@
                                         </form>
                                     </div>
                                     <div class="col-12 col-md-4 text-md-end">
-                                        <a href="<?= site_url('incoming') ?>" class="btn btn-warning w-100 w-md-auto">
+                                        <a href="<?= site_url('incoming') ?>" class="btn btn-danger w-100 w-md-auto">
                                             <i class="bi bi-list-ul me-1"></i> Show All
                                         </a>
                                     </div>
@@ -54,16 +54,16 @@
 
                                 <!-- Responsive Table -->
                                 <div class="table-responsive">
-                                    <table class="table table-hover table-striped align-middle" id="mydatatable">
-                                        <thead>
-                                            <tr class="text-white bg-primary">
-                                                <th>Doc. Code</th>
-                                                <th>Sender</th>
-                                                <th>Details</th>
-                                                <th>Required Action</th>
-                                                <th>Date</th>
-                                                <th>Status</th>
-                                                <th>Action</th>
+                                    <table class="table table-sm table-hover table-striped align-middle fs-7" id="mydatatable">
+                                        <thead class="text-center">
+                                            <tr class="text-white bg-gradient-primary">
+                                                <th class="w-auto text-nowrap">Doc. Code</th>
+                                                <th class="w-auto text-nowrap">Sender</th>
+                                                <th class="w-25 text-wrap">Details</th>
+                                                <th class="w-25 text-wrap">Required Action</th>
+                                                <th class="w-auto text-nowrap">Date</th>
+                                                <th class="w-auto text-nowrap">Status</th>
+                                                <th class="w-auto text-nowrap">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -74,16 +74,19 @@
                                             <?php else : ?>
                                                 <?php foreach ($incoming as $message) : ?>
                                                     <tr>
-                                                        <td class="text-dark"><?= $message['doc_code'] ?></td>
-                                                        <td>
-                                                            <strong class="text-dark"><?= $message['sender'] ?></strong> - <small class="text-primary"><?= $message['brgy'] ?></small>
+                                                        <td class="w-auto text-nowrap text-dark"><?= $message['doc_code'] ?></td>
+                                                        <td class="w-auto text-nowrap">
+                                                            <strong class="text-dark"><?= $message['sender'] ?></strong> -
+                                                            <small class="text-primary"><?= $message['brgy'] ?></small>
                                                         </td>
-                                                        <td>
+                                                        <td class="w-25 text-wrap">
                                                             <strong class="text-dark"><?= $message['subject'] ?></strong><br>
-                                                            <span class="text-dark"><?= $message['description'] ?></span>
+                                                            <span class=""><?= $message['description'] ?></span>
                                                         </td>
-                                                        <td class="text-dark"><?= $message['action'] ?? 'For Information' ?></td>
-                                                        <td class="text-dark"><?= date('M d, Y', strtotime($message['date_of_letter'])) ?></td>
+
+                                                        <td class="w-25 text-wrap"><?= $message['action'] ?? 'For Information' ?></td>
+
+                                                        <td class="w-auto text-nowrap"><?= date('M d, Y', strtotime($message['date_of_letter'])) ?></td>
                                                         <td>
                                                             <?php if ($message['status'] == 'pending') : ?>
                                                                 <span class="badge bg-warning text-dark">Pending</span>
@@ -97,7 +100,7 @@
                                                         </td>
                                                         <td>
                                                             <div class="d-flex gap-2">
-                                                                <a href="<?= base_url('incoming_doc_view/' . $message['id']) ?>" class="btn btn-info btn-sm text-white">
+                                                                <a href="<?= base_url('incoming_doc_view/' . $message['id']) ?>" class="btn btn-light btn-sm text-white">
                                                                     <i class="bi bi-search"></i>
                                                                     <span class="d-none d-md-inline ms-1">View</span>
                                                                 </a>

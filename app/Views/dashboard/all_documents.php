@@ -7,16 +7,16 @@
     <!-- Sidebar End -->
 
     <!-- Content Start -->
-    <div class="content bg-white">
+    <div class="content">
         <!-- Navbar Start -->
         <?= $this->include("partials/navbar"); ?>
         <!-- Navbar End -->
 
-        <div class="bg-white">
+        <div class="bg-gradient-light">
             <div class="container-fluid pt-4 px-4">
                 <div class="row">
                     <div class="col-12">
-                        <div class="card shadow bg-white">
+                        <div class="card shadow bg-gradient-light">
                             <div class="card-header bg-light">
                                 <h3 class="text-white mb-0 fs-4">All Documents</h3>
                             </div>
@@ -27,7 +27,7 @@
                                         <form action="<?= site_url('all_documents') ?>" method="get">
                                             <div class="input-group">
                                                 <input type="hidden" name="type" value="documents">
-                                                <input type="text" name="keyword" class="form-control bg-white" placeholder="Search documents..." value="<?= isset($_GET['keyword']) ? esc($_GET['keyword']) : '' ?>" autocomplete="off">
+                                                <input type="text" name="keyword" class="form-control bg-gradient-light" placeholder="Search documents..." value="<?= isset($_GET['keyword']) ? esc($_GET['keyword']) : '' ?>" autocomplete="off">
                                                 <button class="btn btn-primary" type="submit">
                                                     <i class="bi bi-search d-md-none"></i>
                                                     <span class="d-none d-md-inline">Search</span>

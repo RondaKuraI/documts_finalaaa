@@ -4,10 +4,10 @@
 
 <?= $this->section("content"); ?>
 
-<div class="container-fluid d-flex justify-content-center align-items-center vh-100 p-0">
-    <div class="bg-secondary rounded-3 p-4 w-100 mx-auto" style="max-width: 600px;">
-        <h3 class="text-center mb-3">Register</h3>
-        <p class="text-center text-muted mb-4">Please enter your information and submit to create an account.</p>
+<div class="container-fluid d-flex justify-content-center align-items-center vh-100 p-0 bg-gradient-light">
+    <div class="bg-gradient-info rounded-3 p-4 w-100 mx-auto" style="max-width: 600px; box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.6);">
+        <h3 class="text-center text-white mb-3">Register</h3>
+        <p class="text-center text-white mb-4">Please enter your information and submit to create an account.</p>
 
         <?php if ($page_session->getTempdata('success')) : ?>
             <div class="alert alert-success text-center"><?= $page_session->getTempdata('success') ?></div>
@@ -21,15 +21,15 @@
             <div class="row mb-3">
                 <div class="col-12 col-md-6 mb-3 mb-md-0"> <!-- Margin for small devices -->
                     <div class="form-floating">
-                        <input type="text" name="name" class="form-control bg-dark text-light border-0" id="floatingText" placeholder="Name" value="<?= set_value('name'); ?>">
-                        <label for="floatingText">Full Name</label>
+                        <input type="text" name="name" class="form-control bg-gradient-light text-secondary border-0" id="floatingText" placeholder="Name" value="<?= set_value('name'); ?>">
+                        <label for="floatingText" class="text-dark">Full Name</label>
                         <span class="text-danger small"><?= isset($validation) ? $validation->getError('name') : '' ?></span>
                     </div>
                 </div>
                 <div class="col-12 col-md-6">
                     <div class="form-floating">
-                        <input type="email" name="email" class="form-control bg-dark text-light border-0" id="floatingInput" placeholder="Email Address" value="<?= set_value('email'); ?>">
-                        <label for="floatingInput">Email address</label>
+                        <input type="email" name="email" class="form-control bg-gradient-light text-secondary border-0" id="floatingInput" placeholder="Email Address" value="<?= set_value('email'); ?>">
+                        <label for="floatingInput" class="text-dark">Email address</label>
                     </div>
                     <span class="text-danger small"><?= isset($validation) ? $validation->getError('email') : '' ?></span>
                 </div>
@@ -38,17 +38,17 @@
             <div class="row mb-3">
                 <div class="col-12 col-md-6 mb-3 mb-md-0"> <!-- Added margin for small devices -->
                     <div class="form-floating">
-                        <select class="form-select bg-dark text-light border-0" id="floatingSelectRole" name="role" aria-label="Select Role">
+                        <select class="form-select bg-gradient-light text-secondary border-0" id="floatingSelectRole" name="role" aria-label="Select Role">
                             <option value="admin">Admin</option>
                             <option value="user">User</option>
                         </select>
-                        <label for="floatingSelectRole">Select Role</label>
+                        <label for="floatingSelectRole" class="text-dark">Select Role</label>
                         <span class="text-danger small"><?= isset($validation) ? $validation->getError('role') : '' ?></span>
                     </div>
                 </div>
                 <div class="col-12 col-md-6">
                     <div class="form-floating">
-                        <select class="form-select bg-dark text-light border-0" id="floatingSelectBrgy" name="brgy" aria-label="Select Barangay">
+                        <select class="form-select bg-gradient-light text-secondary border-0" id="floatingSelectBrgy" name="brgy" aria-label="Select Barangay">
                             <option value="Bigaan">Bigaan</option>
                             <option value="Calangatan">Calangatan</option>
                             <option value="Calsapa">Calsapa</option>
@@ -58,7 +58,7 @@
                             <option value="Poblacion">Poblacion</option>
                             <option value="Caagutayan">Caagutayan</option>
                         </select>
-                        <label for="floatingSelectBrgy">Select Barangay</label>
+                        <label for="floatingSelectBrgy" class="text-dark">Select Barangay</label>
                         <span class="text-danger small"><?= isset($validation) ? $validation->getError('brgy') : '' ?></span>
                     </div>
                 </div>
@@ -68,8 +68,8 @@
             <div class="row mb-3">
                 <div class="col-12 col-md-6 mb-3 mb-md-0 position-relative"> <!-- Margin for small devices -->
                     <div class="form-floating">
-                        <input type="password" name="password" class="form-control bg-dark text-light border-0" id="floatingPassword" placeholder="Password" value="<?= set_value('password'); ?>">
-                        <label for="floatingPassword">Password</label>
+                        <input type="password" name="password" class="form-control bg-gradient-light text-secondary border-0" id="floatingPassword" placeholder="Password" value="<?= set_value('password'); ?>">
+                        <label for="floatingPassword" class="text-dark">Password</label>
                         <span class="text-danger small"><?= isset($validation) ? $validation->getError('password') : '' ?></span>
                     </div>
                     <button type="button" id="togglePassword" class="btn position-absolute end-0 top-50 translate-middle-y me-2">
@@ -78,8 +78,8 @@
                 </div>
                 <div class="col-12 col-md-6 position-relative">
                     <div class="form-floating">
-                        <input type="password" name="confirmpassword" class="form-control bg-dark text-light border-0" id="floatingConfirmPassword" placeholder="Confirm Password" value="<?= set_value('confirmpassword'); ?>">
-                        <label for="floatingConfirmPassword">Confirm Password</label>
+                        <input type="password" name="confirmpassword" class="form-control bg-gradient-light text-secondary border-0" id="floatingConfirmPassword" placeholder="Confirm Password" value="<?= set_value('confirmpassword'); ?>">
+                        <label for="floatingConfirmPassword" class="text-dark">Confirm Password</label>
                         <span class="text-danger small"><?= isset($validation) ? $validation->getError('confirmpassword') : '' ?></span>
                     </div>
                     <button type="button" id="toggleConfirmPassword" class="btn position-absolute end-0 top-50 translate-middle-y me-2">

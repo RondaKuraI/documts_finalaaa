@@ -22,7 +22,7 @@
                     <div class="bg-warning rounded d-flex align-items-center justify-content-between p-4">
                         <i class="fa fa-chart-line fa-3x text-dark"></i>
                         <div class="ms-3">
-                            <p class="mb-2 text-white">All Incoming Docs</p>
+                            <p class="mb-2 text-white">Incoming Docs</p>
                             <h4 class="mb-0 text-white"><?= $all_incoming_count ?></h4>
                         </div>
                     </div>

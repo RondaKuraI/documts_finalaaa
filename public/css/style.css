@@ -5,7 +5,51 @@
     --secondary: #191C24;
     --light: #6C7293;
     --dark: #000000;
+    --info: #ADD8E7;
     /* --dark: rgb(24, 23, 23); */
+}
+
+.bg-gradient-light {
+    background: linear-gradient(180deg, #F1EAD2, #F5F5DD);
+}
+
+.bg-gradient-info {
+    background: linear-gradient(180deg, #365194, #ADD8E7);
+}
+
+.bg-gradient-primary {
+    background: linear-gradient(135deg, #0596af, #1AD2BC);
+}
+
+.bg-gradient-dark {
+    background: linear-gradient(135deg, #000000, #191C24);
+}
+
+.btn-gradient-warning {
+    background: linear-gradient(135deg, #f6d365, #EAD66B); /* custom gradient */
+    color: white;
+    border: none;
+}
+.btn-gradient-warning:hover {
+    opacity: 0.9;
+}
+
+.btn-gradient-success {
+    background: linear-gradient(135deg, #025D30, #309F46); /* custom gradient */
+    color: white;
+    border: none;
+}
+.btn-gradient-success:hover {
+    opacity: 0.9;
+}
+
+.btn-gradient-primary {
+    background: linear-gradient(to right, #0596af, #1AD2BC); /* custom gradient */
+    color: white;
+    border: none;
+}
+.btn-gradient-primary:hover {
+    opacity: 0.9;
 }
 
 .status-pending {

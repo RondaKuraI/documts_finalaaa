@@ -2,11 +2,11 @@
 
 <?= $this->section("content"); ?>
 
-<div class="container-fluid d-flex justify-content-center align-items-center vh-100">
-    <div class="bg-secondary rounded-3 p-4 w-100" style="max-width: 400px;">
+<div class="container-fluid d-flex justify-content-center align-items-center vh-100 bg-gradient-light">
+    <div class="bg-gradient-info rounded-3 p-4 w-100" style="max-width: 400px; box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.6);">
         <img src="/img/Department_of_the_Interior_and_Local_Government_(DILG)_Seal_-_Logo.png" alt="DILG Logo" class="d-block mx-auto mb-4" style="max-width: 100px;">
-        <h3 class="text-center mb-3">Welcome!</h3>
-        <p class="text-center text-muted mb-4">Login to your account</p>
+        <h3 class="text-center mb-3 text-white">Welcome to E-GovDocs!</h3>
+        <p class="text-center text-white mb-4">Login to your account</p>
 
         <?php if (session()->getFlashdata('msg')) : ?>
             <div class="alert alert-danger">
@@ -16,11 +16,11 @@
 
         <form action="<?php echo base_url(); ?>SigninController/loginAuth" method="post">
             <div class="form-floating mb-3">
-                <input type="email" name="email" class="form-control bg-dark text-light border-0" id="floatingInput" placeholder="Email Address" value="<?= set_value('email') ?>">
+                <input type="email" name="email" class="form-control bg-gradient-light text-secondary border-0" id="floatingInput" placeholder="Email Address" value="<?= set_value('email') ?>">
                 <label for="floatingInput">Email address</label>
             </div>
             <div class="form-floating mb-3 position-relative">
-                <input type="password" name="password" class="form-control bg-dark text-light border-0" id="floatingPassword" placeholder="Password">
+                <input type="password" name="password" class="form-control bg-gradient-light text-secondary border-0" id="floatingPassword" placeholder="Password">
                 <label for="floatingPassword">Password</label>
                 <button type="button" id="togglePassword" class="btn position-absolute end-0 top-50 translate-middle-y me-2">
                     <i class="fa fa-eye text-light" aria-hidden="true"></i>

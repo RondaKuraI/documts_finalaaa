@@ -7,17 +7,17 @@
     <!-- Sidebar End -->
 
     <!-- Content Start -->
-    <div class="content bg-white">
+    <div class="content bg-gradient-light">
         <!-- Navbar Start -->
         <?= $this->include("partials/navbar"); ?>
         <!-- Navbar End -->
 
-        <div class="bg-white">
+        <div class="bg-gradient-light">
             <div class="container-fluid pt-4 px-4">
                 <div class="row">
                     <div class="col-12">
-                        <div class="card shadow bg-white">
-                            <div class="card-header bg-light">
+                        <div class="card shadow bg-gradient-light">
+                            <div class="card-header bg-gradient-dark">
                                 <?php if ($session->get('role') == 'admin') : ?>
                                     <h3 class="text-white mb-0 fs-4">All Outgoing Documents</h3>
                                 <?php else : ?>
@@ -32,7 +32,7 @@
                                             <div class="input-group">
                                                 <input type="hidden" name="type" value="outgoing">
                                                 <input type="text" name="keyword" class="form-control bg-white" placeholder="Search documents..." value="<?= isset($_GET['keyword']) ? esc($_GET['keyword']) : '' ?>" autocomplete="off">
-                                                <button class="btn btn-primary" type="submit">
+                                                <button class="btn btn-light" type="submit">
                                                     <i class="bi bi-search d-md-none"></i>
                                                     <span class="d-none d-md-inline">Search</span>
                                                 </button>
@@ -40,7 +40,7 @@
                                         </form>
                                     </div>
                                     <div class="col-12 col-md-4 text-md-end">
-                                        <a href="<?= site_url('outgoing') ?>" class="btn btn-warning w-100 w-md-auto">
+                                        <a href="<?= site_url('outgoing') ?>" class="btn btn-danger w-100 w-md-auto">
                                             <i class="bi bi-list-ul me-1"></i> Show All
                                         </a>
                                     </div>
@@ -55,8 +55,8 @@
                                 <!-- Responsive Table -->
                                 <div class="table-responsive">
                                     <table class="table table-hover table-striped align-middle" id="mydatatable">
-                                        <thead>
-                                            <tr class="text-white bg-primary">
+                                        <thead class="text-center">
+                                            <tr class="text-white bg-gradient-primary">
                                                 <th class="d-none d-md-table-cell">Doc. Code</th>
                                                 <th>Recipient</th>
                                                 <th>Details</th>
@@ -101,7 +101,7 @@
                                                         </td>
                                                         <td>
                                                             <div class="d-flex gap-2">
-                                                                <a href="<?= base_url('doc_view/' . $row['id']) ?>" class="btn btn-info btn-sm text-white">
+                                                                <a href="<?= base_url('doc_view/' . $row['id']) ?>" class="btn btn-light btn-sm text-white">
                                                                     <i class="bi bi-search"></i>
                                                                     <span class="d-none d-md-inline ms-1">View</span>
                                                                 </a>

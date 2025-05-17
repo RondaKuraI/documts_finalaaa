@@ -14,18 +14,18 @@
         <!-- Navbar End -->
 
         <?php $validation = \Config\Services::validation(); ?>
-        <div class="bg-white">
+        <div class="bg-gradient-light">
             <div class="container-fluid pt-4 px-4">
                 <div class="row">
                     <!-- <div class="col-lg-6 mx-auto"> -->
                     <div class="col-12 col-sm-12 text-center text-sm-start">
-                        <div class="card shadow bg-white">
-                            <div class="card-header d-flex justify-content-center align-items-center bg-light">
+                        <div class="card shadow bg-gradient-light">
+                            <div class="card-header d-flex justify-content-center align-items-center bg-gradient-dark">
                                 <h5 class="text-white mb-0">Compose Document</h5>
                             </div>
                             <br>
-                            <div class="bg-primary text-center p-1">
-                                <h4 class="text-white mb-0 d-flex justify-content-center align-items-center bg-primary">Add Details</h4>
+                            <div class="bg-gradient-primary text-center p-1">
+                                <h4 class="text-white mb-0 d-flex justify-content-center align-items-center bg-gradient-primary">Add Details</h4>
                             </div>
                             <div class="card-body p-6">
 
@@ -187,7 +187,7 @@
                                     </div>
                                     <br>
                                     <div>
-                                        <h4 class="text-white mb-0 d-flex justify-content-center align-items-center bg-primary p-1">Add Attachment/s</h4>
+                                        <h4 class="text-white mb-0 d-flex justify-content-center align-items-center bg-gradient-primary p-1">Add Attachment/s</h4>
                                     </div>
                                     <br>
 
@@ -200,7 +200,7 @@
                                     </div>
 
                                     <div class="d-grid">
-                                        <button type="submit" class="btn btn-primary bg-gradient files-save">Send</button>
+                                        <button type="submit" class="btn btn-danger bg-gradient files-save">Send</button>
                                     </div>
                                 </form>
                             </div>
